@@ -10,11 +10,15 @@
 
 from flask import Blueprint, url_for, render_template, abort
 
+from functools import partial
+
 from invenio_administration.decorators import _wrap_view, expose
 from flask import current_app
 
 from invenio_administration.errors import InvalidResource
 from invenio_administration.marshmallow_utils import jsonify_schema
+
+from invenio_search_ui.searchconfig import search_app_config
 
 
 class AdminViewMeta(type):
@@ -282,8 +286,14 @@ class AdminResourceListView(AdminResourceBaseView):
 
     def init_search_config(self):
         """Build search view config."""
-        # TODO
-        pass
+        return partial(
+                search_app_config,
+                config_name="RESOURCE_SEARCH_{}".format(self.name),
+                available_facets=None,  # TODO , is it correct?
+                sort_options=self.sort_options,
+                headers={"Accept": "application/json"},
+                endpoint=self.endpoint,
+        )
 
     @expose()
     def index(self):
