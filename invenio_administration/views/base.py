@@ -33,6 +33,8 @@ class AdminView(MethodView):
     template = "invenio_administration/index.html"
     url = None
     menu_label = None
+    order = None
+    icon = None
 
     decorators = [roles_required("admin")]
 
@@ -43,6 +45,8 @@ class AdminView(MethodView):
         url=None,
         extension_name=None,
         admin=None,
+        order=0,
+        icon=None
     ):
         """Constructor."""
         if self.extension_name is None:
@@ -58,6 +62,12 @@ class AdminView(MethodView):
             self.menu_label = self.name
 
         self.administration = admin
+
+        if self.order is None:
+            self.order = order
+
+        if self.icon is None:
+            self.icon = icon
 
         self.url = url or self._get_view_url(self.url)
 
@@ -130,9 +140,11 @@ class AdminResourceBaseView(AdminView):
         url=None,
         extension_name=None,
         admin=None,
+        order=0,
+        icon=None
     ):
         """Constructor."""
-        super().__init__(name, category, url, extension_name, admin)
+        super().__init__(name, category, url, extension_name, admin, order, icon)
 
         if self.extension_name is None:
             raise MissingExtensionName(self.__class__.__name__)
