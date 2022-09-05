@@ -14,6 +14,6 @@ from invenio_administration.views.base import AdminView
 class AdminDashboardView(AdminView):
     """Admin dashboard view."""
 
-    template = "invenio_administration/index.html"
+    template = "invenio_administration/dashboard/dashboard.html"
     name = "dashboard"
     url = "/"
