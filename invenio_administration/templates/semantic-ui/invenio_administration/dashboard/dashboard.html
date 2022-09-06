@@ -11,4 +11,16 @@
 
 Put content here
 
+<div
+  id="statistics-widget-1"
+  data-records="Communities"
+  data-time-interval="week"
+  data-label="created"
+></div>
+
 {% endblock admin_page_content %}
+
+{% block javascript %}
+  {{ super() }}
+  {{ webpack['invenio-administration-statistics.js'] }}
+{% endblock %}

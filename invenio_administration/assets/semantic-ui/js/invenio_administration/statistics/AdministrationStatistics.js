@@ -7,23 +7,76 @@
  */
 import _get from "lodash/get";
 import _isEmpty from "lodash/isEmpty";
+import React from "react";
+import { InvenioAdministrationActionsApi } from "../api/actions";
 import { Component } from "react";
+import { Item } from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 export class AdministrationStatistics extends Component {
+  constructor() {
+    super();
+    this.state = {
+      intervalHits: [],
+      isLoading: false,
+    };
+  }
+
+  fetchValues = async () => {
+    const { apiEndpoint, query, sort, page, size } = this.props;
+    return await InvenioAdministrationActionsApi.searchResource(
+      apiEndpoint,
+      query,
+      sort,
+      page,
+      size
+    );
+  };
+
+  async componentDidMount() {
+    this.setState({ isLoading: true });
+    const response = await this.fetchValues();
+    console.log(response.data);
+    this.setState({
+      intervalHits: response.data.hits.hits.length,
+      isLoading: false,
+    });
+  }
+
   render() {
-    return "ASD";
+    const { records, timeInterval, label } = this.props;
+    const { intervalHits } = this.state;
+    return (
+      <Item>
+        <Item.Content>
+          <Item.Header>{records}</Item.Header>
+          <Item.Description>{intervalHits}</Item.Description>
+          <Item.Extra>
+            {label} in the past {timeInterval}
+          </Item.Extra>
+        </Item.Content>
+      </Item>
+    );
   }
 }
 
 AdministrationStatistics.propTypes = {
-    records: PropTypes.string,
-    timeInterval: PropTypes.string,
-    label: PropTypes.string,
+  records: PropTypes.string,
+  timeInterval: PropTypes.string,
+  label: PropTypes.string,
+  apiEndpoint: PropTypes.string.isRequired,
+  query: PropTypes.string,
+  sort: PropTypes.string,
+  page: PropTypes.number,
+  size: PropTypes.number,
 };
 
 AdministrationStatistics.defaultProps = {
-  records: 'uploads',
-  timeInterval: 'week',
-  label: 'published',
+  records: "",
+  timeInterval: "week",
+  label: "published",
+  query: "created:[2017 TO 2023]",
+  sort: "newest",
+  page: 1,
+  size: 5,
 };

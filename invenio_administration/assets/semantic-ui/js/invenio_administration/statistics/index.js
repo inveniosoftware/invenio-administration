@@ -12,13 +12,17 @@ import ReactDOM from "react-dom";
 import { AdministrationStatistics } from "./AdministrationStatistics";
 
 const domContainer = document.getElementById("statistics-widget-1");
+
 const dataAttr = domContainer.dataset;
 const records = dataAttr.records;
 const timeInterval = dataAttr.timeInterval;
 const label = dataAttr.label;
 
+console.log(domContainer);
+
 ReactDOM.render(
   <AdministrationStatistics
+    apiEndpoint="api/communities"
     records={records}
     timeInterval={timeInterval}
     label={label}
