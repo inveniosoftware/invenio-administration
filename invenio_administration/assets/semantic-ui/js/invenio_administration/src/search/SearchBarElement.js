@@ -11,6 +11,7 @@ import { withState } from "react-searchkit";
 import { Input } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_administration/i18next";
+import Overridable from "react-overridable";
 
 export const SearchBarElement = withState(
   ({
@@ -30,23 +31,25 @@ export const SearchBarElement = withState(
       }
     };
     return (
-      <Input
-        action={{
-          "icon": "search",
-          "onClick": onBtnSearchClick,
-          "className": "search",
-          "aria-label": i18next.t("Search"),
-        }}
-        fluid
-        placeholder={placeholder}
-        onChange={(event, { value }) => {
-          onInputChange(value);
-        }}
-        value={queryString}
-        onKeyPress={onKeyPress}
-        aria-label={i18next.t("Search")}
-        {...uiProps}
-      />
+      <Overridable id="SearchBarElement.layout">
+        <Input
+          action={{
+            "icon": "search",
+            "onClick": onBtnSearchClick,
+            "className": "search",
+            "aria-label": i18next.t("Search"),
+          }}
+          fluid
+          placeholder={placeholder}
+          onChange={(event, { value }) => {
+            onInputChange(value);
+          }}
+          value={queryString}
+          onKeyPress={onKeyPress}
+          aria-label={i18next.t("Search")}
+          {...uiProps}
+        />
+      </Overridable>
     );
   }
 );
@@ -64,3 +67,5 @@ SearchBarElement.defaultProps = {
   placeholder: i18next.t("Search ..."),
   queryString: "",
 };
+
+export default Overridable.component("SearchBarElement", SearchBarElement);

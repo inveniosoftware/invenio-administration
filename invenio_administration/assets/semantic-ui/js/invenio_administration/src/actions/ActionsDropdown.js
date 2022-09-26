@@ -1,12 +1,18 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Dropdown, Button } from "semantic-ui-react";
-import { ResourceActions } from "./ResourceActions";
+import { ResourceActions, DeleteModalTrigger } from ".";
 import isEmpty from "lodash/isEmpty";
 import { i18next } from "@translations/invenio_administration/i18next";
-import { DeleteModalTrigger } from "./DeleteModalTrigger";
+import Overridable from "react-overridable";
 
-export class ActionsDropdown extends Component {
+class ActionsDropdown extends Component {
   render() {
     const {
       title,
@@ -20,38 +26,40 @@ export class ActionsDropdown extends Component {
       actions,
     } = this.props;
     return (
-      <Dropdown>
-        {!isEmpty(actions) && (
-          <ResourceActions
-            resource={resource}
-            successCallback={successCallback}
-            idKeyPath={idKeyPath}
-            actions={actions}
-            apiEndpoint={apiEndpoint}
-            Element={Dropdown.Item}
-            trigger={
-              <Button
-                icon="cog"
-                size="tiny"
-                className="transparent rel-ml-1"
-                aria-label={i18next.t("Open list of actions")}
-              />
-            }
-          />
-        )}
-        {displayEdit && <Dropdown.Item>Edit</Dropdown.Item>}
-        {displayDelete && (
-          <DeleteModalTrigger
-            title={title}
-            resourceName={resourceName}
-            apiEndpoint={apiEndpoint}
-            resource={resource}
-            successCallback={successCallback}
-            idKeyPath={idKeyPath}
-            Element={Dropdown.Item}
-          />
-        )}
-      </Dropdown>
+      <Overridable id="ActionsDropdown.layout">
+        <Dropdown>
+          {!isEmpty(actions) && (
+            <ResourceActions
+              resource={resource}
+              successCallback={successCallback}
+              idKeyPath={idKeyPath}
+              actions={actions}
+              apiEndpoint={apiEndpoint}
+              Element={Dropdown.Item}
+              trigger={
+                <Button
+                  icon="cog"
+                  size="tiny"
+                  className="transparent rel-ml-1"
+                  aria-label={i18next.t("Open list of actions")}
+                />
+              }
+            />
+          )}
+          {displayEdit && <Dropdown.Item>Edit</Dropdown.Item>}
+          {displayDelete && (
+            <DeleteModalTrigger
+              title={title}
+              resourceName={resourceName}
+              apiEndpoint={apiEndpoint}
+              resource={resource}
+              successCallback={successCallback}
+              idKeyPath={idKeyPath}
+              Element={Dropdown.Item}
+            />
+          )}
+        </Dropdown>
+      </Overridable>
     );
   }
 }
@@ -72,3 +80,5 @@ ActionsDropdown.defaultProps = {
   displayDelete: true,
   displayEdit: true,
 };
+
+export default Overridable.component("ActionsDropdown", ActionsDropdown);

@@ -10,10 +10,11 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Table } from "semantic-ui-react";
 import isEmpty from "lodash/isEmpty";
-import { Actions } from "../actions/Actions";
+import { Actions } from "../actions";
 import { withState } from "react-searchkit";
 import { AdminUIRoutes } from "../routes";
-import Formatter from "../components/Formatter";
+import { Formatter } from "../components";
+import Overridable from "react-overridable";
 
 class SearchResultItemComponent extends Component {
   refreshAfterAction = () => {
@@ -38,50 +39,57 @@ class SearchResultItemComponent extends Component {
 
     const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);
     return (
-      <Table.Row>
-        {columns.map(([property, { text, order }], index) => {
-          return (
-            <Table.Cell
-              key={`${text}-${order}`}
-              data-label={text}
-              className="word-break-all"
-            >
-              {index === 0 && (
-                <a href={AdminUIRoutes.detailsView(listUIEndpoint, result, idKeyPath)}>
+      <Overridable
+        id="SearchResultItem.layout"
+        refreshAfterAction={this.refreshAfterAction}
+      >
+        <Table.Row>
+          {columns.map(([property, { text, order }], index) => {
+            return (
+              <Table.Cell
+                key={`${text}-${order}`}
+                data-label={text}
+                className="word-break-all"
+              >
+                {index === 0 && (
+                  <a
+                    href={AdminUIRoutes.detailsView(listUIEndpoint, result, idKeyPath)}
+                  >
+                    <Formatter
+                      result={result}
+                      resourceSchema={resourceSchema}
+                      property={property}
+                    />
+                  </a>
+                )}
+                {index !== 0 && (
                   <Formatter
                     result={result}
                     resourceSchema={resourceSchema}
                     property={property}
                   />
-                </a>
-              )}
-              {index !== 0 && (
-                <Formatter
-                  result={result}
-                  resourceSchema={resourceSchema}
-                  property={property}
-                />
-              )}
+                )}
+              </Table.Cell>
+            );
+          })}
+          {resourceHasActions && (
+            <Table.Cell>
+              <Actions
+                title={title}
+                resourceName={resourceName}
+                apiEndpoint={apiEndpoint}
+                editAction={{ display: displayEdit }}
+                deleteAction={{ display: displayDelete }}
+                actions={actions}
+                resource={result}
+                idKeyPath={idKeyPath}
+                successCallback={this.refreshAfterAction}
+                listUIEndpoint={listUIEndpoint}
+              />
             </Table.Cell>
-          );
-        })}
-        {resourceHasActions && (
-          <Table.Cell>
-            <Actions
-              title={title}
-              resourceName={resourceName}
-              apiEndpoint={apiEndpoint}
-              editAction={{ display: displayEdit }}
-              deleteAction={{ display: displayDelete }}
-              actions={actions}
-              resource={result}
-              idKeyPath={idKeyPath}
-              successCallback={this.refreshAfterAction}
-              listUIEndpoint={listUIEndpoint}
-            />
-          </Table.Cell>
-        )}
-      </Table.Row>
+          )}
+        </Table.Row>
+      </Overridable>
     );
   }
 }
@@ -109,4 +117,5 @@ SearchResultItemComponent.defaultProps = {
   actions: {},
 };
 
-export const SearchResultItem = withState(SearchResultItemComponent);
+const SearchResultItem = withState(SearchResultItemComponent);
+export default Overridable.component("SearchResultItem", SearchResultItem);

@@ -7,12 +7,13 @@ import { Button } from "semantic-ui-react";
 import { NotificationContext } from "../ui_messages/context";
 import { ErrorMessage } from "../ui_messages/messages";
 import isEmpty from "lodash/isEmpty";
-import { GenerateForm } from "./GenerateForm";
+import { GenerateForm } from ".";
 import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
 import mapValues from "lodash/mapValues";
+import Overridable from "react-overridable";
 
-export class AdminForm extends Component {
+class AdminForm extends Component {
   constructor(props) {
     super(props);
     const { resource, formFields } = props;
@@ -82,36 +83,43 @@ export class AdminForm extends Component {
     const { formData, error } = this.state;
 
     return (
-      <Formik initialValues={formData} onSubmit={this.onSubmit}>
-        {(props) => {
-          return (
-            <SemanticForm
-              as={Form}
-              onSubmit={(e) => {
-                e.preventDefault();
-                props.handleSubmit();
-              }}
-            >
-              <GenerateForm
-                formFields={formFields}
-                jsonSchema={resourceSchema}
-                create={create}
-              />
-              {!isEmpty(error) && (
-                <ErrorMessage {...error} removeNotification={this.resetErrorState} />
-              )}
-              <Button
-                type="submit"
-                primary
-                loading={props.isSubmitting}
-                disabled={props.isSubmitting}
+      <Overridable
+        id="AdminForm.layout"
+        onSubmit={this.onSubmit}
+        resetErrorState={this.resetErrorState}
+        onCancel={this.onCancel}
+      >
+        <Formik initialValues={formData} onSubmit={this.onSubmit}>
+          {(props) => {
+            return (
+              <SemanticForm
+                as={Form}
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  props.handleSubmit();
+                }}
               >
-                {i18next.t("Save")}
-              </Button>
-            </SemanticForm>
-          );
-        }}
-      </Formik>
+                <GenerateForm
+                  formFields={formFields}
+                  jsonSchema={resourceSchema}
+                  create={create}
+                />
+                {!isEmpty(error) && (
+                  <ErrorMessage {...error} removeNotification={this.resetErrorState} />
+                )}
+                <Button
+                  type="submit"
+                  primary
+                  loading={props.isSubmitting}
+                  disabled={props.isSubmitting}
+                >
+                  Save
+                </Button>
+              </SemanticForm>
+            );
+          }}
+        </Formik>
+      </Overridable>
     );
   }
 }
@@ -133,3 +141,5 @@ AdminForm.defaultProps = {
   formFields: undefined,
   successCallback: () => {},
 };
+
+export default Overridable.component("AdminForm", AdminForm);

@@ -1,7 +1,14 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "semantic-ui-react";
-import { ActionForm } from "../formik/ActionForm";
+import { ActionForm } from "../formik";
+import Overridable from "react-overridable";
 
 export class ResourceActions extends Component {
   constructor(props) {
@@ -44,7 +51,10 @@ export class ResourceActions extends Component {
     const { actions, Element } = this.props;
     const { modalOpen, modalHeader, modalBody } = this.state;
     return (
-      <>
+      <Overridable
+        id="ResourceActions.layout"
+        onModalTriggerClick={this.onModalTriggerClick}
+      >
         {Object.entries(actions).map(([actionKey, actionConfig]) => {
           return (
             <Element
@@ -62,7 +72,7 @@ export class ResourceActions extends Component {
           {modalHeader && <Modal.Header>{modalHeader}</Modal.Header>}
           {modalBody && <Modal.Content>{modalBody}</Modal.Content>}
         </Modal>
-      </>
+      </Overridable>
     );
   }
 }
@@ -82,3 +92,5 @@ ResourceActions.defaultProps = {
   Element: Button,
   actions: undefined,
 };
+
+export default Overridable.component("ResourceActions", ResourceActions);

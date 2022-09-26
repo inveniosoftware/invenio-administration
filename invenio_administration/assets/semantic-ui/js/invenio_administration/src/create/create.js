@@ -6,7 +6,7 @@
 
 import React from "react";
 import ReactDOM from "react-dom";
-import { CreatePage } from "./CreatePage";
+import { CreatePage } from ".";
 import _get from "lodash/get";
 import { NotificationController } from "../ui_messages/context";
 

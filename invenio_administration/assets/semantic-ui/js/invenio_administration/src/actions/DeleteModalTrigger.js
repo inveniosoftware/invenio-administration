@@ -8,10 +8,11 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_administration/i18next";
 import { Button, Icon } from "semantic-ui-react";
-import { DeleteModal } from "./DeleteModal";
+import { DeleteModal } from ".";
 import { Modal } from "semantic-ui-react";
 import { Trans } from "react-i18next";
 import _get from "lodash/get";
+import Overridable from "react-overridable";
 
 export class DeleteModalTrigger extends Component {
   constructor(props) {
@@ -38,42 +39,44 @@ export class DeleteModalTrigger extends Component {
     const { modalOpen } = this.state;
     const triggerId = `delete-modal-trigger-${resource.id}`;
     return (
-      <>
-        <Element
-          id={triggerId}
-          disabled={disabled}
-          icon
-          negative
-          onClick={() => this.toggleModal(true)}
-          aria-label={i18next.t("Delete")}
-          aria-controls="delete-modal"
-          aria-expanded={modalOpen}
-          aria-haspopup="dialog"
-          title={disabledDeleteMessage}
-        >
-          <Icon name="trash alternate" />
-        </Element>
-        <DeleteModal
-          id="delete-modal"
-          aria-labelledby={triggerId}
-          title={title}
-          apiEndpoint={apiEndpoint}
-          resource={resource}
-          successCallback={successCallback}
-          idKeyPath={idKeyPath}
-          toggleModal={this.toggleModal}
-          modalOpen={modalOpen}
-        >
-          <Modal.Content>
-            <Modal.Description>
-              <Trans
-                defaults="Are you sure you want to delete {{resourceName}}? "
-                values={{ resourceName: _get(resource, resourceName) }}
-              />
-            </Modal.Description>
-          </Modal.Content>
-        </DeleteModal>
-      </>
+      <Overridable id="DeleteModalTrigger.layout" toggleModal={this.toggleModal}>
+        <>
+          <Element
+            id={triggerId}
+            disabled={disabled}
+            icon
+            negative
+            onClick={() => this.toggleModal(true)}
+            aria-label={i18next.t("Delete")}
+            aria-controls="delete-modal"
+            aria-expanded={modalOpen}
+            aria-haspopup="dialog"
+            title={disabledDeleteMessage}
+          >
+            <Icon name="trash alternate" />
+          </Element>
+          <DeleteModal
+            id="delete-modal"
+            aria-labelledby={triggerId}
+            title={title}
+            apiEndpoint={apiEndpoint}
+            resource={resource}
+            successCallback={successCallback}
+            idKeyPath={idKeyPath}
+            toggleModal={this.toggleModal}
+            modalOpen={modalOpen}
+          >
+            <Modal.Content>
+              <Modal.Description>
+                <Trans
+                  defaults="Are you sure you want to delete {{resourceName}}? "
+                  values={{ resourceName: _get(resource, resourceName) }}
+                />
+              </Modal.Description>
+            </Modal.Content>
+          </DeleteModal>
+        </>
+      </Overridable>
     );
   }
 }
@@ -95,3 +98,5 @@ DeleteModalTrigger.defaultProps = {
   disabled: false,
   disabledDeleteMessage: "",
 };
+
+export default Overridable.component("DeleteModalTrigger", DeleteModalTrigger);

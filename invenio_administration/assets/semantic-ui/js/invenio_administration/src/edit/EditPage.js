@@ -2,13 +2,13 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { InvenioAdministrationActionsApi } from "../api/actions";
 import { Grid } from "semantic-ui-react";
-
-import { AdminForm } from "../formik/AdminForm";
+import { AdminForm } from "../formik";
 import Loader from "../components/Loader";
-import { ErrorPage } from "../components/ErrorPage";
+import { ErrorPage } from "../components";
 import _isEmpty from "lodash/isEmpty";
+import Overridable from "react-overridable";
 
-export class EditPage extends Component {
+class EditPage extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: true, resource: undefined, error: undefined };
@@ -46,26 +46,28 @@ export class EditPage extends Component {
     const { loading, resource, error } = this.state;
 
     return (
-      <Loader isLoading={loading}>
-        <ErrorPage
-          error={!_isEmpty(error)}
-          errorCode={error?.response.status}
-          errorMessage={error?.response.data}
-        >
-          <Grid>
-            <Grid.Column width={12}>
-              <AdminForm
-                resourceSchema={resourceSchema}
-                resource={resource}
-                apiEndpoint={apiEndpoint}
-                formFields={formFields}
-                pid={pid}
-                successCallback={this.handleOnEditSuccess}
-              />
-            </Grid.Column>
-          </Grid>
-        </ErrorPage>
-      </Loader>
+      <Overridable id="EditPage.layout" handleOnEditSuccess={this.handleOnEditSuccess}>
+        <Loader isLoading={loading}>
+          <ErrorPage
+            error={!_isEmpty(error)}
+            errorCode={error?.response.status}
+            errorMessage={error?.response.data}
+          >
+            <Grid>
+              <Grid.Column width={12}>
+                <AdminForm
+                  resourceSchema={resourceSchema}
+                  resource={resource}
+                  apiEndpoint={apiEndpoint}
+                  formFields={formFields}
+                  pid={pid}
+                  successCallback={this.handleOnEditSuccess}
+                />
+              </Grid.Column>
+            </Grid>
+          </ErrorPage>
+        </Loader>
+      </Overridable>
     );
   }
 }
@@ -81,3 +83,5 @@ EditPage.propTypes = {
 EditPage.defaultProps = {
   formFields: undefined,
 };
+
+export default Overridable.component("EditPage", EditPage);

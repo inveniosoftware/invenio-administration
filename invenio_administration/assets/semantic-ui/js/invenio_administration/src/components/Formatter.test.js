@@ -1,7 +1,7 @@
 import { act } from "react-dom/test-utils";
 import { render, unmountComponentAtNode } from "react-dom";
 import React from "react";
-import Formatter from "./Formatter";
+import { Formatter } from ".";
 
 let container;
 const result = {

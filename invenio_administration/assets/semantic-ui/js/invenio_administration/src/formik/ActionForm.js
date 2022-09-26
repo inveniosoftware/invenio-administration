@@ -7,11 +7,12 @@ import { Form as SemanticForm } from "semantic-ui-react";
 import _get from "lodash/get";
 import { ErrorMessage } from "../ui_messages/messages";
 import isEmpty from "lodash/isEmpty";
-import { GenerateForm } from "./GenerateForm";
+import { GenerateForm } from ".";
 import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
+import Overridable from "react-overridable";
 
-export class ActionForm extends Component {
+class ActionForm extends Component {
   constructor(props) {
     super(props);
     const { resource } = props;
@@ -79,21 +80,28 @@ export class ActionForm extends Component {
     const { actionSchema } = this.props;
     const { loading, formData, error } = this.state;
     return (
-      <Formik initialValues={formData} onSubmit={this.onSubmit}>
-        {(props) => (
-          <SemanticForm as={Form} onSubmit={props.handleSubmit}>
-            <GenerateForm jsonSchema={actionSchema} />
-            {!isEmpty(error) && (
-              <ErrorMessage {...error} removeNotification={this.resetErrorState} />
-            )}
-            <Modal.Actions>
-              <Button type="submit" primary loading={loading}>
-                {i18next.t("Save")}
-              </Button>
-            </Modal.Actions>
-          </SemanticForm>
-        )}
-      </Formik>
+      <Overridable
+        id="ActionForm.layout"
+        onSubmit={this.onSubmit}
+        resetErrorState={this.resetErrorState}
+        onCancel={this.onCancel}
+      >
+        <Formik initialValues={formData} onSubmit={this.onSubmit}>
+          {(props) => (
+            <SemanticForm as={Form} onSubmit={props.handleSubmit}>
+              <GenerateForm jsonSchema={actionSchema} />
+              {!isEmpty(error) && (
+                <ErrorMessage {...error} removeNotification={this.resetErrorState} />
+              )}
+              <Modal.Actions>
+                <Button type="submit" primary loading={loading}>
+                  {i18next.t("Save")}
+                </Button>
+              </Modal.Actions>
+            </SemanticForm>
+          )}
+        </Formik>
+      </Overridable>
     );
   }
 }
@@ -105,3 +113,5 @@ ActionForm.propTypes = {
   actionSuccessCallback: PropTypes.func.isRequired,
   actionCancelCallback: PropTypes.func.isRequired,
 };
+
+export default Overridable.component("ActionForm", ActionForm);

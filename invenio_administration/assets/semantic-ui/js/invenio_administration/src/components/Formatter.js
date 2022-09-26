@@ -8,7 +8,8 @@
 import React from "react";
 import PropTypes from "prop-types";
 import _get from "lodash/get";
-import DateFormatter from "./DateFormatter";
+import { DateFormatter } from ".";
+import Overridable from "react-overridable";
 
 const elementTypeMap = {
   datetime: DateFormatter,
@@ -25,11 +26,16 @@ class Formatter extends React.Component {
     const type = _get(resourceSchema, typePath);
     const Element = _get(elementTypeMap, type);
     const value = _get(result, property, null);
-    if (Element) {
-      return <Element value={value} />;
-    } else {
-      return value;
-    }
+    return (
+      <Overridable id="Formatter.layout">
+        <>
+          {Element ? <Element value={value} /> : value}
+          {
+            // eslint-disable-line react/jsx-no-useless-fragment
+          }
+        </>
+      </Overridable>
+    );
   }
 }
 
@@ -39,4 +45,4 @@ Formatter.propTypes = {
   property: PropTypes.string.isRequired,
 };
 
-export default Formatter;
+export default Overridable.component("Formatter", Formatter);

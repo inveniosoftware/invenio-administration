@@ -7,7 +7,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import _get from "lodash/get";
-import AdminDetailsView from "./AdminDetailsView";
+import { AdminDetailsView } from ".";
 
 const domContainer = document.getElementById("invenio-details-config");
 

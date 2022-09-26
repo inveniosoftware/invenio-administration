@@ -8,7 +8,7 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import Overridable from "react-overridable";
 import { Table } from "semantic-ui-react";
-import Formatter from "../components/Formatter";
+import { Formatter } from "../components";
 
 class DetailsTable extends Component {
   render() {
@@ -31,7 +31,7 @@ class DetailsTable extends Component {
     });
 
     return (
-      <Overridable id="DetailsComponent.table">
+      <Overridable id="DetailsTable.layout">
         <Table unstackable>
           <Table.Body>{tableRows}</Table.Body>
         </Table>

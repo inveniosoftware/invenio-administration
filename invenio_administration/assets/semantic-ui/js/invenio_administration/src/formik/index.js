@@ -4,6 +4,6 @@
 // Invenio is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-export { ActionForm } from "./ActionForm";
-export { AdminForm } from "./AdminForm";
-export { GenerateForm } from "./GenerateForm";
+export { default as ActionForm } from "./ActionForm";
+export { default as AdminForm } from "./AdminForm";
+export { default as GenerateForm } from "./GenerateForm";

@@ -1,14 +1,19 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
-import { ResourceActions } from "./ResourceActions";
-import { ActionsDropdown } from "./ActionsDropdown";
+import { ResourceActions, ActionsDropdown, DeleteModalTrigger } from ".";
 import { Button, Icon, Popup } from "semantic-ui-react";
 import { AdminUIRoutes } from "../routes";
-import { DeleteModalTrigger } from "./DeleteModalTrigger";
 import { i18next } from "@translations/invenio_administration/i18next";
+import Overridable from "react-overridable";
 
-export class Actions extends Component {
+class Actions extends Component {
   render() {
     const {
       title,
@@ -35,86 +40,86 @@ export class Actions extends Component {
     const displayAsDropdown =
       displayEdit && displayDelete && Object.keys(actions).length > 1;
 
-    if (displayAsDropdown) {
-      return (
-        <ActionsDropdown
-          title={title}
-          resourceName={resourceName}
-          apiEndpoint={apiEndpoint}
-          resource={resource}
-          successCallback={successCallback}
-          idKeyPath={idKeyPath}
-          actions={actions}
-          displayEdit={displayEdit}
-          displayDelete={displayDelete}
-        />
-      );
-    } else {
-      return (
-        <Button.Group size="tiny" className="relaxed">
-          {!isEmpty(actions) && (
-            <ResourceActions
-              resource={resource}
-              successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              actions={actions}
-              apiEndpoint={apiEndpoint}
-            />
-          )}
-          {displayEdit && (
-            <Popup
-              content={
-                disabledEditMessage
-                  ? disabledEditMessage
-                  : i18next.t("Resource is not editable.")
-              }
-              disabled={!disableEdit}
-              trigger={
-                <span className="mr-5">
-                  <Button
-                    as="a"
-                    disabled={disableEdit}
-                    href={AdminUIRoutes.editView(listUIEndpoint, resource, idKeyPath)}
-                    icon
-                    labelPosition="left"
-                    title={disabledEditMessage ? disabledEditMessage : ""}
-                  >
-                    <Icon name="pencil" />
-                    {i18next.t("Edit")}
-                  </Button>
-                </span>
-              }
-            />
-          )}
-          {displayDelete && (
-            <Popup
-              content={
-                disabledDeleteMessage
-                  ? disabledDeleteMessage
-                  : i18next.t("Resource is not deletable.")
-              }
-              disabled={!disableDelete}
-              trigger={
-                <span>
-                  <DeleteModalTrigger
-                    title={title}
-                    resourceName={resourceName}
-                    apiEndpoint={apiEndpoint}
-                    resource={resource}
-                    successCallback={successCallback}
-                    idKeyPath={idKeyPath}
-                    disabled={disableDelete}
-                    disabledDeleteMessage={
-                      disabledEditMessage ? disabledEditMessage : ""
-                    }
-                  />
-                </span>
-              }
-            />
-          )}
-        </Button.Group>
-      );
-    }
+    return (
+      <Overridable id="Actions.layout">
+        {displayAsDropdown ? (
+          <ActionsDropdown
+            title={title}
+            resourceName={resourceName}
+            apiEndpoint={apiEndpoint}
+            resource={resource}
+            successCallback={successCallback}
+            idKeyPath={idKeyPath}
+            actions={actions}
+            displayEdit={displayEdit}
+            displayDelete={displayDelete}
+          />
+        ) : (
+          <Button.Group size="tiny" className="relaxed">
+            {!isEmpty(actions) && (
+              <ResourceActions
+                resource={resource}
+                successCallback={successCallback}
+                idKeyPath={idKeyPath}
+                actions={actions}
+                apiEndpoint={apiEndpoint}
+              />
+            )}
+            {displayEdit && (
+              <Popup
+                content={
+                  disabledEditMessage
+                    ? disabledEditMessage
+                    : i18next.t("Resource is not editable.")
+                }
+                disabled={!disableEdit}
+                trigger={
+                  <span className="mr-5">
+                    <Button
+                      as="a"
+                      disabled={disableEdit}
+                      href={AdminUIRoutes.editView(listUIEndpoint, resource, idKeyPath)}
+                      icon
+                      labelPosition="left"
+                      title={disabledEditMessage ? disabledEditMessage : ""}
+                    >
+                      <Icon name="pencil" />
+                      {i18next.t("Edit")}
+                    </Button>
+                  </span>
+                }
+              />
+            )}
+            {displayDelete && (
+              <Popup
+                content={
+                  disabledDeleteMessage
+                    ? disabledDeleteMessage
+                    : i18next.t("Resource is not deletable.")
+                }
+                disabled={!disableDelete}
+                trigger={
+                  <span>
+                    <DeleteModalTrigger
+                      title={title}
+                      resourceName={resourceName}
+                      apiEndpoint={apiEndpoint}
+                      resource={resource}
+                      successCallback={successCallback}
+                      idKeyPath={idKeyPath}
+                      disabled={disableDelete}
+                      disabledDeleteMessage={
+                        disabledEditMessage ? disabledEditMessage : ""
+                      }
+                    />
+                  </span>
+                }
+              />
+            )}
+          </Button.Group>
+        )}
+      </Overridable>
+    );
   }
 }
 
@@ -153,3 +158,5 @@ Actions.defaultProps = {
   apiEndpoint: undefined,
   idKeyPath: "pid",
 };
+
+export default Overridable.component("Actions", Actions);

@@ -10,6 +10,8 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Table } from "semantic-ui-react";
 import isEmpty from "lodash/isEmpty";
+import Overridable from "react-overridable";
+import { i18next } from "@translations/invenio_administration/i18next";
 
 export const SearchResultsContainer = ({
   results,
@@ -21,22 +23,26 @@ export const SearchResultsContainer = ({
   const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);
 
   return (
-    <Table>
-      <Table.Header>
-        <Table.Row>
-          {columns.map(([property, { text, order }], index) => {
-            const width = index === 0 ? undefined : index === 1 ? 4 : 3;
-            return (
-              <Table.HeaderCell key={property + order} width={width}>
-                {text}
-              </Table.HeaderCell>
-            );
-          })}
-          {resourceHasActions && <Table.HeaderCell>Actions</Table.HeaderCell>}
-        </Table.Row>
-      </Table.Header>
-      <Table.Body>{results}</Table.Body>
-    </Table>
+    <Overridable id="SearchResultsContainer.layout">
+      <Table>
+        <Table.Header>
+          <Table.Row>
+            {columns.map(([property, { text, order }], index) => {
+              const width = index === 0 ? undefined : index === 1 ? 4 : 3;
+              return (
+                <Table.HeaderCell key={property + order} width={width}>
+                  {text}
+                </Table.HeaderCell>
+              );
+            })}
+            {resourceHasActions && (
+              <Table.HeaderCell>{i18next.t("Actions")}</Table.HeaderCell>
+            )}
+          </Table.Row>
+        </Table.Header>
+        <Table.Body>{results}</Table.Body>
+      </Table>
+    </Overridable>
   );
 };
 
@@ -52,3 +58,5 @@ SearchResultsContainer.defaultProps = {
   displayDelete: true,
   displayEdit: true,
 };
+
+export default Overridable.component("SearchResultsContainer", SearchResultsContainer);

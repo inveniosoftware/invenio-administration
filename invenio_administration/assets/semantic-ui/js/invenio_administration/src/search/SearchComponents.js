@@ -6,20 +6,22 @@
  * under the terms of the MIT License; see LICENSE file for more details.
  */
 
-import { SearchResultItem } from "./SearchResultItem";
-import SearchEmptyResults from "./SearchEmptyResults";
-import { SearchResultsContainer } from "./SearchResultsContainer";
-import { SearchResults } from "./SearchResults";
+import {
+  SearchResultItem,
+  SearchEmptyResults,
+  SearchResultsContainer,
+  SearchBarElement,
+  SearchBar,
+  SearchResults,
+} from ".";
 import { parametrize } from "react-overridable";
 import { DropdownSort } from "@js/invenio_search_ui/components";
-import { SearchBarElement } from "./SearchBarElement";
 import _get from "lodash/get";
 import {
   ContribSearchAppFacets,
   ContribBucketAggregationElement,
   ContribBucketAggregationValuesElement,
 } from "@js/invenio_search_ui/components";
-import { SearchBar } from "./SearchBar";
 
 export const initDefaultSearchComponents = (domContainer) => {
   const sortColumns = (columns) =>

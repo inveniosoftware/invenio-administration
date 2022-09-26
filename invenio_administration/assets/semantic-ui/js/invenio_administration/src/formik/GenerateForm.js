@@ -6,6 +6,7 @@ import { Form, Segment, Header } from "semantic-ui-react";
 import { AdminArrayField } from "./array";
 import _isEmpty from "lodash/isEmpty";
 import { sortFields } from "../components/utils";
+import Overridable from "react-overridable";
 
 const fieldsMap = {
   string: Input,
@@ -125,9 +126,13 @@ const mapFormFields = (obj, parentField, isCreate, formFieldsConfig) => {
   return elements;
 };
 
-export const GenerateForm = ({ jsonSchema, create, formFields }) => {
+const GenerateForm = ({ jsonSchema, create, formFields }) => {
   const properties = jsonSchema;
-  return <>{mapFormFields(properties, undefined, create, formFields)}</>;
+  return (
+    <Overridable id="GenerateForm.layout">
+      <>{mapFormFields(properties, undefined, create, formFields)}</>
+    </Overridable>
+  );
 };
 
 GenerateForm.propTypes = {
@@ -140,3 +145,5 @@ GenerateForm.defaultProps = {
   create: false,
   formFields: undefined,
 };
+
+export default Overridable.component("GenerateForm", GenerateForm);

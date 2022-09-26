@@ -2,14 +2,15 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Grid, Header, Divider, Container } from "semantic-ui-react";
 import { InvenioAdministrationActionsApi } from "../api/actions";
-import DetailsTable from "./DetailsComponent";
-import { Actions } from "../actions/Actions";
+import { DetailsTable } from ".";
+import { Actions } from "../actions";
 import _isEmpty from "lodash/isEmpty";
-import { ErrorPage } from "../components/ErrorPage";
+import { ErrorPage } from "../components";
 import { sortFields } from "../components/utils";
 import { Loader } from "../components";
+import Overridable from "react-overridable";
 
-export default class AdminDetailsView extends Component {
+class AdminDetailsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,48 +85,54 @@ export default class AdminDetailsView extends Component {
 
     const sortedColumns = sortFields(resourceSchema);
     return (
-      <Loader isLoading={loading}>
-        <ErrorPage
-          error={!_isEmpty(error)}
-          errorCode={error?.response.status}
-          errorMessage={error?.response.data}
-        >
-          <Grid stackable>
-            <Grid.Row columns="2">
-              <Grid.Column verticalAlign="middle">
-                <Header as="h1">{title}</Header>
-              </Grid.Column>
-              <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
-                <Actions
-                  title={title}
-                  resourceName={resourceName}
-                  apiEndpoint={apiEndpoint}
-                  editAction={{
-                    display: displayEdit,
-                    disabled: disableEdit(data),
-                    disabledMessage: disabledEditMessage,
-                  }}
-                  deleteAction={{
-                    display: displayDelete,
-                    disabled: disableDelete(data),
-                    disabledMessage: disabledDeleteMessage,
-                  }}
-                  actions={actions}
-                  resource={data}
-                  idKeyPath={idKeyPath}
-                  successCallback={this.handleDelete}
-                  listUIEndpoint={listUIEndpoint}
-                />
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <Divider />
-          <Container fluid>
-            <DetailsTable data={data} schema={sortedColumns} />
-            {this.childrenWithData(data, columns)}
-          </Container>
-        </ErrorPage>
-      </Loader>
+      <Overridable
+        id="AdminDetailsView.layout"
+        handleDelete={this.handleDelete}
+        childrenWithData={this.childrenWithData}
+      >
+        <Loader isLoading={loading}>
+          <ErrorPage
+            error={!_isEmpty(error)}
+            errorCode={error?.response.status}
+            errorMessage={error?.response.data}
+          >
+            <Grid stackable>
+              <Grid.Row columns="2">
+                <Grid.Column verticalAlign="middle">
+                  <Header as="h1">{title}</Header>
+                </Grid.Column>
+                <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
+                  <Actions
+                    title={title}
+                    resourceName={resourceName}
+                    apiEndpoint={apiEndpoint}
+                    editAction={{
+                      display: displayEdit,
+                      disabled: disableEdit(data),
+                      disabledMessage: disabledEditMessage,
+                    }}
+                    deleteAction={{
+                      display: displayDelete,
+                      disabled: disableDelete(data),
+                      disabledMessage: disabledDeleteMessage,
+                    }}
+                    actions={actions}
+                    resource={data}
+                    idKeyPath={idKeyPath}
+                    successCallback={this.handleDelete}
+                    listUIEndpoint={listUIEndpoint}
+                  />
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Divider />
+            <Container fluid>
+              <DetailsTable data={data} schema={sortedColumns} />
+              {this.childrenWithData(data, columns)}
+            </Container>
+          </ErrorPage>
+        </Loader>
+      </Overridable>
     );
   }
 }
@@ -157,3 +164,5 @@ AdminDetailsView.defaultProps = {
   actions: undefined,
   children: undefined,
 };
+
+export default Overridable.component("AdminDetailsView", AdminDetailsView);

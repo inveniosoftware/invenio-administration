@@ -11,57 +11,60 @@ import { Grid } from "semantic-ui-react";
 import { ResultsList, Pagination, ResultsPerPage, Count } from "react-searchkit";
 import { i18next } from "@translations/invenio_administration/i18next";
 import PropTypes from "prop-types";
+import Overridable from "react-overridable";
 
 export const SearchResults = ({ paginationOptions, currentResultsState }) => {
   const { total } = currentResultsState.data;
 
   return (
-    total && (
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={16}>
-            <Grid>
-              <Grid.Row>
-                <Grid.Column>
-                  <ResultsList />
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-          </Grid.Column>
-        </Grid.Row>
-        <Grid.Row verticalAlign="middle">
-          <Grid.Column width={4}>
-            <Count
-              label={() => (
-                <>
-                  {total} {i18next.t("result(s) found")}
-                </>
-              )}
-            />
-          </Grid.Column>
-          <Grid.Column width={8} textAlign="center">
-            <Pagination
-              options={{
-                size: "mini",
-                showFirst: false,
-                showLast: false,
-              }}
-            />
-          </Grid.Column>
-          <Grid.Column textAlign="right" width={4}>
-            <ResultsPerPage
-              values={paginationOptions.resultsPerPage}
-              label={(cmp) => (
-                <>
-                  {" "}
-                  {cmp} {i18next.t("results per page")}
-                </>
-              )}
-            />
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
-    )
+    <Overridable id="SearchResults.layout">
+      {total && (
+        <Grid>
+          <Grid.Row>
+            <Grid.Column width={16}>
+              <Grid>
+                <Grid.Row>
+                  <Grid.Column>
+                    <ResultsList />
+                  </Grid.Column>
+                </Grid.Row>
+              </Grid>
+            </Grid.Column>
+          </Grid.Row>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column width={4}>
+              <Count
+                label={() => (
+                  <>
+                    {total} {i18next.t("result(s) found")}
+                  </>
+                )}
+              />
+            </Grid.Column>
+            <Grid.Column width={8} textAlign="center">
+              <Pagination
+                options={{
+                  size: "mini",
+                  showFirst: false,
+                  showLast: false,
+                }}
+              />
+            </Grid.Column>
+            <Grid.Column textAlign="right" width={4}>
+              <ResultsPerPage
+                values={paginationOptions.resultsPerPage}
+                label={(cmp) => (
+                  <>
+                    {" "}
+                    {cmp} {i18next.t("results per page")}
+                  </>
+                )}
+              />
+            </Grid.Column>
+          </Grid.Row>
+        </Grid>
+      )}
+    </Overridable>
   );
 };
 
@@ -69,3 +72,5 @@ SearchResults.propTypes = {
   paginationOptions: PropTypes.object.isRequired,
   currentResultsState: PropTypes.object.isRequired,
 };
+
+export default Overridable.component("SearchResults", SearchResults);

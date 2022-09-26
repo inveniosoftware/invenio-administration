@@ -5,10 +5,9 @@
 // under the terms of the MIT License; see LICENSE file for more details.
 
 export { initDefaultSearchComponents } from "./SearchComponents";
-export { SearchBarElement } from "./SearchBarElement";
+export { default as SearchBar } from "./SearchBar";
+export { default as SearchBarElement } from "./SearchBarElement";
 export { default as SearchEmptyResults } from "./SearchEmptyResults";
-export { SearchFacets } from "./SearchFacets";
-export { SearchResultItem } from "./SearchResultItem";
-export { SearchBar } from "./SearchBar";
-export { SearchResults } from "./SearchResults";
-export { SearchResultsContainer } from "./SearchResultsContainer";
+export { default as SearchResultItem } from "./SearchResultItem";
+export { default as SearchResults } from "./SearchResults";
+export { default as SearchResultsContainer } from "./SearchResultsContainer";
