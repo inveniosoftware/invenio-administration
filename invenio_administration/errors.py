@@ -89,3 +89,17 @@ class MissingDefaultGetView(Exception):
                 )
             )
         )
+
+
+class MissingAppId(Exception):
+    """Exception for missing application id."""
+
+    def __init__(self, name):
+        """Initialise error."""
+        super().__init__(
+            _(
+                "Cannot instantiate resource view {name} without an application id.".format(
+                    name=name
+                )
+            )
+        )

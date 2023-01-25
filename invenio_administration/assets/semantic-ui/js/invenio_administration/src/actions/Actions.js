@@ -21,12 +21,12 @@ export class Actions extends Component {
       editUrl,
       displayEdit,
       displayDelete,
+      appName,
     } = this.props;
 
     // if number of actions is greater than 3, we display all in a dropdown
     const displayAsDropdown =
       displayEdit && displayDelete && Object.keys(actions).length > 1;
-
     if (displayAsDropdown) {
       return (
         <Dropdown>
@@ -37,6 +37,7 @@ export class Actions extends Component {
               idKeyPath={idKeyPath}
               actions={actions}
               Element={Dropdown.Item}
+              appName={appName}
               trigger={
                 <Button
                   icon="cog"
@@ -47,7 +48,9 @@ export class Actions extends Component {
               }
             />
           )}
-          {displayEdit && <Edit editUrl={editUrl} resource={resource} />}
+          {displayEdit && (
+            <Edit editUrl={editUrl} resource={resource} appName={appName} />
+          )}
           {displayDelete && (
             <DeleteModalTrigger
               title={title}
@@ -57,6 +60,7 @@ export class Actions extends Component {
               successCallback={successCallback}
               idKeyPath={idKeyPath}
               Element={Dropdown.Item}
+              appName={appName}
             />
           )}
         </Dropdown>
@@ -67,18 +71,22 @@ export class Actions extends Component {
           {!isEmpty(actions) && (
             <ResourceActions
               resource={resource}
+              appName={appName}
               successCallback={successCallback}
               idKeyPath={idKeyPath}
               actions={actions}
             />
           )}
-          {displayEdit && <Edit editUrl={editUrl} resource={resource} />}
+          {displayEdit && (
+            <Edit editUrl={editUrl} resource={resource} appName={appName} />
+          )}
           {displayDelete && (
             <Delete
               successCallback={successCallback}
               resource={resource}
               resourceName={resourceName}
               title={title}
+              appName={appName}
             />
           )}
         </Button.Group>
@@ -97,10 +105,12 @@ Actions.propTypes = {
   idKeyPath: PropTypes.string,
   actions: PropTypes.object.isRequired,
   editUrl: PropTypes.string.isRequired,
+  appName: PropTypes.string,
 };
 
 Actions.defaultProps = {
   displayEdit: true,
   displayDelete: true,
   idKeyPath: "pid",
+  appName: "",
 };

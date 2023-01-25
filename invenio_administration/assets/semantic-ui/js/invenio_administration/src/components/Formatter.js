@@ -39,6 +39,11 @@ Formatter.propTypes = {
   resourceSchema: PropTypes.object.isRequired,
   result: PropTypes.object.isRequired,
   property: PropTypes.string.isRequired,
+  appName: PropTypes.string,
+};
+
+Formatter.defaultProps = {
+  appName: "",
 };
 
 export default Formatter;

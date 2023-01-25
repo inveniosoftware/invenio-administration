@@ -73,15 +73,17 @@ export default class AdminDetailsView extends Component {
       displayDelete,
       displayEdit,
       uiSchema,
+      appName,
     } = this.props;
     const { loading, data, error } = this.state;
     const sortedColumns = sortFields(resourceSchema);
     return (
-      <Loader isLoading={loading}>
+      <Loader isLoading={loading} appName={appName}>
         <ErrorPage
           error={!_isEmpty(error)}
           errorCode={error?.response.status}
           errorMessage={error?.response.data}
+          appName={appName}
         >
           <Grid stackable>
             <Grid.Row columns="2">
@@ -101,13 +103,19 @@ export default class AdminDetailsView extends Component {
                   idKeyPath={idKeyPath}
                   successCallback={this.handleDelete}
                   listUIEndpoint={listUIEndpoint}
+                  appName={appName}
                 />
               </Grid.Column>
             </Grid.Row>
           </Grid>
           <Divider />
           <Container fluid>
-            <DetailsTable data={data} schema={sortedColumns} uiSchema={uiSchema} />
+            <DetailsTable
+              data={data}
+              schema={sortedColumns}
+              uiSchema={uiSchema}
+              appName={appName}
+            />
             {this.childrenWithData(data, columns)}
           </Container>
         </ErrorPage>
@@ -131,9 +139,11 @@ AdminDetailsView.propTypes = {
   resourceSchema: PropTypes.object.isRequired,
   requestHeaders: PropTypes.object.isRequired,
   uiSchema: PropTypes.object.isRequired,
+  appName: PropTypes.string,
 };
 
 AdminDetailsView.defaultProps = {
   actions: undefined,
   children: undefined,
+  appName: "",
 };

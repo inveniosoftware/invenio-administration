@@ -5,8 +5,9 @@ import { Popup } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
 import _get from "lodash/get";
 import Overridable from "react-overridable";
+import { buildUID } from "react-searchkit";
 
-class DeleteCmp extends Component {
+export default class DeleteCmp extends Component {
   render() {
     const {
       disabledMessage,
@@ -16,26 +17,40 @@ class DeleteCmp extends Component {
       successCallback,
       idKeyPath,
       resource,
+      appName,
     } = this.props;
     return (
-      <Popup
-        content={disabledMessage}
-        disabled={!disable}
-        trigger={
-          <span>
-            <DeleteModalTrigger
-              title={title}
-              resourceName={resourceName}
-              resource={resource}
-              successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              disabled={disable(resource)}
-              apiEndpoint={_get(resource, "links.self")}
-              disabledDeleteMessage={disabledMessage}
-            />
-          </span>
-        }
-      />
+      <Overridable
+        id={buildUID("DeleteAction.layout", "", appName)}
+        disabledMessage={disabledMessage}
+        disable={disable}
+        title={title}
+        resourceName={resourceName}
+        successCallback={successCallback}
+        idKeyPath={idKeyPath}
+        resource={resource}
+        appName={appName}
+      >
+        <Popup
+          content={disabledMessage}
+          disabled={!disable}
+          trigger={
+            <span>
+              <DeleteModalTrigger
+                title={title}
+                resourceName={resourceName}
+                resource={resource}
+                successCallback={successCallback}
+                idKeyPath={idKeyPath}
+                disabled={disable(resource)}
+                apiEndpoint={_get(resource, "links.self")}
+                disabledDeleteMessage={disabledMessage}
+                appName={appName}
+              />
+            </span>
+          }
+        />
+      </Overridable>
     );
   }
 }
@@ -48,12 +63,12 @@ DeleteCmp.propTypes = {
   idKeyPath: PropTypes.string,
   disable: PropTypes.func,
   resource: PropTypes.object.isRequired,
+  appName: PropTypes.string,
 };
 
 DeleteCmp.defaultProps = {
   disabledMessage: i18next.t("Resource is not deletable."),
   idKeyPath: "pid",
+  appName: "",
   disable: () => false,
 };
-
-export default Overridable.component("InvenioAdministration.DeleteAction", DeleteCmp);

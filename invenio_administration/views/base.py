@@ -20,6 +20,7 @@ from invenio_administration.errors import (
     MissingDefaultGetView,
     MissingExtensionName,
     MissingResourceConfiguration,
+    MissingAppId,
 )
 from invenio_administration.marshmallow_utils import jsonify_schema
 from invenio_administration.permissions import administration_permission
@@ -139,6 +140,7 @@ class AdminResourceBaseView(AdminView):
     pid_path = "pid"
     title = None
     resource_name = None
+    app_id = None
 
     create_view_name = None
     list_view_name = None
@@ -161,6 +163,8 @@ class AdminResourceBaseView(AdminView):
             raise MissingExtensionName(self.__class__.__name__)
         if self.resource_config is None:
             raise MissingResourceConfiguration(self.__class__.__name__)
+        if self.app_id is None:
+            raise MissingAppId(self.__class__.__name__)
 
     @classmethod
     def set_schema(cls):
@@ -267,6 +271,7 @@ class AdminResourceDetailView(AdminResourceBaseView):
             "ui_config": self.item_field_list,
             "pid": pid_value,
             "api_endpoint": self.get_api_endpoint(),
+            "app_id": self.app_id,
             "title": self.title,
             "list_endpoint": self.get_list_view_endpoint(),
             "actions": self.serialize_actions(),
@@ -392,6 +397,7 @@ class AdminResourceListView(AdminResourceBaseView):
                 "api_endpoint": self.get_api_endpoint(),
                 "title": self.title,
                 "name": self.name,
+                "app_id": self.app_id,
                 "resource_schema": serialized_schema,
                 "fields": self.item_field_list,
                 "display_search": self.display_search,

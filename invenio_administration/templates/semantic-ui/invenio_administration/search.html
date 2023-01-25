@@ -38,7 +38,7 @@
             id="invenio-search-config"
             data-title='{{ title | tojson }}'
             data-resource-name='{{ resource_name | tojson }}'
-            data-invenio-search-config='{{ search_config() | tojson }}'
+            data-invenio-search-config='{{ search_config(app_id=app_id) | tojson }}'
             data-fields='{{ fields | tojson }}'
             data-display-search='{{ display_search | tojson }}'
             data-display-read='{{ display_read | tojson }}'

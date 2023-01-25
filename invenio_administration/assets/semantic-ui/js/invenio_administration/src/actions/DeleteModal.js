@@ -15,8 +15,9 @@ import { ErrorMessage } from "../ui_messages/messages";
 import { NotificationContext } from "../ui_messages/context";
 import Overridable from "react-overridable";
 import { InvenioAdministrationActionsApi } from "../api/actions";
+import { buildUID } from "react-searchkit";
 
-class DeleteModal extends Component {
+export default class DeleteModal extends Component {
   constructor(props) {
     super(props);
     this.state = { loading: false, error: undefined };
@@ -58,11 +59,16 @@ class DeleteModal extends Component {
 
   render() {
     const { loading, error } = this.state;
-    const { modalOpen, toggleModal, children, title } = this.props;
+    const { modalOpen, toggleModal, children, title, appName } = this.props;
     return (
       <Overridable
-        id="DeleteModal.layout"
-        {...this.props}
+        id={buildUID("DeleteModal.layout", "", appName)}
+        modalOpen={modalOpen}
+        toggleModal={toggleModal}
+        // eslint-disable-next-line react/no-children-prop
+        children={children}
+        title={title}
+        appName={appName}
         handleOnButtonClick={this.handleOnButtonClick}
         cleanError={this.cleanError}
         resetErrorState={this.resetErrorState}
@@ -110,10 +116,10 @@ DeleteModal.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   children: PropTypes.node,
+  appName: PropTypes.string,
 };
 
 DeleteModal.defaultProps = {
   children: null,
+  appName: "",
 };
-
-export default Overridable.component("DeleteModal", DeleteModal);

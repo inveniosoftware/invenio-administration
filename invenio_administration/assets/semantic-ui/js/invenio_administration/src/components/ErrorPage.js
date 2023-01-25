@@ -3,12 +3,21 @@ import { Container, Header, Icon } from "semantic-ui-react";
 import Overridable from "react-overridable";
 import PropTypes from "prop-types";
 import { i18next } from "@translations/invenio_administration/i18next";
+import { buildUID } from "react-searchkit";
 
-class ErrorPage extends Component {
+export default class ErrorPage extends Component {
   render() {
-    const { errorCode, errorMessage, error, children } = this.props;
+    const { errorCode, errorMessage, error, children, appName } = this.props;
     return (
-      <Overridable id="Admin.ErrorPage.layout" {...this.props}>
+      <Overridable
+        id={buildUID("ErrorPage.layout", "", appName)}
+        errorCode={errorCode}
+        errorMessage={errorMessage}
+        error={error}
+        // eslint-disable-next-line react/no-children-prop
+        children={children}
+        appName={appName}
+      >
         {error ? (
           <Container textAlign="center" className="error-handler">
             <Header as="h1" icon>
@@ -31,6 +40,7 @@ ErrorPage.propTypes = {
   errorMessage: PropTypes.string,
   error: PropTypes.bool,
   children: PropTypes.element,
+  appName: PropTypes.string,
 };
 
 ErrorPage.defaultProps = {
@@ -38,6 +48,5 @@ ErrorPage.defaultProps = {
   errorMessage: i18next.t("Server was not able to process your request."),
   error: false,
   children: undefined,
+  appName: "",
 };
-
-export default Overridable.component("ErrorPage", ErrorPage);

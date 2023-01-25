@@ -13,6 +13,7 @@ import { Modal } from "semantic-ui-react";
 import { Trans } from "react-i18next";
 import _get from "lodash/get";
 import Overridable from "react-overridable";
+import { buildUID } from "react-searchkit";
 
 export class DeleteModalTrigger extends Component {
   constructor(props) {
@@ -35,11 +36,24 @@ export class DeleteModalTrigger extends Component {
       Element,
       disabled,
       disabledDeleteMessage,
+      appName,
     } = this.props;
     const { modalOpen } = this.state;
     const triggerId = `delete-modal-trigger-${resource.id}`;
     return (
-      <Overridable id="InvenioAdministration.DeleteModalTrigger">
+      <Overridable
+        id={buildUID("DeleteModalTrigger.layout", "", appName)}
+        title={title}
+        resourceName={resourceName}
+        apiEndpoint={apiEndpoint}
+        resource={resource}
+        successCallback={successCallback}
+        idKeyPath={idKeyPath}
+        Element={Element}
+        disabled={disabled}
+        disabledDeleteMessage={disabledDeleteMessage}
+        appName={appName}
+      >
         <>
           <Element
             id={triggerId}
@@ -65,6 +79,7 @@ export class DeleteModalTrigger extends Component {
             idKeyPath={idKeyPath}
             toggleModal={this.toggleModal}
             modalOpen={modalOpen}
+            appName={appName}
           >
             <Modal.Content>
               <Modal.Description>
@@ -91,10 +106,12 @@ DeleteModalTrigger.propTypes = {
   idKeyPath: PropTypes.string.isRequired,
   disabled: PropTypes.bool,
   disabledDeleteMessage: PropTypes.string,
+  appName: PropTypes.string,
 };
 
 DeleteModalTrigger.defaultProps = {
   Element: Button,
   disabled: false,
   disabledDeleteMessage: "",
+  appName: "",
 };

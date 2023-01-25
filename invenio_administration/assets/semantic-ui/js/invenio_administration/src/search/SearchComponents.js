@@ -20,8 +20,9 @@ import {
   ContribBucketAggregationValuesElement,
 } from "@js/invenio_search_ui/components";
 import { SearchBar } from "./SearchBar";
+import _mapKeys from "lodash/mapKeys";
 
-export const initDefaultSearchComponents = (domContainer) => {
+export const initDefaultSearchComponents = (domContainer, appId = "") => {
   const sortColumns = (columns) =>
     Object.entries(columns).sort((a, b) => a[1].order - b[1].order);
   const title = JSON.parse(domContainer.dataset.title);
@@ -61,13 +62,14 @@ export const initDefaultSearchComponents = (domContainer) => {
     idKeyPath: idKeyPath,
     listUIEndpoint: listUIEndpoint,
     resourceSchema: resourceSchema,
+    appName: appId,
   });
 
-  return {
+  const components = {
     "ResultsList.item": SearchResultItemWithConfig,
     "BucketAggregation.element": ContribBucketAggregationElement,
     "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
-    "ResultsGrid.item": () => {},
+    "ResultsGrid.item": () => null,
     "SearchApp.results": SearchResultsWithConfig,
     "ResultsList.container": ResultsContainerWithConfig,
     "EmptyResults.element": SearchEmptyResults,
@@ -77,4 +79,13 @@ export const initDefaultSearchComponents = (domContainer) => {
     "SearchApp.resultOptions": () => null,
     "SearchBar.element": displaySearch ? SearchBarElement : () => null,
   };
+
+  if (appId) {
+    const nameSpacedComponents = _mapKeys(components, function (value, key) {
+      return `${appId}.${key}`;
+    });
+    return nameSpacedComponents;
+  }
+
+  return components;
 };

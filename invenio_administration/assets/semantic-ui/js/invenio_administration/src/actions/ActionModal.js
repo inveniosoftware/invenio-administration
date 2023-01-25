@@ -8,18 +8,19 @@ import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Modal } from "semantic-ui-react";
 import Overridable from "react-overridable";
+import { buildUID } from "react-searchkit";
 
-class ActionModal extends Component {
+export default class ActionModal extends Component {
   render() {
-    const { children, modalOpen, resource } = this.props;
-
+    const { children, modalOpen, resource, appName } = this.props;
     return (
       <Overridable
-        id="InvenioAdministration.ActionModal.layout"
+        id={buildUID("ActionModal.layout", "", appName)}
         modalOpen={modalOpen}
         // eslint-disable-next-line react/no-children-prop
         children={children}
         resource={resource}
+        appName={appName}
       >
         <Modal role="dialog" open={modalOpen}>
           {children}
@@ -33,11 +34,11 @@ ActionModal.propTypes = {
   children: PropTypes.object,
   modalOpen: PropTypes.bool,
   resource: PropTypes.object.isRequired,
+  appName: PropTypes.string,
 };
 
 ActionModal.defaultProps = {
   modalOpen: false,
   children: null,
+  appName: "",
 };
-
-export default Overridable.component("InvenioAdministration.ActionModal", ActionModal);

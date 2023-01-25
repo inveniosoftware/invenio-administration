@@ -10,14 +10,22 @@ import PropTypes from "prop-types";
 import React from "react";
 import { Icon } from "semantic-ui-react";
 import Overridable from "react-overridable";
+import { buildUID } from "react-searchkit";
 
-class BoolFormatter extends React.Component {
+export default class BoolFormatter extends React.Component {
   render() {
-    const { value, icon, color } = this.props;
-    if (!value) {
-      return null;
-    }
-    return <Icon name={icon} color={color} />;
+    const { value, icon, color, appName } = this.props;
+    return (
+      <Overridable
+        id={buildUID("BoolFormater.layout", "", appName)}
+        icon={icon}
+        color={color}
+        value={value}
+        appName={appName}
+      >
+        {!value ? null : <Icon name={icon} color={color} />}
+      </Overridable>
+    );
   }
 }
 
@@ -25,14 +33,11 @@ BoolFormatter.propTypes = {
   value: PropTypes.string.isRequired,
   icon: PropTypes.string,
   color: PropTypes.string,
+  appName: PropTypes.string,
 };
 
 BoolFormatter.defaultProps = {
   icon: "check",
   color: "green",
+  appName: "",
 };
-
-export default Overridable.component(
-  "InvenioAdministration.BoolFormatter",
-  BoolFormatter
-);

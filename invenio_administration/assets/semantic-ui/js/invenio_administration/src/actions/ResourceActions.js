@@ -51,7 +51,7 @@ export class ResourceActions extends Component {
   };
 
   render() {
-    const { actions, Element, resource } = this.props;
+    const { actions, Element, resource, appName } = this.props;
     const { modalOpen, modalHeader, modalBody } = this.state;
     return (
       <>
@@ -68,7 +68,7 @@ export class ResourceActions extends Component {
             </Element>
           );
         })}
-        <ActionModal modalOpen={modalOpen} resource={resource}>
+        <ActionModal modalOpen={modalOpen} resource={resource} appName={appName}>
           {modalHeader && <Modal.Header>{modalHeader}</Modal.Header>}
           {!_isEmpty(modalBody) && modalBody}
         </ActionModal>
@@ -86,9 +86,11 @@ ResourceActions.propTypes = {
     order: PropTypes.number.isRequired,
   }),
   Element: PropTypes.node,
+  appName: PropTypes.string,
 };
 
 ResourceActions.defaultProps = {
   Element: Button,
   actions: undefined,
+  appName: "",
 };

@@ -33,6 +33,7 @@ class SearchResultItemComponent extends Component {
       idKeyPath,
       resourceSchema,
       listUIEndpoint,
+      appName,
     } = this.props;
     const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);
 
@@ -51,6 +52,7 @@ class SearchResultItemComponent extends Component {
                     result={result}
                     resourceSchema={resourceSchema}
                     property={property}
+                    appName={appName}
                   />
                 </a>
               )}
@@ -59,6 +61,7 @@ class SearchResultItemComponent extends Component {
                   result={result}
                   resourceSchema={resourceSchema}
                   property={property}
+                  appName={appName}
                 />
               )}
             </Table.Cell>
@@ -77,6 +80,7 @@ class SearchResultItemComponent extends Component {
               idKeyPath={idKeyPath}
               successCallback={this.refreshAfterAction}
               listUIEndpoint={listUIEndpoint}
+              appName={appName}
             />
           </Table.Cell>
         )}
@@ -98,12 +102,14 @@ SearchResultItemComponent.propTypes = {
   idKeyPath: PropTypes.string.isRequired,
   resourceSchema: PropTypes.object.isRequired,
   listUIEndpoint: PropTypes.string.isRequired,
+  appName: PropTypes.string,
 };
 
 SearchResultItemComponent.defaultProps = {
   displayDelete: true,
   displayEdit: true,
   actions: {},
+  appName: "",
 };
 
 export const SearchResultItem = withState(SearchResultItemComponent);

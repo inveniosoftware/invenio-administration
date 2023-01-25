@@ -9,10 +9,11 @@ import React, { Component } from "react";
 import Overridable from "react-overridable";
 import { Table } from "semantic-ui-react";
 import Formatter from "../components/Formatter";
+import { buildUID } from "react-searchkit";
 
-class DetailsTable extends Component {
+export default class DetailsTable extends Component {
   render() {
-    const { schema, data, uiSchema } = this.props;
+    const { schema, data, uiSchema, appName } = this.props;
     let fields = uiSchema ? uiSchema : schema;
 
     const tableRows = Object.entries(fields).map(([field, fieldSchema]) => {
@@ -25,14 +26,25 @@ class DetailsTable extends Component {
           </Table.Cell>
           <Table.Cell>
             {" "}
-            <Formatter result={data} resourceSchema={schema} property={field} />
+            <Formatter
+              result={data}
+              resourceSchema={schema}
+              property={field}
+              appName={appName}
+            />
           </Table.Cell>
         </Table.Row>
       );
     });
 
     return (
-      <Overridable id="DetailsComponent.table">
+      <Overridable
+        id={buildUID("DetailsComponent.table", "", appName)}
+        data={data}
+        schema={schema}
+        uiSchema={uiSchema}
+        appName={appName}
+      >
         <Table unstackable>
           <Table.Body>{tableRows}</Table.Body>
         </Table>
@@ -45,6 +57,9 @@ DetailsTable.propTypes = {
   data: PropTypes.object.isRequired,
   schema: PropTypes.object.isRequired,
   uiSchema: PropTypes.object.isRequired,
+  appName: PropTypes.string,
 };
 
-export default Overridable.component("DetailsTable", DetailsTable);
+DetailsTable.defaultProps = {
+  appName: "",
+};
