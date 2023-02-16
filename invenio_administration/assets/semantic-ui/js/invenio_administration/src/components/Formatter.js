@@ -10,6 +10,7 @@ import PropTypes from "prop-types";
 import _get from "lodash/get";
 import DateFormatter from "./DateFormatter";
 import BoolFormatter from "./BoolFormatter";
+import _truncate from "lodash/truncate";
 
 const elementTypeMap = {
   datetime: DateFormatter,
@@ -19,14 +20,17 @@ const elementTypeMap = {
 
 class Formatter extends React.Component {
   render() {
-    const { resourceSchema, result, property, ...uiProps } = this.props;
+    const { resourceSchema, result, property, truncate, ...uiProps } = this.props;
 
     const resourceSchemaProperty = property.replace(/\./g, ".properties.");
     const typePath = `${resourceSchemaProperty}.type`;
 
     const type = _get(resourceSchema, typePath);
     const Element = _get(elementTypeMap, type);
-    const value = _get(result, property, null);
+    const value = truncate
+      ? _truncate(_get(result, property, null), { length: truncate })
+      : _get(result, property, null);
+
     if (Element) {
       return <Element value={value} {...uiProps} />;
     } else {
@@ -39,6 +43,11 @@ Formatter.propTypes = {
   resourceSchema: PropTypes.object.isRequired,
   result: PropTypes.object.isRequired,
   property: PropTypes.string.isRequired,
+  truncate: PropTypes.number,
+};
+
+Formatter.defaultProps = {
+  truncate: null,
 };
 
 export default Formatter;

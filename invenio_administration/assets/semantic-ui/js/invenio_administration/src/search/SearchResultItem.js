@@ -38,29 +38,31 @@ class SearchResultItemComponent extends Component {
 
     return (
       <Table.Row>
-        {columns.map(([property, { text, order }], index) => {
+        {columns.map(([property, { text, order, truncate }], index) => {
+          const formattedElement = (
+            <Formatter
+              result={result}
+              resourceSchema={resourceSchema}
+              property={property}
+              truncate={truncate}
+            />
+          );
+          const columnElement =
+            index > 0 ? (
+              formattedElement
+            ) : (
+              <a href={AdminUIRoutes.detailsView(listUIEndpoint, result, idKeyPath)}>
+                {formattedElement}
+              </a>
+            );
+
           return (
             <Table.Cell
               key={`${text}-${order}`}
               data-label={text}
               className="word-break-all"
             >
-              {index === 0 && (
-                <a href={AdminUIRoutes.detailsView(listUIEndpoint, result, idKeyPath)}>
-                  <Formatter
-                    result={result}
-                    resourceSchema={resourceSchema}
-                    property={property}
-                  />
-                </a>
-              )}
-              {index !== 0 && (
-                <Formatter
-                  result={result}
-                  resourceSchema={resourceSchema}
-                  property={property}
-                />
-              )}
+              {columnElement}
             </Table.Cell>
           );
         })}
