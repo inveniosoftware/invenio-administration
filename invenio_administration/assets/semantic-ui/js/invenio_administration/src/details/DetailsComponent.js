@@ -20,12 +20,16 @@ class DetailsTable extends Component {
 
       return (
         <Table.Row key={text}>
-          <Table.Cell width={3}>
+          <Table.Cell width={3} className="vertical-align-top">
             <b>{text}</b>
           </Table.Cell>
           <Table.Cell>
-            {" "}
-            <Formatter result={data} resourceSchema={schema} property={field} />
+            <Formatter
+              result={data}
+              resourceSchema={schema}
+              property={field}
+              preformat={fieldSchema.preformat}
+            />
           </Table.Cell>
         </Table.Row>
       );
