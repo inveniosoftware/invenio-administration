@@ -1,11 +1,14 @@
+/* eslint-disable */
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "semantic-ui-react";
 import { ActionForm } from "../formik";
 import ActionModal from "./ActionModal";
 import _isEmpty from "lodash/isEmpty";
+import Overridable from "react-overridable";
 
-export class ResourceActions extends Component {
+class ResourceActions extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -54,25 +57,31 @@ export class ResourceActions extends Component {
     const { actions, Element, resource } = this.props;
     const { modalOpen, modalHeader, modalBody } = this.state;
     return (
-      <>
-        {Object.entries(actions).map(([actionKey, actionConfig]) => {
-          return (
-            <Element
-              key={actionKey}
-              onClick={this.onModalTriggerClick}
-              payloadSchema={actionConfig.payload_schema}
-              dataName={actionConfig.text}
-              dataActionKey={actionKey}
-            >
-              {actionConfig.text}
-            </Element>
-          );
-        })}
-        <ActionModal modalOpen={modalOpen} resource={resource}>
-          {modalHeader && <Modal.Header>{modalHeader}</Modal.Header>}
-          {!_isEmpty(modalBody) && modalBody}
-        </ActionModal>
-      </>
+      <Overridable id="InvenioAdministration.ResourceActions.layout">
+        <>
+          {
+            Object.entries(actions).map(([actionKey, actionConfig]) => {
+              return (
+                <Element
+                  key={actionKey}
+                  onClick={this.onModalTriggerClick}
+                  payloadSchema={actionConfig.payload_schema}
+                  dataName={actionConfig.text}
+                  dataActionKey={actionKey}
+                >
+                  {actionConfig.text}
+                </Element>
+              );
+            })
+          }
+          <ActionModal modalOpen={modalOpen} resource={resource}>
+            {
+              modalHeader && <Modal.Header>{modalHeader}</Modal.Header>
+            }
+            {!_isEmpty(modalBody) && modalBody}
+          </ActionModal>
+        </>
+      </Overridable>
     );
   }
 }
@@ -92,3 +101,5 @@ ResourceActions.defaultProps = {
   Element: Button,
   actions: undefined,
 };
+
+export default Overridable.component("InvenioAdministration.ResourceActions", ResourceActions);
