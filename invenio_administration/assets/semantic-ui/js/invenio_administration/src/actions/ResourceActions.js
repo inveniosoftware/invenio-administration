@@ -1,5 +1,3 @@
-/* eslint-disable */
-
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Button, Modal } from "semantic-ui-react";
@@ -57,31 +55,25 @@ class ResourceActions extends Component {
     const { actions, Element, resource } = this.props;
     const { modalOpen, modalHeader, modalBody } = this.state;
     return (
-      <Overridable id="InvenioAdministration.ResourceActions.layout">
-        <>
-          {
-            Object.entries(actions).map(([actionKey, actionConfig]) => {
-              return (
-                <Element
-                  key={actionKey}
-                  onClick={this.onModalTriggerClick}
-                  payloadSchema={actionConfig.payload_schema}
-                  dataName={actionConfig.text}
-                  dataActionKey={actionKey}
-                >
-                  {actionConfig.text}
-                </Element>
-              );
-            })
-          }
-          <ActionModal modalOpen={modalOpen} resource={resource}>
-            {
-              modalHeader && <Modal.Header>{modalHeader}</Modal.Header>
-            }
-            {!_isEmpty(modalBody) && modalBody}
-          </ActionModal>
-        </>
-      </Overridable>
+      <>
+        {Object.entries(actions).map(([actionKey, actionConfig]) => {
+          return (
+            <Element
+              key={actionKey}
+              onClick={this.onModalTriggerClick}
+              payloadSchema={actionConfig.payload_schema}
+              dataName={actionConfig.text}
+              dataActionKey={actionKey}
+            >
+              {actionConfig.text}
+            </Element>
+          );
+        })}
+        <ActionModal modalOpen={modalOpen} resource={resource}>
+          {modalHeader && <Modal.Header>{modalHeader}</Modal.Header>}
+          {!_isEmpty(modalBody) && modalBody}
+        </ActionModal>
+      </>
     );
   }
 }
@@ -102,4 +94,7 @@ ResourceActions.defaultProps = {
   actions: undefined,
 };
 
-export default Overridable.component("InvenioAdministration.ResourceActions", ResourceActions);
+export default Overridable.component(
+  "InvenioAdministration.ResourceActions",
+  ResourceActions
+);
