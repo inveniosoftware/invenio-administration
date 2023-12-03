@@ -7,11 +7,24 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Invenio Administration views base module."""
+import requests
+import json
+from sickle import Sickle
 from functools import partial
+import os
+from ratelimit import limits, sleep_and_retry
+from datetime import datetime
+import time
+from bs4 import BeautifulSoup
+from .translate import *
+from .project import *
+from .publish import *
+from .model import *
 
 from flask import current_app, render_template, url_for
 from flask.views import MethodView
 from invenio_search_ui.searchconfig import search_app_config
+from invenio_banners.records.models import BannerModel
 
 from invenio_administration.errors import (
     InvalidActionsConfiguration,
@@ -23,6 +36,12 @@ from invenio_administration.errors import (
 )
 from invenio_administration.marshmallow_utils import jsonify_schema
 from invenio_administration.permissions import administration_permission
+
+from sqlalchemy import create_engine, Column, Integer, String, LargeBinary
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+from sqlalchemy.sql.sqltypes import JSON
+Base = declarative_base()
 
 
 class AdminView(MethodView):
@@ -294,9 +313,244 @@ class AdminFormView(AdminResourceBaseView):
 
     form_fields = None
     display_read_only = True
+    
+    host = "localhost"
+    user = "root"
+    password = ""
+    database = "file_storage"
+
+    # Connection string for MySQL
+    connection_string = f"mysql+mysqlconnector://{user}:{password}@{host}/{database}"
+
+    # Create the engine and establish the connection
+    engine = create_engine(connection_string)
+    Base.metadata.create_all(engine)
+
+    # Create a session
+    Session = sessionmaker(bind=engine)
+    session = Session()
+
 
     def get(self, pid_value=None):
+        check_api_endpoint = self.api_endpoint
+        # print("checkapiendpoint")
+        # print(check_api_endpoint)
+        if check_api_endpoint == "/pages":
+            translate_function()
+            publish_function()
         """GET view method."""
+        oaiurl = ""
+        for record in BannerModel.query.filter_by(id=pid_value):
+            # print("OAI URL")
+            oaiurl = record.oai_url
+            oaiset = record.set_name
+            reponame = record.repo_name
+
+        # Automatic uploads (Start)
+
+        if self.url == "/banners/<pid_value>/edit":
+        #     # Start new code
+            api = "https://127.0.0.1:5000"
+            token = "m1VuHtbNzvxjZuLfBs8PeIVsnAEETt31K2gnmPwKVQxZyOi7BZruP1iO0klT"
+            sickle = Sickle(oaiurl)
+            if(oaiset==''):
+                records = sickle.ListRecords(metadataPrefix='oai_dc')
+            else:
+                records = sickle.ListRecords(metadataPrefix='oai_dc', set=oaiset)
+            @sleep_and_retry
+            @limits(calls=1, period=10) # 1 request per second
+            def make_api_request(req_url):
+                response = requests.get(req_url)
+                # print("STATUS CODE")
+                # print(response.status_code)
+                # if response.status_code == 200:
+                return response
+                # else:
+                #     print("STATUS CODE IN ELSE")
+                #     print(response.status_code)
+                #     time.sleep(3)
+                #     make_api_request(req_url)
+                for record in records:
+                meta = record.metadata
+                creators_list=[]
+                try:
+                    author = meta['creator'][0]
+                    for author in meta['creator']:
+                        creators_list.append(
+                            {
+                                "person_or_org":{
+                                    "family_name": author,
+                                    "type": "personal"                                                                        
+                                }
+                            }                            
+                        )
+                except:
+                    creators_list=['N/A']
+                try:    
+                    date_string = meta['date'][0]
+                    date_format = "%Y-%m-%dT%H:%M:%SZ"
+                    # try:
+                    input_date = datetime.strptime(date_string, date_format)
+                    publdate = input_date.strftime("%Y-%m-%d")
+                    # except:
+                        # publdate = meta['date'][0]
+                except:
+                    publdate = meta['date'][0]
+                    # today = datetime.now().date()
+                    # publdate = str(today)
+                    # publdate = meta['date'][0]
+                
+                contributors_list=[]
+                try:
+                    for contributor_item in meta['contributor']:
+                        contributors_list.append(
+                            {
+                                "person_or_org":{
+                                    "type": "personal",
+                                    "name": contributor_item,
+                                    "family_name": contributor_item
+                                },
+                                "role": {
+                                    "id": "other"
+                                }
+                            }
+                        )    
+                except:
+                    contributors_list=[]                                   
+                
+                description = meta.get('description',['N/A'])[0]
+                
+                try:
+                    identifier_list = meta['identifier']
+                    identifier=""
+                    for identify in identifier_list:
+                        if identify.startswith('http'):
+                            identifier=identify
+                            break
+                except:
+                    identifier='N/A'
+
+                rectitle = meta.get('title',['N/A'])[0]
+                try:
+                    rights = meta['rights']
+                    rights_title = rights[0]
+                    rights_link=""
+                    for right in rights:
+                        if right.startswith('http'):
+                            rights_link=right
+                            break
+                except:
+                    rights_title = 'N/A'
+
+                subject = meta.get('subject',['N/A'])[0]
+
+                publisher = meta.get('publisher',[reponame])[0]
+
+                # try:
+                #     restype = meta['type'][0].lower()
+                # except:
+                restype = 'other'
+
+                datameta = {
+                    "access": {
+                        "files": "public",
+                        "record": "public"
+                    },
+                    "files": {
+                        "enabled": True
+                    },
+                    "metadata": {
+                        "creators": creators_list,
+                        "description": description,
+                        "identifiers": [{
+                        "identifier": identifier,
+                        "scheme": "other"
+                        }],
+                        "publication_date": publdate,
+                        "publisher": publisher,
+                        "contributors": contributors_list,
+                        "resource_type": {
+                        "id": restype
+                        },
+                        "rights": [
+                        {
+                            "title": {
+                            "en": rights_title
+                            },
+                            "link": rights_link
+                        }
+                        ],
+                        "subjects": [{
+                            "subject": subject
+                        }
+                        ],
+                        "title": rectitle,
+                        "version": "v1"
+                    },
+                    "custom_fields": {
+                        "invisible_search": "testforuniquetextonorigintochecksearchlongtextinvisiblesearch"
+                    },
+                    "pids": {}
+                    }
+
+                h = {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": f"Bearer {token}"
+                    }
+                fh = {
+                    "Accept": "application/json",
+                    "Content-Type": "application/octet-stream",
+                    "Authorization": f"Bearer {token}"
+                    }
+
+                # title_split=meta['title'][0].split(' ')[0]
+                title=meta['title'][0]
+                title_split=title.split(" ")
+                title_concat=title_split[0]
+                id_list=meta['identifier']
+                for iden in id_list:
+                    if iden.startswith('http'):
+                        rec_url=iden
+                        break
+                rec_url_split=rec_url.split('/')[-1]
+                file_name_short=title_concat+rec_url_split
+                output_directory='.'
+                rec_response = make_api_request(rec_url)
+                rec_path = os.path.join(output_directory, f"rec_{title}.html")
+                
+                with open(rec_path, "wb") as file:
+                    file.write(rec_response.content)
+                
+                with open(rec_path, 'r') as file:
+                    html = file.read()
+                soup = BeautifulSoup(html, 'html.parser')
+                try:
+                    element = soup.find('meta', {'name': 'citation_pdf_url'})
+                except:
+                    continue
+                time.sleep(5)
+                try:
+                    file_url=element['content']
+                except:
+                    continue
+                file_response = make_api_request(file_url)
+                content_type = file_response.headers.get("Content-Type")
+                slash = content_type.split('/')
+                extension = slash[-1].split(';')[0]
+
+                # file_extension = file_url.split(".")[-1]  # Extract file extension from URL
+                file_path = os.path.join(output_directory, f"{file_name_short}.{extension}")
+                with open(file_path, "wb") as file:
+                    file.write(file_response.content)
+                new_file = OriginalFile(file_name=file_name_short, file_data=file_response.content, file_type=extension,metadata_file=datameta)
+                self.session.add(new_file)
+                self.session.commit()
+    
+                self.session.close()
+                project_function()
+
+                
         schema = self.get_service_schema()
         serialized_schema = self._schema_to_json(schema)
         form_fields = self.form_fields
