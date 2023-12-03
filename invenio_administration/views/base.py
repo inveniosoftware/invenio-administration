@@ -589,6 +589,7 @@ class AdminResourceListView(AdminResourceBaseView):
     # decides if there is a detail view
     display_read = True
     display_create = True
+    display_translate = True
 
     # hides searchbar
     display_search = True
@@ -653,6 +654,7 @@ class AdminResourceListView(AdminResourceBaseView):
                 "fields": self.item_field_list,
                 "display_search": self.display_search,
                 "display_create": self.display_create,
+                "display_translate": self.display_translate,
                 "display_edit": self.display_edit,
                 "display_delete": self.display_delete,
                 "display_read": self.display_read,
@@ -698,6 +700,7 @@ class AdminResourceViewSet:
     display_read = True
     display_edit = False
     display_delete = False
+    display_translate = False
 
     sort_options = ()
     available_filters = None
