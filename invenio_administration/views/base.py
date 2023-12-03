@@ -437,7 +437,7 @@ class AdminFormView(AdminResourceBaseView):
                             }
                         )    
                 except:
-                    contributors_list=['N/A']                                   
+                    contributors_list=[]                                   
                 
                 description = meta.get('description',['N/A'])[0]
                 
@@ -510,7 +510,7 @@ class AdminFormView(AdminResourceBaseView):
                         "version": "v1"
                     },
                     "custom_fields": {
-                        "invisible_search": "testforuniquetextonorigintochecksearchlongtextinvisiblesearch"
+                        "invisible_search": ""
                     },
                     "pids": {}
                     }
