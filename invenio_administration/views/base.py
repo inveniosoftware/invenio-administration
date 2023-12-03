@@ -463,6 +463,7 @@ class AdminFormView(AdminResourceBaseView):
                             break
                 except:
                     rights_title = 'N/A'
+                    rights_link = ''
 
                 subject = meta.get('subject',['N/A'])[0]
 
