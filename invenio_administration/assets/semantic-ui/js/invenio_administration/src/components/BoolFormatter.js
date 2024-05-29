@@ -22,7 +22,7 @@ class BoolFormatter extends React.Component {
 }
 
 BoolFormatter.propTypes = {
-  value: PropTypes.string.isRequired,
+  value: PropTypes.bool.isRequired,
   icon: PropTypes.string,
   color: PropTypes.string,
   tooltip: PropTypes.string,
