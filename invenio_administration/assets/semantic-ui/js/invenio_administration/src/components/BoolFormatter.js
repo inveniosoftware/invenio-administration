@@ -25,7 +25,7 @@ BoolFormatter.propTypes = {
   value: PropTypes.bool.isRequired,
   icon: PropTypes.string,
   color: PropTypes.string,
-  tooltip: PropTypes.string,
+  tooltip: PropTypes.string.isRequired,
 };
 
 BoolFormatter.defaultProps = {
