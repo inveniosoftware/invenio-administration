@@ -26,6 +26,12 @@ export class AdminForm extends Component {
             if (defaultValue) {
               return defaultValue;
             }
+            if (value.type === "bool") {
+              return false;
+            }
+            if (value.type === "object") {
+              return null;
+            }
             return "";
           }),
     };
@@ -37,17 +43,40 @@ export class AdminForm extends Component {
     const { apiEndpoint, pid, successCallback, create } = this.props;
     const { addNotification } = this.context;
     let response;
+    // eslint-disable-next-line no-debugger
+    debugger;
+
+    const transformedValues = mapValues(values, (value, key) => {
+      const fieldSchema = this.props.resourceSchema[key];
+      if (fieldSchema?.metadata?.type === "json") {
+        try {
+          if (value === "") {
+            return null;
+          } else if (typeof value === "object") {
+            return value;
+          } else {
+            return JSON.parse(value);
+          }
+        } catch (e) {
+          console.error(`Error parsing JSON for field ${key}:`, e);
+          actions.setFieldError(key, "Invalid JSON format");
+          throw e;
+        }
+      }
+      return value;
+    });
+
     try {
       if (create) {
         response = await InvenioAdministrationActionsApi.createResource(
           apiEndpoint,
-          values
+          transformedValues
         );
       } else {
         response = await InvenioAdministrationActionsApi.editResource(
           apiEndpoint,
           pid,
-          values
+          transformedValues
         );
       }
       actions.setSubmitting(false);
