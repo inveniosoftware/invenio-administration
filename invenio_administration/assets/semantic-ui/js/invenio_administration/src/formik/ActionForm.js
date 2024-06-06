@@ -10,6 +10,7 @@ import isEmpty from "lodash/isEmpty";
 import { GenerateForm } from "./GenerateForm";
 import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
+import { generateValidationSchema } from "./validation";
 
 export class ActionForm extends Component {
   constructor(props) {
@@ -79,7 +80,11 @@ export class ActionForm extends Component {
     const { actionSchema, formFields, actionCancelCallback } = this.props;
     const { loading, formData, error } = this.state;
     return (
-      <Formik initialValues={formData} onSubmit={this.onSubmit}>
+      <Formik
+        initialValues={formData}
+        validationSchema={generateValidationSchema(actionSchema)}
+        onSubmit={this.onSubmit}
+      >
         {(props) => (
           <>
             <Modal.Content>

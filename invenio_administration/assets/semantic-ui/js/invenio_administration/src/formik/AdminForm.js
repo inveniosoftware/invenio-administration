@@ -11,6 +11,7 @@ import { GenerateForm } from "./GenerateForm";
 import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
 import mapValues from "lodash/mapValues";
+import { generateValidationSchema } from "./validation";
 
 export class AdminForm extends Component {
   constructor(props) {
@@ -86,7 +87,11 @@ export class AdminForm extends Component {
     const { formData, error } = this.state;
 
     return (
-      <Formik initialValues={formData} onSubmit={this.onSubmit}>
+      <Formik
+        initialValues={formData}
+        validationSchema={generateValidationSchema(resourceSchema)}
+        onSubmit={this.onSubmit}
+      >
         {(props) => {
           return (
             <>
