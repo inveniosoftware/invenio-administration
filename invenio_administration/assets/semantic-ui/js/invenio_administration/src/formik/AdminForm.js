@@ -46,6 +46,7 @@ export class AdminForm extends Component {
 
     const transformedValues = mapValues(values, (value, key) => {
       const fieldSchema = this.props.resourceSchema[key];
+
       if (fieldSchema?.metadata?.type === "json") {
         try {
           if (value === "") {
@@ -142,6 +143,7 @@ export class AdminForm extends Component {
                     formFields={formFields}
                     jsonSchema={resourceSchema}
                     create={create}
+                    formikProps={props}
                   />
                   {!isEmpty(error) && (
                     <ErrorMessage

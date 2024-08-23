@@ -7,7 +7,7 @@
 # under the terms of the MIT License; see LICENSE file for more details.
 
 """Invenio administration marshmallow utils module."""
-
+import marshmallow
 from marshmallow import fields
 from marshmallow_utils import fields as invenio_fields
 from marshmallow_utils.fields import EDTFDateString, EDTFDateTimeString
@@ -30,11 +30,7 @@ custom_mapping = {
     fields.TimeDelta: "timedelta",
     fields.Decimal: "decimal",
     fields.Enum: "string",
-    # TODO: This is needed for the is_current_user in the administration
-    # of the user resources. It might be better to implement also a handler for this.
-    # See https://github.com/inveniosoftware/invenio-administration/issues/174
-    # For the moment it is skipped when we call `jsonify_schema`
-    fields.Method: None,
+    fields.Method: "function",
     # invenio fields
     invenio_fields.SanitizedUnicode: "string",
     invenio_fields.links.Links: "array",
@@ -74,13 +70,10 @@ def find_type_in_mapping(field_type, custom_mapping):
 def jsonify_schema(schema):
     """Marshmallow schema to dict."""
     schema_dict = {}
-
     for field, field_type in schema.fields.items():
         is_links = isinstance(field_type, invenio_fields.links.Links)
-        # skip `fields.Method`
-        is_method = isinstance(field_type, fields.Method)
 
-        if is_links or is_method:
+        if is_links:
             continue
 
         is_read_only = field_type.dump_only
@@ -96,6 +89,13 @@ def jsonify_schema(schema):
         nested_field = isinstance(field_type, fields.Nested)
         list_field = isinstance(field_type, fields.List)
 
+        dump_default = field_type.dump_default if field_type.dump_default else None
+        load_default = field_type.load_default if field_type.load_default else None
+        if callable(dump_default):
+            dump_default = dump_default()
+        if callable(load_default):
+            load_default = load_default()
+
         schema_dict[field] = {
             "required": is_required,
             "readOnly": is_read_only,
@@ -104,7 +104,14 @@ def jsonify_schema(schema):
             ),
             "createOnly": is_create_only,
             "metadata": field_type.metadata,
+            "dump_default": dump_default,
+            "load_default": load_default
         }
+
+        options = field_type.validate
+        if options and hasattr(options, "choices"):
+            schema_dict[field].update({"enum": list(options.choices)})
+
 
         if nested_field:
             schema_type = getattr(
@@ -154,4 +161,5 @@ def jsonify_schema(schema):
                 )
             except KeyError:
                 raise Exception(f"Unrecognised schema field {field}: {field_type_name}")
+
     return schema_dict

@@ -10,15 +10,89 @@ import isEmpty from "lodash/isEmpty";
 import { GenerateForm } from "./GenerateForm";
 import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
+import Overridable from "react-overridable";
 
-export class ActionForm extends Component {
+export class ActionFormLayout extends Component {
+  render() {
+    const {
+      actionSchema,
+      actionCancelCallback,
+      actionConfig,
+      formData,
+      loading,
+      error,
+      onSubmit,
+    } = this.props;
+    return (
+      <Formik initialValues={formData} onSubmit={onSubmit}>
+        {(props) => (
+          <>
+            <Modal.Content>
+              <SemanticForm as={Form} id="action-form" onSubmit={props.handleSubmit}>
+                <GenerateForm
+                  jsonSchema={actionSchema}
+                  formFields={actionSchema}
+                  create
+                  dropDumpOnly
+                  formikProps={props}
+                  formData={formData}
+                />
+                {!isEmpty(error) && (
+                  <ErrorMessage {...error} removeNotification={this.resetErrorState} />
+                )}
+              </SemanticForm>
+            </Modal.Content>
+
+            <Modal.Actions>
+              <Button type="submit" primary form="action-form" loading={loading}>
+                {i18next.t(actionConfig.text)}
+              </Button>
+              <Button
+                onClick={actionCancelCallback}
+                floated="left"
+                icon="cancel"
+                labelPosition="left"
+                content={i18next.t("Cancel")}
+              />
+            </Modal.Actions>
+          </>
+        )}
+      </Formik>
+    );
+  }
+}
+
+ActionFormLayout.propTypes = {
+  resource: PropTypes.object.isRequired,
+  actionSchema: PropTypes.object.isRequired,
+  actionKey: PropTypes.string.isRequired,
+  actionSuccessCallback: PropTypes.func.isRequired,
+  actionCancelCallback: PropTypes.func.isRequired,
+  formFields: PropTypes.object,
+  actionConfig: PropTypes.object.isRequired,
+  actionPayload: PropTypes.object,
+  error: PropTypes.object,
+  formData: PropTypes.object,
+  loading: PropTypes.bool,
+  onSubmit: PropTypes.func.isRequired,
+};
+
+ActionFormLayout.defaultProps = {
+  formFields: {},
+  actionPayload: {},
+  error: undefined,
+  formData: undefined,
+  loading: false,
+};
+
+class ActionForm extends Component {
   constructor(props) {
     super(props);
-
+    const { actionPayload } = props;
     this.state = {
       loading: false,
       error: undefined,
-      formData: {},
+      formData: actionPayload,
     };
   }
 
@@ -55,7 +129,7 @@ export class ActionForm extends Component {
   };
 
   getEndpoint = (actionKey) => {
-    const { resource } = this.props;
+    const { resource, actionConfig } = this.props;
     let endpoint;
     // get the action endpoint from the current resource links
     endpoint = _get(resource, `links.actions[${actionKey}]`);
@@ -76,41 +150,27 @@ export class ActionForm extends Component {
   };
 
   render() {
-    const { actionSchema, formFields, actionCancelCallback } = this.props;
+    const { actionSchema, actionCancelCallback, actionConfig, actionKey } = this.props;
     const { loading, formData, error } = this.state;
     return (
-      <Formik initialValues={formData} onSubmit={this.onSubmit}>
-        {(props) => (
-          <>
-            <Modal.Content>
-              <SemanticForm as={Form} id="action-form" onSubmit={props.handleSubmit}>
-                <GenerateForm
-                  jsonSchema={actionSchema}
-                  formFields={actionSchema}
-                  create
-                  dropDumpOnly
-                />
-                {!isEmpty(error) && (
-                  <ErrorMessage {...error} removeNotification={this.resetErrorState} />
-                )}
-              </SemanticForm>
-            </Modal.Content>
-
-            <Modal.Actions>
-              <Button type="submit" primary form="action-form" loading={loading}>
-                {i18next.t("Save")}
-              </Button>
-              <Button
-                onClick={actionCancelCallback}
-                floated="left"
-                icon="cancel"
-                labelPosition="left"
-                content={i18next.t("Cancel")}
-              />
-            </Modal.Actions>
-          </>
-        )}
-      </Formik>
+      <Overridable
+        id={`InvenioAdministration.ActionForm.${actionKey}.layout`}
+        loading={loading}
+        formData={formData}
+        error={error}
+        {...this.props}
+      >
+        <ActionFormLayout
+          actionSchema={actionSchema}
+          actionCancelCallback={actionCancelCallback}
+          actionConfig={actionConfig}
+          actionKey={actionKey}
+          loading={loading}
+          formData={formData}
+          error={error}
+          onSubmit={this.onSubmit}
+        />
+      </Overridable>
     );
   }
 }
@@ -122,8 +182,13 @@ ActionForm.propTypes = {
   actionSuccessCallback: PropTypes.func.isRequired,
   actionCancelCallback: PropTypes.func.isRequired,
   formFields: PropTypes.object,
+  actionConfig: PropTypes.object.isRequired,
+  actionPayload: PropTypes.object,
 };
 
 ActionForm.defaultProps = {
   formFields: {},
+  actionPayload: {},
 };
+
+export default Overridable.component("InvenioAdministration.ActionForm", ActionForm);

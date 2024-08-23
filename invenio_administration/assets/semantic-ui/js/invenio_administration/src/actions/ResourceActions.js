@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { Button, Modal } from "semantic-ui-react";
+import { Button, Modal, Icon } from "semantic-ui-react";
 import { ActionForm } from "../formik";
 import ActionModal from "./ActionModal";
 import _isEmpty from "lodash/isEmpty";
@@ -17,18 +17,29 @@ class ResourceActions extends Component {
   }
 
   onModalTriggerClick = (e, { payloadSchema, dataName, dataActionKey }) => {
-    const { resource } = this.props;
+    const { resource, actions: actionsConfig } = this.props;
     this.setState({
       modalOpen: true,
       modalHeader: dataName,
       modalBody: (
-        <ActionForm
+        <Overridable
+          id={`InvenioAdministration.ResourceActions.ModalBody.${dataActionKey}`}
           actionKey={dataActionKey}
           actionSchema={payloadSchema}
           actionSuccessCallback={this.onModalClose}
           actionCancelCallback={this.closeModal}
           resource={resource}
-        />
+          actionConfig={actionsConfig[dataActionKey]}
+        >
+          <ActionForm
+            actionKey={dataActionKey}
+            actionSchema={payloadSchema}
+            actionSuccessCallback={this.onModalClose}
+            actionCancelCallback={this.closeModal}
+            resource={resource}
+            actionConfig={actionsConfig[dataActionKey]}
+          />
+        </Overridable>
       ),
     });
   };
@@ -57,6 +68,8 @@ class ResourceActions extends Component {
     return (
       <>
         {Object.entries(actions).map(([actionKey, actionConfig]) => {
+          const icon = actionConfig.icon;
+          const labelPos = icon ? "left" : null;
           return (
             <Element
               key={actionKey}
@@ -65,7 +78,10 @@ class ResourceActions extends Component {
               dataName={actionConfig.text}
               dataActionKey={actionKey}
               basic
+              icon={!_isEmpty(icon)}
+              labelPosition={labelPos}
             >
+              {!_isEmpty(icon) && <Icon name={icon} />}
               {actionConfig.text}
             </Element>
           );
@@ -82,17 +98,12 @@ class ResourceActions extends Component {
 ResourceActions.propTypes = {
   resource: PropTypes.object.isRequired,
   successCallback: PropTypes.func.isRequired,
-  actions: PropTypes.shape({
-    text: PropTypes.string.isRequired,
-    payload_schema: PropTypes.object.isRequired,
-    order: PropTypes.number.isRequired,
-  }),
+  actions: PropTypes.object.isRequired,
   Element: PropTypes.node,
 };
 
 ResourceActions.defaultProps = {
   Element: Button,
-  actions: undefined,
 };
 
 export default Overridable.component(
