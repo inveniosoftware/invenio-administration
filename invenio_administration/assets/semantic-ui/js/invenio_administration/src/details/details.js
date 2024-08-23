@@ -8,6 +8,9 @@ import React from "react";
 import ReactDOM from "react-dom";
 import _get from "lodash/get";
 import AdminDetailsView from "./AdminDetailsView";
+import { OverridableContext, overrideStore } from "react-overridable";
+
+const overriddenComponents = overrideStore.getAll();
 
 const domContainer = document.getElementById("invenio-details-config");
 
@@ -24,23 +27,28 @@ const listUIEndpoint = domContainer.dataset.listEndpoint;
 const resourceSchema = JSON.parse(domContainer.dataset?.resourceSchema);
 const requestHeaders = JSON.parse(domContainer.dataset?.requestHeaders);
 const uiSchema = JSON.parse(domContainer.dataset?.uiConfig);
+const name = JSON.parse(domContainer.dataset?.name);
 
 domContainer &&
   ReactDOM.render(
-    <AdminDetailsView
-      title={title}
-      actions={actions}
-      apiEndpoint={apiEndpoint}
-      columns={fields}
-      pid={pidValue}
-      displayEdit={displayEdit}
-      displayDelete={displayDelete}
-      idKeyPath={idKeyPath}
-      resourceName={resourceName}
-      listUIEndpoint={listUIEndpoint}
-      resourceSchema={resourceSchema}
-      requestHeaders={requestHeaders}
-      uiSchema={uiSchema}
-    />,
+    <OverridableContext.Provider value={overriddenComponents}>
+      <AdminDetailsView
+        title={title}
+        actions={actions}
+        apiEndpoint={apiEndpoint}
+        columns={fields}
+        pid={pidValue}
+        displayEdit={displayEdit}
+        displayDelete={displayDelete}
+        idKeyPath={idKeyPath}
+        resourceName={resourceName}
+        listUIEndpoint={listUIEndpoint}
+        resourceSchema={resourceSchema}
+        requestHeaders={requestHeaders}
+        uiSchema={uiSchema}
+        name={name}
+      />
+      ,
+    </OverridableContext.Provider>,
     domContainer
   );

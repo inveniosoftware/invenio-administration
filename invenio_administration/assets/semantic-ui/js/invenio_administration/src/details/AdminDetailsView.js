@@ -8,8 +8,9 @@ import { Actions } from "../actions/Actions";
 import _isEmpty from "lodash/isEmpty";
 import { sortFields } from "../components/utils";
 import { Loader, ErrorPage } from "../components";
+import Overridable from "react-overridable";
 
-export default class AdminDetailsView extends Component {
+class AdminDetailsView extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -73,51 +74,60 @@ export default class AdminDetailsView extends Component {
       displayDelete,
       displayEdit,
       uiSchema,
+      name,
     } = this.props;
     const { loading, data, error } = this.state;
     const sortedColumns = sortFields(uiSchema);
     return (
-      <Loader isLoading={loading}>
-        <ErrorPage
-          error={!_isEmpty(error)}
-          errorCode={error?.response.status}
-          errorMessage={error?.response.data}
-        >
-          <Grid stackable>
-            <Grid.Row columns="2">
-              <Grid.Column verticalAlign="middle">
-                <Header as="h1">{title}</Header>
-              </Grid.Column>
-              <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
-                <Button.Group size="tiny" className="relaxed">
-                  <Actions
-                    title={title}
-                    resourceName={resourceName}
-                    apiEndpoint={apiEndpoint}
-                    editUrl={AdminUIRoutes.editView(listUIEndpoint, data, idKeyPath)}
-                    actions={actions}
-                    displayEdit={displayEdit}
-                    displayDelete={displayDelete}
-                    resource={data}
-                    idKeyPath={idKeyPath}
-                    successCallback={this.handleDelete}
-                    listUIEndpoint={listUIEndpoint}
-                  />
-                </Button.Group>
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-          <Divider />
-          <Container fluid>
-            <DetailsTable
-              data={data}
-              schema={resourceSchema}
-              uiSchema={sortedColumns}
-            />
-            {this.childrenWithData(data, columns)}
-          </Container>
-        </ErrorPage>
-      </Loader>
+      <Overridable
+        id={`InvenioAdministration.AdminDetailsView.${name}.layout`}
+        data={data}
+        error={error}
+        loading={loading}
+        {...this.props}
+      >
+        <Loader isLoading={loading}>
+          <ErrorPage
+            error={!_isEmpty(error)}
+            errorCode={error?.response.status}
+            errorMessage={error?.response.data}
+          >
+            <Grid stackable>
+              <Grid.Row columns="2">
+                <Grid.Column verticalAlign="middle">
+                  <Header as="h1">{title}</Header>
+                </Grid.Column>
+                <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
+                  <Button.Group size="tiny" className="relaxed">
+                    <Actions
+                      title={title}
+                      resourceName={resourceName}
+                      apiEndpoint={apiEndpoint}
+                      editUrl={AdminUIRoutes.editView(listUIEndpoint, data, idKeyPath)}
+                      actions={actions}
+                      displayEdit={displayEdit}
+                      displayDelete={displayDelete}
+                      resource={data}
+                      idKeyPath={idKeyPath}
+                      successCallback={this.handleDelete}
+                      listUIEndpoint={listUIEndpoint}
+                    />
+                  </Button.Group>
+                </Grid.Column>
+              </Grid.Row>
+            </Grid>
+            <Divider />
+            <Container fluid>
+              <DetailsTable
+                data={data}
+                schema={resourceSchema}
+                uiSchema={sortedColumns}
+              />
+              {this.childrenWithData(data, columns)}
+            </Container>
+          </ErrorPage>
+        </Loader>
+      </Overridable>
     );
   }
 }
@@ -137,9 +147,15 @@ AdminDetailsView.propTypes = {
   resourceSchema: PropTypes.object.isRequired,
   requestHeaders: PropTypes.object.isRequired,
   uiSchema: PropTypes.object.isRequired,
+  name: PropTypes.string.isRequired,
 };
 
 AdminDetailsView.defaultProps = {
   actions: undefined,
   children: undefined,
 };
+
+export default Overridable.component(
+  "InvenioAdministration.AdminDetailsView",
+  AdminDetailsView
+);
