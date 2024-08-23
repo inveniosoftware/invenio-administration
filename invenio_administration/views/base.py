@@ -224,9 +224,7 @@ class AdminResourceBaseView(AdminView):
             if "payload_schema" and "order" not in value:
                 raise InvalidActionsConfiguration
 
-            serialized_actions[key] = {
-                **value
-            }
+            serialized_actions[key] = {**value}
 
             if value["payload_schema"] is not None:
                 serialized_actions[key]["payload_schema"] = self._schema_to_json(

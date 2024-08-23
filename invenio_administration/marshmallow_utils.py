@@ -105,13 +105,12 @@ def jsonify_schema(schema):
             "createOnly": is_create_only,
             "metadata": field_type.metadata,
             "dump_default": dump_default,
-            "load_default": load_default
+            "load_default": load_default,
         }
 
         options = field_type.validate
         if options and hasattr(options, "choices"):
             schema_dict[field].update({"enum": list(options.choices)})
-
 
         if nested_field:
             schema_type = getattr(

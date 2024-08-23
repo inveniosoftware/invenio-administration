@@ -1,8 +1,36 @@
+import { mapFormFields } from "./fields";
+import { generateFieldProps } from "./props_generator";
 import React from "react";
 import { Array } from "react-invenio-forms";
 import { Form, Button, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
 import PropTypes from "prop-types";
+
+export const generateArrayFieldProps = (
+  fieldName,
+  fieldSchema,
+  parentField,
+  isCreate,
+  formFieldConfig,
+  formikProps,
+  formFieldsConfig
+) => {
+  const fieldProps = generateFieldProps(
+    fieldName,
+    fieldSchema,
+    parentField,
+    isCreate,
+    formFieldConfig,
+    formikProps
+  );
+  const arrayFieldProps = {
+    fieldSchema: fieldSchema,
+    isCreate: isCreate,
+    mapFormFields: mapFormFields,
+    formFields: formFieldsConfig,
+  };
+  return { ...fieldProps, ...arrayFieldProps };
+};
 
 const createEmptyArrayRowObject = (properties) => {
   const emptyRow = {};
