@@ -22,10 +22,10 @@ export const generateObjectFieldProps = (
     formFieldConfig,
     formikProps
   );
-  const dynamicFieldProps = {
+  const objectFieldProps = {
     mapFormFields: mapFormFields,
   };
-  return { ...fieldProps, ...dynamicFieldProps };
+  return { ...fieldProps, ...objectFieldProps };
 };
 
 export class ObjectField extends Component {
