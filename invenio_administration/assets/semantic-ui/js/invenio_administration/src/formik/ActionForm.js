@@ -63,10 +63,8 @@ export class ActionFormLayout extends Component {
 }
 
 ActionFormLayout.propTypes = {
-  resource: PropTypes.object.isRequired,
   actionSchema: PropTypes.object.isRequired,
   actionKey: PropTypes.string.isRequired,
-  actionSuccessCallback: PropTypes.func.isRequired,
   actionCancelCallback: PropTypes.func.isRequired,
   formFields: PropTypes.object,
   actionConfig: PropTypes.object.isRequired,
