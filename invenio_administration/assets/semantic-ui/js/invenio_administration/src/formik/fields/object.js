@@ -24,6 +24,7 @@ export const generateObjectFieldProps = (
   );
   const objectFieldProps = {
     mapFormFields: mapFormFields,
+    fieldSchema: fieldSchema,
   };
   return { ...fieldProps, ...objectFieldProps };
 };
@@ -33,7 +34,7 @@ export class ObjectField extends Component {
     const { mapFormFields, fieldSchema, isCreate, formFieldsConfig, ...fieldProps } =
       this.props;
     return (
-      <React.Fragment key={fieldProps.fieldPath}>
+      <React.Fragment key={fieldProps.name}>
         <Header attached="top" as="h5">
           {fieldProps.label}
         </Header>
@@ -41,7 +42,7 @@ export class ObjectField extends Component {
           <Form.Group grouped>
             {mapFormFields(
               fieldSchema.properties,
-              fieldProps.fieldPath,
+              fieldProps.name,
               isCreate,
               formFieldsConfig
             )}

@@ -21,5 +21,5 @@ export const generateHiddenFieldProps = (
     formFieldConfig,
     formikProps
   );
-  return { ...fieldProps, type: "hidden", name: fieldProps.fieldPath };
+  return { ...fieldProps, type: "hidden", name: fieldProps.name };
 };

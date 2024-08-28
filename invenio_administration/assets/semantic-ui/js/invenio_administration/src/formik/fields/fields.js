@@ -95,24 +95,17 @@ export const mapFormFields = (
 
     const showField =
       _isEmpty(formFieldsConfig) ||
-      Object.prototype.hasOwnProperty.call(formFieldsConfig, fieldProps.fieldPath) ||
+      Object.prototype.hasOwnProperty.call(formFieldsConfig, fieldProps.name) ||
       Object.prototype.hasOwnProperty.call(
         formFieldsConfig,
-        fieldProps.fieldPath.replace(`${parentField}.`, "")
+        fieldProps.name.replace(`${parentField}.`, "")
       );
 
     if (!showField) {
       return null;
     }
 
-    return (
-      <Element
-        {...fieldProps}
-        key={fieldProps.fieldPath}
-        value={fieldProps.value}
-        fieldSchema={fieldSchema}
-      />
-    );
+    return <Element {...fieldProps} key={fieldProps.name} value={fieldProps.value} />;
   });
 
   return elements;

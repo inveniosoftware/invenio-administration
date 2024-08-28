@@ -62,7 +62,7 @@ export const AdminArrayField = ({
       {...fieldProps}
     >
       {({ arrayHelpers, indexPath }) => {
-        const fieldPathPrefix = `${fieldProps.fieldPath}.${indexPath}`;
+        const fieldPathPrefix = `${fieldProps.name}.${indexPath}`;
         return (
           <Form.Group grouped widths="equal" className="group">
             {mapFormFields(

@@ -25,6 +25,7 @@ export const generateDynamicFieldProps = (
   const dynamicFieldProps = {
     formData: formData,
     formikProps: formikProps,
+    fieldSchema: fieldSchema,
   };
   return { ...fieldProps, ...dynamicFieldProps };
 };
@@ -34,7 +35,7 @@ export class DynamicSubFormField extends Component {
     const { formikProps, fieldSchema, formData, ...fieldProps } = this.props;
 
     return (
-      <React.Fragment key={fieldProps.fieldPath}>
+      <React.Fragment key={fieldProps.name}>
         <Header attached="top" as="h5">
           {fieldProps.label}
         </Header>
@@ -44,7 +45,7 @@ export class DynamicSubFormField extends Component {
               {...fieldProps}
               formikProps={formikProps}
               fieldSchema={fieldSchema}
-              key={fieldProps.fieldPath}
+              key={fieldProps.name}
               formData={formData}
             />
           </Form.Group>
@@ -55,7 +56,6 @@ export class DynamicSubFormField extends Component {
 }
 
 DynamicSubFormField.propTypes = {
-  fieldProps: PropTypes.object.isRequired,
   fieldSchema: PropTypes.object.isRequired,
   formikProps: PropTypes.object.isRequired,
   formData: PropTypes.object.isRequired,
