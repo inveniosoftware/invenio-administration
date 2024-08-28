@@ -10,8 +10,6 @@ export class LazyForm extends Component {
     super(props);
     const { fieldSchema } = props;
     this.state = {
-      // loading: false,
-      // error: undefined,
       lazySchema: {},
       fieldSchema: fieldSchema,
     };
@@ -29,7 +27,7 @@ export class LazyForm extends Component {
       fieldSchema["properties"] = response.data;
       this.setState({ lazySchema: response.data, fieldSchema: { ...fieldSchema } });
       for (const [key, value] of Object.entries(response.data)) {
-        formikProps.setFieldValue(`${fieldPath}.${key}`, value.metadata?.default);
+        formikProps.setFieldValue(`${fieldPath}.${key}`, value.load_default);
       }
     } catch (e) {
       console.error(e);

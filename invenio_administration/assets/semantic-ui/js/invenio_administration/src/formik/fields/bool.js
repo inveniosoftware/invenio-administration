@@ -10,7 +10,7 @@ export class AdminBoolField extends Component {
     return (
       <>
         <BooleanField
-          key={fieldProps.fieldPath}
+          key={fieldProps.name}
           required={fieldSchema.required}
           value={fieldSchema.metadata.checked === "true"}
           {...fieldProps}
