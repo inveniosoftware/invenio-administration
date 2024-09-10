@@ -20,10 +20,7 @@ export class LazyForm extends Component {
     const { formikProps, fieldPath } = this.props;
     const { endpoint } = fieldSchema.metadata;
     try {
-      const response = await InvenioAdministrationActionsApi.getRegisteredTaskSchema(
-        endpoint,
-        value
-      );
+      const response = await InvenioAdministrationActionsApi.getSchema(endpoint, value);
       fieldSchema["properties"] = response.data;
       this.setState({ lazySchema: response.data, fieldSchema: { ...fieldSchema } });
       for (const [key, value] of Object.entries(response.data)) {
