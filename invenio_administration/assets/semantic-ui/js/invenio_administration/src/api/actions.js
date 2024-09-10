@@ -21,7 +21,7 @@ const resourceAction = async (endpoint, payload) => {
   return await http.post(endpoint, payload);
 };
 
-const getRegisteredTaskSchema = async (endpoint, id) => {
+const getSchema = async (endpoint, id) => {
   const serializedEndpoint = endpoint.replace("<item_id>", id);
   return await http.get(serializedEndpoint);
 };
@@ -32,5 +32,5 @@ export const InvenioAdministrationActionsApi = {
   getResource: getResource,
   resourceAction: resourceAction,
   createResource: createResource,
-  getRegisteredTaskSchema: getRegisteredTaskSchema,
+  getSchema: getSchema,
 };
