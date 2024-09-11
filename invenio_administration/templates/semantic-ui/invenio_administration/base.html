@@ -28,6 +28,22 @@
           {% block admin_sidenav_menu %}
             {% include "invenio_administration/sidebar/sidenav.html" %}
           {% endblock %}
+
+          <div class="ui divider" aria-hidden="true"></div>
+
+          {% if config.ADMINISTRATION_DISPLAY_VERSIONS %}
+          <div class="ui relaxed list ml-10 versions">
+            {% for package_name, package_version in config.ADMINISTRATION_DISPLAY_VERSIONS %}
+            <div class="item">
+              <a class="ui grey tiny label">
+                {{ package_name }}
+                <div class="detail">{{ package_version }}</div>
+              </a>
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %}
+
         </section>
 
       {% endblock admin_sidenav %}

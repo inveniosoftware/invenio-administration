@@ -22,3 +22,10 @@ ADMINISTRATION_DASHBOARD_VIEW = (
 
 ADMINISTRATION_THEME_BASE_TEMPLATE = "invenio_theme/page.html"
 """Administration base template."""
+
+ADMINISTRATION_DISPLAY_VERSIONS = []
+"""Display packages versions in the admin panel side bar.
+
+Accepts a list of tuples in the format (package name, version).
+Example: [("my-app", "v1.3.2")]
+"""
