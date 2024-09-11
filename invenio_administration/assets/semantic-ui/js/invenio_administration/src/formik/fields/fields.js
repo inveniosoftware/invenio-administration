@@ -14,7 +14,7 @@ import _get from "lodash/get";
 import { AdminArrayField } from "./array";
 import _isEmpty from "lodash/isEmpty";
 import { sortFields } from "../../components/utils";
-import { AdminBoolField } from "./bool";
+import { AdminBoolField, generateBoolFieldProps } from "./bool";
 import { generateFieldProps } from "./props_generator";
 import { generateVocabularyFieldProps } from "./vocabulary";
 import { generateArrayFieldProps } from "./array";
@@ -25,7 +25,7 @@ const fieldsMap = {
   uuid: { element: Input, props: generateFieldProps },
   datetime: { element: Input, props: generateFieldProps },
   array: { element: AdminArrayField, props: generateArrayFieldProps },
-  bool: { element: AdminBoolField, props: generateFieldProps },
+  bool: { element: AdminBoolField, props: generateBoolFieldProps },
   hidden: { element: Field, props: generateHiddenFieldProps },
   vocabulary: { element: AutocompleteDropdown, props: generateVocabularyFieldProps },
   dynamic: { element: DynamicSubFormField, props: generateDynamicFieldProps },
