@@ -18,6 +18,7 @@ import { AdminBoolField, generateBoolFieldProps } from "./bool";
 import { generateFieldProps } from "./props_generator";
 import { generateVocabularyFieldProps } from "./vocabulary";
 import { generateArrayFieldProps } from "./array";
+import { generateDropdownFieldProps } from "./dropdown";
 
 const fieldsMap = {
   string: { element: Input, props: generateFieldProps },
@@ -30,7 +31,7 @@ const fieldsMap = {
   vocabulary: { element: AutocompleteDropdown, props: generateVocabularyFieldProps },
   dynamic: { element: DynamicSubFormField, props: generateDynamicFieldProps },
   object: { element: ObjectField, props: generateObjectFieldProps },
-  dropdown: { element: Dropdown, props: generateFieldProps },
+  dropdown: { element: Dropdown, props: generateDropdownFieldProps },
   textarea: { element: TextArea, props: generateFieldProps },
   html: { element: RichInput, props: generateFieldProps },
   function: null,
