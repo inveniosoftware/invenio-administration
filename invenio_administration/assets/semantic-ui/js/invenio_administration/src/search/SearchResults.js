@@ -16,6 +16,10 @@ import { Trans } from "react-i18next";
 export const SearchResults = ({ paginationOptions, currentResultsState }) => {
   const { total } = currentResultsState.data;
 
+  const handleResultsRendered = () => {
+    window.invenio?.onSearchResultsRendered();
+  };
+
   return (
     total && (
       <Grid>
@@ -24,7 +28,7 @@ export const SearchResults = ({ paginationOptions, currentResultsState }) => {
             <Grid>
               <Grid.Row>
                 <Grid.Column>
-                  <ResultsList />
+                  <ResultsList onResultsRendered={handleResultsRendered} />
                 </Grid.Column>
               </Grid.Row>
             </Grid>
