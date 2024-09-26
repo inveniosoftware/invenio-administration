@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.7.0 (released 2024-09-26)
+
+- feature: add display packages version badges in the sidebar
+
 Version v2.6.0 (released 2024-09-26)
 
 - actions: add actions properties (icon)
