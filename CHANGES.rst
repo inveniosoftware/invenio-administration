@@ -8,6 +8,14 @@
 Changes
 =======
 
+Version v2.6.0 (released 2024-09-26)
+
+- actions: add actions properties (icon)
+- actions: add possibility of pre-filling the action form
+- form: add hidden field, lazy field
+- form: refactor fields generation to improve readability and modular approach
+- form: add overridable components
+
 Version v2.5.0 (released 2024-08-22)
 
 - package: bump react-invenio-forms
