@@ -27,7 +27,7 @@ const listUIEndpoint = domContainer.dataset.listEndpoint;
 const resourceSchema = JSON.parse(domContainer.dataset?.resourceSchema);
 const requestHeaders = JSON.parse(domContainer.dataset?.requestHeaders);
 const uiSchema = JSON.parse(domContainer.dataset?.uiConfig);
-const name = JSON.parse(domContainer.dataset?.name);
+const name = domContainer.dataset?.name;
 
 domContainer &&
   ReactDOM.render(
