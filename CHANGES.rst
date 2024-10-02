@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.7.2 (released 2024-10-02)
+
+- views: add callback hook on search results rendered
+
 Version v2.7.1 (released 2024-10-02)
 
 - details: remove parsing for name field
