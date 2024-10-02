@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.7.1 (released 2024-10-02)
+
+- details: remove parsing for name field
+
 Version v2.7.0 (released 2024-09-26)
 
 - feature: add display packages version badges in the sidebar
