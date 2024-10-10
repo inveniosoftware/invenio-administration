@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.8.0 (released 2024-10-10)
+
+- deps: update axios major version (needed only to run js tests)
+
 Version v2.7.2 (released 2024-10-02)
 
 - views: add callback hook on search results rendered
