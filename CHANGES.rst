@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.8.1 (released 2024-10-10)
+
+- setup: bump invenio-search-ui to fix dependency installation
+
 Version v2.8.0 (released 2024-10-10)
 
 - deps: update axios major version (needed only to run js tests)
