@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.8.2 (released 2024-10-10)
+
+- webpack: bump react-searchkit to v3.0.0 due to axios upgrade
+
 Version v2.8.1 (released 2024-10-10)
 
 - setup: bump invenio-search-ui to fix dependency installation
