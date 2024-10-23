@@ -1,5 +1,6 @@
 // This file is part of InvenioAdministration
 // Copyright (C) 2022 CERN.
+// Copyright (C) 2024 KTH Royal Institute of Technology.
 //
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
@@ -40,14 +41,14 @@ class DeleteModal extends Component {
       await InvenioAdministrationActionsApi.deleteResource(apiEndpoint);
       toggleModal(false);
       addNotification({
-        title: "Success",
-        content: "Resource was successfully deleted.",
+        title: i18next.t("Success"),
+        content: i18next.t("Resource was successfully deleted."),
         type: "success",
       });
       successCallback();
     } catch (e) {
       this.setState({
-        error: { header: "Action error", content: e.message, id: e.code },
+        error: { header: i18next.t("Action error"), content: e.message, id: e.code },
       });
     }
   };
