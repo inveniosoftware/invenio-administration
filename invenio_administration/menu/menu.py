@@ -3,6 +3,7 @@
 # This file is part of Invenio.
 # Copyright (C) 2022-2024 CERN.
 # Copyright (C) 2023 Graz University of Technology.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -90,7 +91,7 @@ class AdminMenu:
     def add_menu_item(self, item, index=None):
         """Add menu item."""
         if not isinstance(item, MenuItem):
-            return TypeError("Item should be MenuItem instance.")
+            return TypeError(_("Item should be MenuItem instance."))
 
         if index:
             self._menu_items[index] = item
