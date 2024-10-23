@@ -1,6 +1,7 @@
 /*
  * This file is part of Invenio.
  * Copyright (C) 2022 CERN.
+ * Copyright (C) 2024 KTH Royal Institute of Technology.
  *
  * Invenio is free software; you can redistribute it and/or modify it
  * under the terms of the MIT License; see LICENSE file for more details.
@@ -33,7 +34,11 @@ class SearchEmptyResults extends Component {
           {isEmptyPage && i18next.t("There is no resources in this category.")}
           {isEmptyPageAfterSearch && i18next.t("No matching resources found.")}
         </Header>
-        {queryString && <em>Current search "{queryString}"</em>}
+        {queryString && (
+          <em>
+            {i18next.t("Current search")} "{queryString}"
+          </em>
+        )}
         <br />
         {isEmptyPageAfterSearch && (
           <Button primary onClick={() => resetQuery()}>
