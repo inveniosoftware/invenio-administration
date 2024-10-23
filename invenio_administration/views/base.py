@@ -3,6 +3,7 @@
 # This file is part of Invenio.
 # Copyright (C) 2022-2024 CERN.
 # Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -12,6 +13,7 @@ from functools import partial
 
 from flask import current_app, render_template, url_for
 from flask.views import MethodView
+from invenio_i18n import lazy_gettext as _
 from invenio_search_ui.searchconfig import search_app_config
 
 from invenio_administration.errors import (
@@ -255,7 +257,7 @@ class AdminResourceDetailView(AdminResourceBaseView):
     item_field_exclude_list = None
     item_field_list = None
     template = "invenio_administration/details.html"
-    title = "Resource details"
+    title = _("Resource details")
 
     def get_context(self, pid_value=None):
         """Create details view context."""
@@ -317,14 +319,14 @@ class AdminResourceEditView(AdminFormView):
     """Admin resource edit view."""
 
     template = "invenio_administration/edit.html"
-    title = "Edit resource"
+    title = _("Edit resource")
 
 
 class AdminResourceCreateView(AdminFormView):
     """Admin resource edit view."""
 
     template = "invenio_administration/create.html"
-    title = "Create resource"
+    title = _("Create resource")
 
 
 class AdminResourceListView(AdminResourceBaseView):

@@ -2,7 +2,7 @@
 #
 # This file is part of Invenio.
 # Copyright (C) 2022-2024 CERN.
-# Copyright (C) 2023 KTH Royal Institute of Technology.
+# Copyright (C) 2023-2024 KTH Royal Institute of Technology.
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
 
@@ -13,6 +13,7 @@ from invenio_vocabularies.services.schema import (
     ContribVocabularyRelationSchema,
     VocabularyRelationSchema,
 )
+from invenio_i18n import lazy_gettext as _
 from marshmallow import fields
 from marshmallow_utils import fields as invenio_fields
 from marshmallow_utils.fields import EDTFDateString, EDTFDateTimeString
@@ -78,7 +79,7 @@ def find_type_in_mapping(field_type, custom_mapping):
             return custom_mapping[current_type]
         current_type = current_type.__base__
 
-    raise KeyError(f"Unrecognized field type: {field_type}")
+    raise KeyError(_("Unrecognized field type: {field_type}", field_type=field_type))
 
 
 def jsonify_schema(schema):
@@ -162,5 +163,12 @@ def jsonify_schema(schema):
                     }
                 )
             except KeyError:
-                raise Exception(f"Unrecognised schema field {field}: {field_type_name}")
+                raise Exception(
+                    _(
+                        "Unrecognised schema field {field}: {field_type_name}",
+                        field=field,
+                        field_type_name=field_type_name,
+                    )
+                )
+
     return schema_dict
