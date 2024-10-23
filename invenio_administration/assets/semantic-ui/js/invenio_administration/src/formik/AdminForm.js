@@ -1,3 +1,10 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+// Copyright (C) 2024 KTH Royal Institute of Technology.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, Formik } from "formik";
@@ -43,6 +50,28 @@ export class AdminForm extends Component {
     const { apiEndpoint, pid, successCallback, create } = this.props;
     const { addNotification } = this.context;
     let response;
+
+    const transformedValues = mapValues(values, (value, key) => {
+      const fieldSchema = this.props.resourceSchema[key];
+
+      if (fieldSchema?.metadata?.type === "json") {
+        try {
+          if (value === "") {
+            return null;
+          } else if (typeof value === "object") {
+            return value;
+          } else {
+            return JSON.parse(value);
+          }
+        } catch (e) {
+          console.error(`Error parsing JSON for field ${key}:`, e);
+          actions.setFieldError(key, i18next.t("Invalid JSON format"));
+          throw e;
+        }
+      }
+      return value;
+    });
+
     try {
       if (create) {
         response = await InvenioAdministrationActionsApi.createResource(
@@ -59,8 +88,8 @@ export class AdminForm extends Component {
       actions.setSubmitting(false);
       actions.resetForm({ values: { ...values } });
       addNotification({
-        title: "Success",
-        content: "Your changes were successfully submitted",
+        title: i18next.t("Success"),
+        content: i18next.t("Your changes were successfully submitted"),
         type: "success",
       });
       successCallback(response.data);
@@ -78,7 +107,7 @@ export class AdminForm extends Component {
       }
 
       this.setState({
-        error: { header: "Form error", content: errorMessage, id: e.code },
+        error: { header: i18next.t("Form error"), content: errorMessage, id: e.code },
       });
     }
   };
