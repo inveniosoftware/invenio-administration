@@ -372,6 +372,8 @@ class AdminResourceListView(AdminResourceBaseView):
             sort_options=current_app.config[self.search_sort_config_name],
             endpoint=self.get_api_endpoint(**kwargs),
             headers=self.get_search_request_headers(**kwargs),
+            pagination_options=(20, 50),
+            default_size=20,
         )
 
     def get_sort_options(self):
