@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v2.9.0 (released 2024-11-11)
+
+- admin: change default # of results from 10 to 20
+- fix: make tooltip required
+- bug: fix type for BoolFormatter value
+
 Version v2.8.2 (released 2024-10-10)
 
 - webpack: bump react-searchkit to v3.0.0 due to axios upgrade
