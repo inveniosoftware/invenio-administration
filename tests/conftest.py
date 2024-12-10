@@ -19,13 +19,14 @@ from flask_security import login_user
 from invenio_access.models import ActionRoles, Role
 from invenio_access.permissions import superuser_access
 from invenio_accounts.testutils import login_user_via_session
-from invenio_admin.permissions import action_admin_access
 from invenio_app.factory import create_app as _create_app
 from invenio_records_resources.resources import RecordResource
 from invenio_records_resources.services import RecordService
 from mock_module.administration.mock import MockView
 from mock_module.config import ServiceConfig
 from mock_module.resource import MockResource
+
+from invenio_administration.permissions import administration_access_action
 
 
 @pytest.fixture(scope="module")
@@ -63,7 +64,7 @@ def admin_role_need(db):
     role = Role(name="admin-access", id="admin-access")
     db.session.add(role)
 
-    action_role = ActionRoles.create(action=action_admin_access, role=role)
+    action_role = ActionRoles.create(action=administration_access_action, role=role)
     db.session.add(action_role)
 
     db.session.commit()
