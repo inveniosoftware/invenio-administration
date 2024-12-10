@@ -1,5 +1,6 @@
 ..
     Copyright (C) 2022-2024 CERN.
+    Copyright (C) 2024 Graz University of Technology.
 
     invenio-administration is free software; you can redistribute it and/or
     modify it under the terms of the MIT License; see LICENSE file for more
@@ -7,6 +8,12 @@
 
 Changes
 =======
+
+Version v3.0.0 (released 2024-12-10)
+
+- tests: remove invenio-admin dependency
+- setup: change to reusable workflows
+- setup: bump major dependencies
 
 Version v2.9.0 (released 2024-11-11)
 
