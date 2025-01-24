@@ -9,6 +9,10 @@
 Changes
 =======
 
+Version v3.1.0 (released 2025-01-24)
+
+- modal: add support for custom modal SUI props
+
 Version v3.0.0 (released 2024-12-10)
 
 - tests: remove invenio-admin dependency
