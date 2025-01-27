@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.10.0 (released 2025-01-27)
+
+- modal: add support for custom modal SUI props
+
 Version v2.9.0 (released 2024-11-11)
 
 - admin: change default # of results from 10 to 20
