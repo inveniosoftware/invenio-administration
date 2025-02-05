@@ -65,7 +65,7 @@ def find_type_in_mapping(field_type, custom_mapping):
             return custom_mapping[current_type]
         current_type = current_type.__base__
 
-    raise KeyError(_("Unrecognized field type: {field_type}", field_type=field_type))
+    raise KeyError(_("Unrecognized field type: %(field_type)s", field_type=field_type))
 
 
 def jsonify_schema(schema):
@@ -162,7 +162,7 @@ def jsonify_schema(schema):
             except KeyError:
                 raise Exception(
                     _(
-                        "Unrecognised schema field {field}: {field_type_name}",
+                        "Unrecognised schema field %(field)s: %(field_type_name)s",
                         field=field,
                         field_type_name=field_type_name,
                     )
