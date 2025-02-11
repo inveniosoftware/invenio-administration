@@ -99,6 +99,13 @@ class ActionForm extends Component {
     const { actionKey, actionSuccessCallback } = this.props;
     const actionEndpoint = this.getEndpoint(actionKey);
 
+    const args = formData?.args;
+    if (args) {
+      formData.args = Object.fromEntries(
+        Object.entries(args).map(([key, value]) => [key, value === "" ? null : value])
+      );
+    }
+
     try {
       const response = await InvenioAdministrationActionsApi.resourceAction(
         actionEndpoint,
@@ -127,7 +134,7 @@ class ActionForm extends Component {
   };
 
   getEndpoint = (actionKey) => {
-    const { resource, actionConfig } = this.props;
+    const { resource } = this.props;
     let endpoint;
     // get the action endpoint from the current resource links
     endpoint = _get(resource, `links.actions[${actionKey}]`);
