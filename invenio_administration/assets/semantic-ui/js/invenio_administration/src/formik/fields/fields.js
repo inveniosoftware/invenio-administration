@@ -25,6 +25,7 @@ const fieldsMap = {
   integer: { element: Input, props: generateFieldProps },
   uuid: { element: Input, props: generateFieldProps },
   datetime: { element: Input, props: generateFieldProps },
+  date: { element: Input, props: generateFieldProps },
   array: { element: AdminArrayField, props: generateArrayFieldProps },
   bool: { element: AdminBoolField, props: generateBoolFieldProps },
   hidden: { element: Field, props: generateHiddenFieldProps },
