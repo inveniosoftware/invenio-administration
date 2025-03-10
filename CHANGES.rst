@@ -9,6 +9,10 @@
 Changes
 =======
 
+Version v3.1.1 (released 2025-03-10)
+
+- ui: improve UX of modal button triggers
+
 Version v3.1.0 (released 2025-01-24)
 
 - modal: add support for custom modal SUI props
