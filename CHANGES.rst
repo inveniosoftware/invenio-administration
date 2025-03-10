@@ -9,6 +9,10 @@
 Changes
 =======
 
+Version v3.1.2 (released 2025-03-10)
+
+- forms: handle date type in form generation
+
 Version v3.1.1 (released 2025-03-10)
 
 - ui: improve UX of modal button triggers
