@@ -1,3 +1,10 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+// Copyright (C) 2024 KTH Royal Institute of Technology.
+//
+// Invenio RDM Records is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, Formik } from "formik";
@@ -128,7 +135,7 @@ class ActionForm extends Component {
       }
 
       this.setState({
-        error: { header: "Action error", content: errorMessage, id: e.code },
+        error: { header: i18next.t("Action error"), content: errorMessage, id: e.code },
       });
     }
   };

@@ -3,6 +3,7 @@
 # This file is part of Invenio.
 # Copyright (C) 2022-2024 CERN.
 # Copyright (C) 2023-2024 Graz University of Technology.
+# Copyright (C) 2024 KTH Royal Institute of Technology.
 #
 # Invenio is free software; you can redistribute it and/or modify it
 # under the terms of the MIT License; see LICENSE file for more details.
@@ -11,6 +12,7 @@
 
 from flask import Blueprint
 from flask_menu import current_menu
+from invenio_i18n import lazy_gettext as _
 from werkzeug.utils import import_string
 
 from invenio_administration.menu import AdminMenu
@@ -50,7 +52,7 @@ class Administration:
         self.blueprint = None
 
         if name is None:
-            name = "Administration"
+            name = _("Administration")
         self.name = name
 
         self.dashboard_view_class = self.load_admin_dashboard(app)

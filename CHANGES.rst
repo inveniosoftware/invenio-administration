@@ -8,6 +8,10 @@
 Changes
 =======
 
+Version v2.10.1 (released 2025-03-18)
+
+- i18n: mark missing translations
+
 Version v2.10.0 (released 2025-01-27)
 
 - modal: add support for custom modal SUI props
