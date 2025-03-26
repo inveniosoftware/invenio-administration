@@ -18,5 +18,12 @@
   "Save": "",
   "Search": "搜尋",
   "Clear query": "",
-  "Actions": ""
+  "Actions": "",
+  "Success": "",
+  "Resource was successfully deleted.": "",
+  "Action error": "",
+  "Invalid JSON format": "",
+  "Your changes were successfully submitted": "",
+  "Form error": "",
+  "Current search": ""
 }

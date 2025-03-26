@@ -22,5 +22,12 @@
   "{{count}} results found_plural": "{{count}} results found",
   " results per page": " results per page",
   " results per page_plural": " results per page",
-  "Actions": "Actions"
+  "Actions": "Actions",
+  "Success": "Success",
+  "Resource was successfully deleted.": "Resource was successfully deleted.",
+  "Action error": "Action error",
+  "Invalid JSON format": "Invalid JSON format",
+  "Your changes were successfully submitted": "Your changes were successfully submitted",
+  "Form error": "Form error",
+  "Current search": "Current search"
 }
