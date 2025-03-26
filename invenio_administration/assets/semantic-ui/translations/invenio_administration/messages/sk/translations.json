@@ -21,8 +21,15 @@
   "{{count}} results found_0": "",
   "{{count}} results found_1": "",
   "{{count}} results found_2": "",
-  " results per page_0": "",
-  " results per page_1": "",
-  " results per page_2": "",
-  "Actions": ""
+  " results per page_0": " results per page",
+  " results per page_1": " results per page",
+  " results per page_2": " results per page",
+  "Actions": "",
+  "Success": "",
+  "Resource was successfully deleted.": "",
+  "Action error": "",
+  "Invalid JSON format": "",
+  "Your changes were successfully submitted": "",
+  "Form error": "",
+  "Current search": ""
 }

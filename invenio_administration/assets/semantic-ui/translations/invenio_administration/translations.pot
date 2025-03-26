@@ -5,8 +5,8 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
-"POT-Creation-Date: 2024-08-12T10:05:55.799Z\n"
-"PO-Revision-Date: 2024-08-12T10:05:55.799Z\n"
+"POT-Creation-Date: 2025-03-26T16:16:11.725Z\n"
+"PO-Revision-Date: 2025-03-26T16:16:11.725Z\n"
 "Language: en\n"
 
 msgid "Open list of actions"
@@ -78,3 +78,24 @@ msgstr[1] " results per page"
 
 msgid "Actions"
 msgstr "Actions"
+
+msgid "Success"
+msgstr "Success"
+
+msgid "Resource was successfully deleted."
+msgstr "Resource was successfully deleted."
+
+msgid "Action error"
+msgstr "Action error"
+
+msgid "Invalid JSON format"
+msgstr "Invalid JSON format"
+
+msgid "Your changes were successfully submitted"
+msgstr "Your changes were successfully submitted"
+
+msgid "Form error"
+msgstr "Form error"
+
+msgid "Current search"
+msgstr "Current search"

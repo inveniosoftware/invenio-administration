@@ -19,6 +19,13 @@
   "Search": "جستجو",
   "Clear query": "",
   "{{count}} results found_0": "",
-  " results per page_0": "",
-  "Actions": ""
+  " results per page_0": " results per page",
+  "Actions": "",
+  "Success": "",
+  "Resource was successfully deleted.": "",
+  "Action error": "",
+  "Invalid JSON format": "",
+  "Your changes were successfully submitted": "",
+  "Form error": "",
+  "Current search": ""
 }
