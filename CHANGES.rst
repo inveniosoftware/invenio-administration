@@ -1,5 +1,6 @@
 ..
     Copyright (C) 2022-2024 CERN.
+    Copyright (C) 2025 Graz University of Technology.
 
     invenio-administration is free software; you can redistribute it and/or
     modify it under the terms of the MIT License; see LICENSE file for more
@@ -7,6 +8,14 @@
 
 Changes
 =======
+
+Version v2.11.0 (released 2025-04-29)
+
+- i18n:pulled translations
+- i18n:push translations
+- i18n: improve error message formatting for unrecognized field types
+- i18n: mark strings for translation
+- ui: add an indicator for the buttons that open modals
 
 Version v2.10.0 (released 2025-01-27)
 
