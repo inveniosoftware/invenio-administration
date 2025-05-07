@@ -9,6 +9,10 @@
 Changes
 =======
 
+Version v2.11.1 (released 2025-05-08)
+
+- i18n:compile js translations
+
 Version v2.11.0 (released 2025-04-29)
 
 - i18n:pulled translations
