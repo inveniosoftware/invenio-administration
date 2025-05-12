@@ -8,12 +8,12 @@
 
 """Invenio administration marshmallow utils module."""
 
+from invenio_i18n import lazy_gettext as _
 from invenio_vocabularies.services.schema import (
     BaseVocabularySchema,
     ContribVocabularyRelationSchema,
     VocabularyRelationSchema,
 )
-from invenio_i18n import lazy_gettext as _
 from marshmallow import fields
 from marshmallow_utils import fields as invenio_fields
 from marshmallow_utils.fields import EDTFDateString, EDTFDateTimeString
