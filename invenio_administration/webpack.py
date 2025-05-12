@@ -26,7 +26,7 @@ theme = WebpackThemeBundle(
                 "invenio-administration-details": "./js/invenio_administration/src/details/details.js",
             },
             dependencies={
-                "@babel/runtime": "^7.9.0",
+                "@babel/runtime": "^7.26.10",
                 "i18next": "^20.3.0",
                 "i18next-browser-languagedetector": "^6.1.0",
                 "luxon": "^1.23.0",
