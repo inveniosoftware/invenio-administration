@@ -3,7 +3,7 @@
     "This package.json is needed to run the JS tests, locally and CI."
   ],
   "scripts": {
-    "test": "react-scripts test"
+    "test": "export TZ=UTC && react-scripts test"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^4.2.0",
