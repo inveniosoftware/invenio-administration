@@ -51,7 +51,7 @@ module.exports = {
 
       // The path to store resources.
       savePath: "messages/{{lng}}/{{ns}}.json",
-      jsonIndent: 2,
+      jsonIndent: 4,
       lineEnding: "\n",
     },
     nsSeparator: false, // namespace separator
