@@ -8,6 +8,7 @@ import TRANSLATE_CS from "./cs/translations.json";
 import TRANSLATE_DA from "./da/translations.json";
 import TRANSLATE_DE from "./de/translations.json";
 import TRANSLATE_EL from "./el/translations.json";
+import TRANSLATE_EN from "./en/translations.json";
 import TRANSLATE_ES from "./es/translations.json";
 import TRANSLATE_ET from "./et/translations.json";
 import TRANSLATE_FA from "./fa/translations.json";
@@ -39,6 +40,7 @@ export const translations = {
   da: { translation: TRANSLATE_DA },
   de: { translation: TRANSLATE_DE },
   el: { translation: TRANSLATE_EL },
+  en: { translation: TRANSLATE_EN },
   es: { translation: TRANSLATE_ES },
   et: { translation: TRANSLATE_ET },
   fa: { translation: TRANSLATE_FA },
