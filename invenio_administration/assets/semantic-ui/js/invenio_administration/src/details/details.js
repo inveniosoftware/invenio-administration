@@ -48,7 +48,6 @@ domContainer &&
         uiSchema={uiSchema}
         name={name}
       />
-      ,
     </OverridableContext.Provider>,
     domContainer
   );
