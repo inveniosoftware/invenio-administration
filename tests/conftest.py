@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 #
 # Copyright (C) 2022 CERN.
-# Copyright (C) 2024 Graz University of Technology.
+# Copyright (C) 2024-2025 Graz University of Technology.
 #
 # invenio-administration is free software; you can redistribute it and/or
 # modify it under the terms of the MIT License; see LICENSE file for more
@@ -126,6 +126,13 @@ RunningApp = namedtuple(
         "cache",
     ],
 )
+
+
+@pytest.fixture(scope="module")
+def app_config(app_config):
+    """Application configuration fixture."""
+    app_config["THEME_FRONTPAGE"] = False
+    return app_config
 
 
 @pytest.fixture(scope="module")
