@@ -11,7 +11,6 @@ import { Grid } from "semantic-ui-react";
 import { ResultsList, Pagination, ResultsPerPage, Count } from "react-searchkit";
 import { i18next } from "@translations/invenio_administration/i18next";
 import PropTypes from "prop-types";
-import { Trans } from "react-i18next";
 
 export const SearchResults = ({ paginationOptions, currentResultsState }) => {
   const { total } = currentResultsState.data;
@@ -59,9 +58,9 @@ export const SearchResults = ({ paginationOptions, currentResultsState }) => {
             <ResultsPerPage
               values={paginationOptions.resultsPerPage}
               label={(cmp) => (
-                <Trans key="adminSearchResults" count={cmp}>
-                  {cmp} results per page
-                </Trans>
+                <>
+                  {cmp} {i18next.t("results per page")}
+                </>
               )}
             />
           </Grid.Column>
