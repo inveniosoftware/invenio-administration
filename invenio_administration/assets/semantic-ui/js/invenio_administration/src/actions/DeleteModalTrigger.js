@@ -10,7 +10,6 @@ import { i18next } from "@translations/invenio_administration/i18next";
 import { Button, Icon } from "semantic-ui-react";
 import DeleteModal from "./DeleteModal";
 import { Modal } from "semantic-ui-react";
-import { Trans } from "react-i18next";
 import _get from "lodash/get";
 import Overridable from "react-overridable";
 
@@ -68,10 +67,9 @@ export class DeleteModalTrigger extends Component {
           >
             <Modal.Content>
               <Modal.Description>
-                <Trans
-                  defaults="Are you sure you want to delete {{resourceName}}? "
-                  values={{ resourceName: _get(resource, resourceName) }}
-                />
+                {i18next.t("Are you sure you want to delete {{resourceName}}?", {
+                  resourceName: _get(resource, resourceName),
+                })}
               </Modal.Description>
             </Modal.Content>
           </DeleteModal>
