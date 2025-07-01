@@ -10,7 +10,6 @@ import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
 import { Modal } from "semantic-ui-react";
-import { Trans } from "react-i18next";
 import isEmpty from "lodash/isEmpty";
 import { ErrorMessage } from "../ui_messages/messages";
 import { NotificationContext } from "../ui_messages/context";
@@ -70,7 +69,7 @@ class DeleteModal extends Component {
       >
         <Modal role="dialog" open={modalOpen}>
           <Modal.Header as="h2">
-            <Trans defaults="Delete {{title}}" values={{ title: title }} />
+            {i18next.t("Delete {{title}}", { title: title })}
           </Modal.Header>
           <Modal.Content>
             <Modal.Description>
