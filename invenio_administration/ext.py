@@ -9,7 +9,7 @@
 
 """Invenio admin extension."""
 
-import importlib_metadata
+from invenio_base.utils import entry_points
 
 from . import config
 from .admin import Administration
@@ -42,7 +42,7 @@ class InvenioAdministration:
 
     def load_entry_point_group(self, app):
         """Load admin interface views from entry point group."""
-        entrypoints = set(importlib_metadata.entry_points(group=self.entry_point_group))
+        entrypoints = entry_points(group=self.entry_point_group)
         for ep in entrypoints:
             entry_point = self._load_entry_point(ep)
             entrypoint_path = ep.value
