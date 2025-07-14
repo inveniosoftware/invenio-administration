@@ -9,6 +9,19 @@
 Changes
 =======
 
+Version v4.1.0 (released 2025-07-14)
+
+- chores: replaced importlib_xyz with importlib
+- i18n: run js compile_catalog
+- i18n: run js extract msgs
+- i18n: DeleteModal replace Trans component with i18next
+- i18n: DeleteModalTrigger replace Trans component with i18next
+- i18n: update ResultsPerPage label to use i18next for translation
+- i18n: refactor compile catalog
+- i18n: force pull translations
+- i18n: extract msgs
+- fix: include invenio-i18n dependency
+
 Version v4.0.0 (released 2025-06-03)
 
 - setup: bump major dependencies
