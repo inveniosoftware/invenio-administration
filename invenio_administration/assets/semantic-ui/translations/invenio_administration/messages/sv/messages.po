@@ -1,16 +1,16 @@
 # 
 # Translators:
 # Tibor Simko <tibor.simko@cern.ch>, 2022
-# Sam Arbid, 2024
 # Rim Sharif, 2024
 # Mattias Vesterlund, 2025
+# Sam Arbid, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-03-26T16:16:11.725Z\n"
+"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Mattias Vesterlund, 2025\n"
+"Last-Translator: Sam Arbid, 2025\n"
 "Language-Team: Swedish (https://app.transifex.com/inveniosoftware/teams/23537/sv/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,16 +24,25 @@ msgstr "Öppna listan över åtgärder"
 msgid "Resource is not deletable."
 msgstr "Resursen går inte att radera."
 
+msgid "Success"
+msgstr "Framgång"
+
+msgid "Resource was successfully deleted."
+msgstr "Resursen har raderats."
+
+msgid "Action error"
+msgstr "Åtgärdsfel"
+
+msgid "Delete {{title}}"
+msgstr "Ta bort {{title}}"
+
 msgid "Cancel"
 msgstr "Avbryt"
 
 msgid "Delete"
 msgstr "Radera"
 
-msgid "Delete {{title}}"
-msgstr "Ta bort {{title}}"
-
-msgid "Are you sure you want to delete {{resourceName}}? "
+msgid "Are you sure you want to delete {{resourceName}}?"
 msgstr "Är du säker på att du vill ta bort {{resourceName}}?"
 
 msgid "Edit"
@@ -47,6 +56,15 @@ msgstr "Fel"
 
 msgid "Server was not able to process your request."
 msgstr "Servern kunde inte behandla din förfrågan."
+
+msgid "Invalid JSON format"
+msgstr "Ogiltigt JSON-format"
+
+msgid "Your changes were successfully submitted"
+msgstr "Dina ändringar har skickats in"
+
+msgid "Form error"
+msgstr "Formulärsfel"
 
 msgid "Save"
 msgstr "Spara"
@@ -72,6 +90,9 @@ msgstr "Det finns inga resurser i denna kategori."
 msgid "No matching resources found."
 msgstr "Inga matchande resurser hittades."
 
+msgid "Current search"
+msgstr "Nuvarande sökning"
+
 msgid "Clear query"
 msgstr "Rensa query"
 
@@ -80,31 +101,8 @@ msgid_plural "{{count}} results found"
 msgstr[0] "{{count}} resultat hittades"
 msgstr[1] "{{count}} resultat hittades"
 
-msgid " results per page"
-msgid_plural " results per page"
-msgstr[0] "resultat per sida"
-msgstr[1] "resultat per sida"
+msgid "results per page"
+msgstr "resultat per sida"
 
 msgid "Actions"
 msgstr "Åtgärder"
-
-msgid "Success"
-msgstr "Framgång"
-
-msgid "Resource was successfully deleted."
-msgstr "Resursen har raderats."
-
-msgid "Action error"
-msgstr "Åtgärdsfel"
-
-msgid "Invalid JSON format"
-msgstr "Ogiltigt JSON-format"
-
-msgid "Your changes were successfully submitted"
-msgstr "Dina ändringar har skickats in"
-
-msgid "Form error"
-msgstr "Formulärsfel"
-
-msgid "Current search"
-msgstr "Nuvarande sökning"
