@@ -12,9 +12,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: invenio-administration 2.10.0\n"
+"Project-Id-Version: invenio-administration 4.0.0\n"
 "Report-Msgid-Bugs-To: info@inveniosoftware.org\n"
-"POT-Creation-Date: 2025-03-26 16:16+0000\n"
+"POT-Creation-Date: 2025-07-08 19:19+0000\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2025\n"
 "Language-Team: French (https://app.transifex.com/inveniosoftware/teams/23537/fr/)\n"

@@ -7,7 +7,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-03-26T16:16:11.725Z\n"
+"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Jesús Martín <jesusmartin@sallep.net>, 2025\n"
 "Language-Team: Spanish (https://app.transifex.com/inveniosoftware/teams/23537/es/)\n"
@@ -23,17 +23,26 @@ msgstr "Abrir lista de acciones"
 msgid "Resource is not deletable."
 msgstr "El recurso no se puede eliminar."
 
+msgid "Success"
+msgstr "Éxito"
+
+msgid "Resource was successfully deleted."
+msgstr "El recurso se ha eliminado con éxito."
+
+msgid "Action error"
+msgstr "Error de acción"
+
+msgid "Delete {{title}}"
+msgstr "Borrar {{title}}"
+
 msgid "Cancel"
 msgstr "Cancelar"
 
 msgid "Delete"
 msgstr "Eliminar"
 
-msgid "Delete {{title}}"
-msgstr "Borrar {{title}}"
-
-msgid "Are you sure you want to delete {{resourceName}}? "
-msgstr "¿Está seguro de querer eliminar {{resourceName}}?"
+msgid "Are you sure you want to delete {{resourceName}}?"
+msgstr ""
 
 msgid "Edit"
 msgstr "Editar"
@@ -46,6 +55,15 @@ msgstr "Error"
 
 msgid "Server was not able to process your request."
 msgstr "El servidor no pudo procesar su solicitud."
+
+msgid "Invalid JSON format"
+msgstr "Formato JSON no válido"
+
+msgid "Your changes were successfully submitted"
+msgstr "Sus cambios fueron enviados con éxito"
+
+msgid "Form error"
+msgstr "Error de formulario"
 
 msgid "Save"
 msgstr "Guardar"
@@ -71,6 +89,9 @@ msgstr "No hay recursos en esta categoría."
 msgid "No matching resources found."
 msgstr "No se encontraron recursos coincidentes."
 
+msgid "Current search"
+msgstr "Búsqueda actual"
+
 msgid "Clear query"
 msgstr "Borrar consulta"
 
@@ -80,32 +101,8 @@ msgstr[0] "{{count}} resultado encontrado"
 msgstr[1] "{{count}} resultados encontrados"
 msgstr[2] "{{count}} resultados encontrados"
 
-msgid " results per page"
-msgid_plural " results per page"
-msgstr[0] "resultados por página"
-msgstr[1] "resultados por página"
-msgstr[2] "resultados por página"
+msgid "results per page"
+msgstr "resultados por página"
 
 msgid "Actions"
 msgstr "Acciones"
-
-msgid "Success"
-msgstr "Éxito"
-
-msgid "Resource was successfully deleted."
-msgstr "El recurso se ha eliminado con éxito."
-
-msgid "Action error"
-msgstr "Error de acción"
-
-msgid "Invalid JSON format"
-msgstr "Formato JSON no válido"
-
-msgid "Your changes were successfully submitted"
-msgstr "Sus cambios fueron enviados con éxito"
-
-msgid "Form error"
-msgstr "Error de formulario"
-
-msgid "Current search"
-msgstr "Búsqueda actual"

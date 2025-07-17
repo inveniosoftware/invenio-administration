@@ -5,7 +5,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-03-26T16:16:11.725Z\n"
+"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2024\n"
 "Language-Team: Croatian (https://app.transifex.com/inveniosoftware/teams/23537/hr/)\n"
@@ -21,16 +21,25 @@ msgstr ""
 msgid "Resource is not deletable."
 msgstr ""
 
+msgid "Success"
+msgstr ""
+
+msgid "Resource was successfully deleted."
+msgstr ""
+
+msgid "Action error"
+msgstr ""
+
+msgid "Delete {{title}}"
+msgstr ""
+
 msgid "Cancel"
 msgstr "Odustani"
 
 msgid "Delete"
 msgstr "Briši"
 
-msgid "Delete {{title}}"
-msgstr ""
-
-msgid "Are you sure you want to delete {{resourceName}}? "
+msgid "Are you sure you want to delete {{resourceName}}?"
 msgstr ""
 
 msgid "Edit"
@@ -43,6 +52,15 @@ msgid "Error"
 msgstr "Greška"
 
 msgid "Server was not able to process your request."
+msgstr ""
+
+msgid "Invalid JSON format"
+msgstr ""
+
+msgid "Your changes were successfully submitted"
+msgstr ""
+
+msgid "Form error"
 msgstr ""
 
 msgid "Save"
@@ -69,6 +87,9 @@ msgstr ""
 msgid "No matching resources found."
 msgstr ""
 
+msgid "Current search"
+msgstr ""
+
 msgid "Clear query"
 msgstr ""
 
@@ -78,32 +99,8 @@ msgstr[0] ""
 msgstr[1] ""
 msgstr[2] ""
 
-msgid " results per page"
-msgid_plural " results per page"
-msgstr[0] ""
-msgstr[1] ""
-msgstr[2] ""
+msgid "results per page"
+msgstr ""
 
 msgid "Actions"
 msgstr "Akcije"
-
-msgid "Success"
-msgstr ""
-
-msgid "Resource was successfully deleted."
-msgstr ""
-
-msgid "Action error"
-msgstr ""
-
-msgid "Invalid JSON format"
-msgstr ""
-
-msgid "Your changes were successfully submitted"
-msgstr ""
-
-msgid "Form error"
-msgstr ""
-
-msgid "Current search"
-msgstr ""

@@ -6,7 +6,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-03-26T16:16:11.725Z\n"
+"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Anna Sakoyan, 2025\n"
 "Language-Team: Russian (https://app.transifex.com/inveniosoftware/teams/23537/ru/)\n"
@@ -22,17 +22,26 @@ msgstr "Открыть список действий"
 msgid "Resource is not deletable."
 msgstr "Ресурс нельзя удалить"
 
+msgid "Success"
+msgstr "Успешно"
+
+msgid "Resource was successfully deleted."
+msgstr ""
+
+msgid "Action error"
+msgstr ""
+
+msgid "Delete {{title}}"
+msgstr "Удалить {{title}}"
+
 msgid "Cancel"
 msgstr "Отменить"
 
 msgid "Delete"
 msgstr "Удалить"
 
-msgid "Delete {{title}}"
-msgstr "Удалить {{title}}"
-
-msgid "Are you sure you want to delete {{resourceName}}? "
-msgstr "Вы уверены, что хотите удалить {{resourceName}}? "
+msgid "Are you sure you want to delete {{resourceName}}?"
+msgstr ""
 
 msgid "Edit"
 msgstr "Редактировать"
@@ -45,6 +54,15 @@ msgstr "Ошибка"
 
 msgid "Server was not able to process your request."
 msgstr "Сервер не смог обработать ваш запрос."
+
+msgid "Invalid JSON format"
+msgstr ""
+
+msgid "Your changes were successfully submitted"
+msgstr ""
+
+msgid "Form error"
+msgstr ""
 
 msgid "Save"
 msgstr "Сохранить"
@@ -70,6 +88,9 @@ msgstr "В этой категории нет ресурсов."
 msgid "No matching resources found."
 msgstr "Подходящие ресурсы не найдены."
 
+msgid "Current search"
+msgstr "Поисковый запрос"
+
 msgid "Clear query"
 msgstr "Очистить запрос"
 
@@ -80,33 +101,8 @@ msgstr[1] "{{count}} результата найдено"
 msgstr[2] "{{count}} результатов найдено"
 msgstr[3] "{{count}} результата найдено"
 
-msgid " results per page"
-msgid_plural " results per page"
-msgstr[0] "результат на страницу"
-msgstr[1] "результатов"
-msgstr[2] "результатов"
-msgstr[3] "результат на странице: результатов на странице"
+msgid "results per page"
+msgstr "результатов на страницу"
 
 msgid "Actions"
 msgstr "Действия"
-
-msgid "Success"
-msgstr "Успешно"
-
-msgid "Resource was successfully deleted."
-msgstr ""
-
-msgid "Action error"
-msgstr ""
-
-msgid "Invalid JSON format"
-msgstr ""
-
-msgid "Your changes were successfully submitted"
-msgstr ""
-
-msgid "Form error"
-msgstr ""
-
-msgid "Current search"
-msgstr "Поисковый запрос"
