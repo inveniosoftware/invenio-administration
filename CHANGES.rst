@@ -9,6 +9,12 @@
 Changes
 =======
 
+Version v4.3.0 (released 2025-08-06)
+
+- theme: move TinyMCE from invenio-app-rdm to invenio-administration
+
+- ui: fix recursive import of header_login.html
+
 Version v4.2.0 (released 2025-07-17)
 
 - i18n: pulled translations
