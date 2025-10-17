@@ -1,108 +1,105 @@
 # 
 # Translators:
-# Tibor Simko <tibor.simko@cern.ch>, 2022
-# Rim Sharif, 2024
-# Sam Arbid, 2025
-# Mattias Vesterlund, 2025
+# Matti Lassila <matti.lassila@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Mattias Vesterlund, 2025\n"
-"Language-Team: Swedish (https://app.transifex.com/inveniosoftware/teams/23537/sv/)\n"
+"Last-Translator: Matti Lassila <matti.lassila@gmail.com>, 2025\n"
+"Language-Team: Finnish (https://app.transifex.com/inveniosoftware/teams/23537/fi/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sv\n"
+"Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "mime-version: 1.0\n"
 
 msgid "Open list of actions"
-msgstr "Öppna listan över åtgärder"
+msgstr "Avaa toimintojen luettelo"
 
 msgid "Resource is not deletable."
-msgstr "Resursen går inte att radera."
+msgstr "Resurssia ei voi poistaa."
 
 msgid "Success"
-msgstr "Genomförd"
+msgstr "Onnistui"
 
 msgid "Resource was successfully deleted."
-msgstr "Resursen har raderats."
+msgstr "Resurssi poistettiin onnistuneesti."
 
 msgid "Action error"
-msgstr "Åtgärdsfel"
+msgstr "Toimintovirhe"
 
 msgid "Delete {{title}}"
-msgstr "Ta bort {{title}}"
+msgstr "Poista {{title}}"
 
 msgid "Cancel"
-msgstr "Avbryt"
+msgstr "Peruuta"
 
 msgid "Delete"
-msgstr "Radera"
+msgstr "Poista"
 
 msgid "Are you sure you want to delete {{resourceName}}?"
-msgstr "Är du säker på att du vill ta bort {{resourceName}}?"
+msgstr "Haluatko varmasti poistaa kohteen {{resourceName}}?"
 
 msgid "Edit"
-msgstr "Redigera"
+msgstr "Muokkaa"
 
 msgid "Resource is not editable."
-msgstr "Resursen är inte redigerbar."
+msgstr "Resurssia ei voi muokata."
 
 msgid "Error"
-msgstr "Fel"
+msgstr "Virhe"
 
 msgid "Server was not able to process your request."
-msgstr "Servern kunde inte behandla din förfrågan."
+msgstr "Palvelin ei pystynyt käsittelemään pyyntöäsi."
 
 msgid "Invalid JSON format"
-msgstr "Ogiltigt JSON-format"
+msgstr "Virheellinen JSON-muoto"
 
 msgid "Your changes were successfully submitted"
-msgstr "Dina ändringar har skickats in"
+msgstr "Muutoksesi lähetettiin onnistuneesti"
 
 msgid "Form error"
-msgstr "Formulärsfel"
+msgstr "Lomakevirhe"
 
 msgid "Save"
-msgstr "Spara"
+msgstr "Tallenna"
 
 msgid "Add"
-msgstr "Lägg till"
+msgstr "Lisää"
 
 msgid "Remove field"
-msgstr "Ta bort fält"
+msgstr "Poista kenttä"
 
 msgid "Sort"
-msgstr "Sortera"
+msgstr "Lajittele"
 
 msgid "Search"
-msgstr "Sök"
+msgstr "Haku"
 
 msgid "Search ..."
-msgstr "Sök ..."
+msgstr "Haku ..."
 
 msgid "There is no resources in this category."
-msgstr "Det finns inga resurser i denna kategori."
+msgstr "Tässä kategoriassa ei ole resursseja."
 
 msgid "No matching resources found."
-msgstr "Inga matchande resurser hittades."
+msgstr "Vastaavia resursseja ei löytynyt."
 
 msgid "Current search"
-msgstr "Nuvarande sökning"
+msgstr "Nykyinen haku"
 
 msgid "Clear query"
-msgstr "Rensa query"
+msgstr "Tyhjennä haku"
 
 msgid "{{count}} results found"
 msgid_plural "{{count}} results found"
-msgstr[0] "{{count}} resultat hittades"
-msgstr[1] "{{count}} resultat hittades"
+msgstr[0] "{{count}} tulos löytyi"
+msgstr[1] "{{count}} tulosta löytyi"
 
 msgid "results per page"
-msgstr "resultat per sida"
+msgstr "tulosta sivulla"
 
 msgid "Actions"
-msgstr "Åtgärder"
+msgstr "Toiminnot"
