@@ -1,13 +1,18 @@
+// This file is part of InvenioAdministration
+// Copyright (C) 2022 CERN.
+// Copyright (C) 2025 KTH Royal Institute of Technology.
+//
+// Invenio is free software; you can redistribute it and/or modify it
+// under the terms of the MIT License; see LICENSE file for more details.
+
 import Edit from "./Edit";
 import Delete from "./Delete";
-import { DeleteModalTrigger } from "./DeleteModalTrigger";
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import ResourceActions from "./ResourceActions";
-import { Button, Dropdown } from "semantic-ui-react";
+import { Dropdown } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
-import _get from "lodash/get";
 
 export class Actions extends Component {
   render() {
@@ -31,37 +36,37 @@ export class Actions extends Component {
 
     if (_displayAsDropdown) {
       return (
-        <Dropdown>
-          {!isEmpty(actions) && (
-            <ResourceActions
-              resource={resource}
-              successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              actions={actions}
-              Element={Dropdown.Item}
-              trigger={
-                <Button
-                  icon="cog"
-                  size="tiny"
-                  className="transparent rel-ml-1"
-                  aria-label={i18next.t("Open list of actions")}
+        <>
+          <Dropdown
+            button
+            icon="cog"
+            size="tiny"
+            direction="left"
+            className="icon rel-ml-1 light"
+            aria-label={i18next.t("Open list of actions")}
+          >
+            {!isEmpty(actions) && (
+              <Dropdown.Menu>
+                <ResourceActions
+                  resource={resource}
+                  successCallback={successCallback}
+                  idKeyPath={idKeyPath}
+                  actions={actions}
+                  Element={Dropdown.Item}
                 />
-              }
-            />
-          )}
+              </Dropdown.Menu>
+            )}
+          </Dropdown>
           {displayEdit && <Edit editUrl={editUrl} resource={resource} />}
           {displayDelete && (
-            <DeleteModalTrigger
-              title={title}
-              resourceName={resourceName}
-              apiEndpoint={_get(resource, "links.self")}
-              resource={resource}
+            <Delete
               successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              Element={Dropdown.Item}
+              resource={resource}
+              resourceName={resourceName}
+              title={title}
             />
           )}
-        </Dropdown>
+        </>
       );
     } else {
       return (
