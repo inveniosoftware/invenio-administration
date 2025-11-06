@@ -9,6 +9,11 @@
 Changes
 =======
 
+Version v4.3.1 (released 2025-10-07)
+
+- i18n: pulled translations
+- index: change welcome message to be non RDM-specific
+
 Version v4.3.0 (released 2025-08-06)
 
 - theme: move TinyMCE from invenio-app-rdm to invenio-administration
