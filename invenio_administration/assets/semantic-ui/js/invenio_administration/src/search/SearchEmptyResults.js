@@ -31,7 +31,7 @@ class SearchEmptyResults extends Component {
       <Segment placeholder textAlign="center">
         <Header icon>
           <Icon name="search" />
-          {isEmptyPage && i18next.t("There is no resources in this category.")}
+          {isEmptyPage && i18next.t("There are no resources in this category.")}
           {isEmptyPageAfterSearch && i18next.t("No matching resources found.")}
         </Header>
         {queryString && (
