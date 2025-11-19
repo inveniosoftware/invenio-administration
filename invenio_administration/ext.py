@@ -53,7 +53,6 @@ class InvenioAdministration:
             extension_name = extension_name_from_view or extension_name_from_path
 
             self.register_view(entry_point, extension_name, app)
-        app.register_blueprint(self.administration.blueprint)
 
     def _load_entry_point(self, entry_point):
         """Loads one entry point. Validates whether its view is an AdminView."""
