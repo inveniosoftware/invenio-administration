@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 #
-# Copyright (C) 2019-2024 CERN.
+# Copyright (C) 2019-2025 CERN.
 # Copyright (C) 2019-2022 Northwestern University.
 # Copyright (C)      2022 TU Wien.
 # Copyright (C)      2022 Graz University of Technology.
@@ -10,7 +10,19 @@
 
 """JS/CSS Webpack bundles for theme."""
 
+import os
+
+from flask import current_app
 from invenio_assets.webpack import WebpackThemeBundle
+from werkzeug.local import LocalProxy
+
+
+def build_static_path(subpath):
+    """Return a lazy loaded path under `COLLECT_STATIC_ROOT`."""
+    return LocalProxy(
+        lambda: os.path.join(current_app.config["COLLECT_STATIC_ROOT"], subpath)
+    )
+
 
 theme = WebpackThemeBundle(
     __name__,
@@ -54,15 +66,15 @@ theme = WebpackThemeBundle(
                 # Note that the base path for all entries is the `config.json` directory
                 {
                     "from": "../node_modules/tinymce/skins/content/default/content.css",
-                    "to": "../../static/dist/js/skins/content/default",
+                    "to": build_static_path("dist/js/skins/content/default"),
                 },
                 {
                     "from": "../node_modules/tinymce/skins/ui/oxide/skin.min.css",
-                    "to": "../../static/dist/js/skins/ui/oxide",
+                    "to": build_static_path("dist/js/skins/ui/oxide"),
                 },
                 {
                     "from": "../node_modules/tinymce/skins/ui/oxide/content.min.css",
-                    "to": "../../static/dist/js/skins/ui/oxide",
+                    "to": build_static_path("dist/js/skins/ui/oxide"),
                 },
             ],
         ),
