@@ -42,6 +42,10 @@ export const generateFieldProps = (
     }));
   }
 
+  const multiple = formFieldConfig?.multiple || false;
+  const allowAdditions = formFieldConfig?.allowAdditions || false;
+  const search = formFieldConfig?.search || false;
+
   return {
     fieldPath: currentFieldName,
     key: currentFieldName,
@@ -54,5 +58,8 @@ export const generateFieldProps = (
     rows: formFieldConfig?.rows || fieldSchema?.metadata?.rows,
     value: formFieldConfig.dump_default,
     name: currentFieldName,
+    multiple: multiple,
+    search: search,
+    allowAdditions: allowAdditions,
   };
 };

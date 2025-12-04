@@ -39,6 +39,9 @@ export class AdminForm extends Component {
             if (value.type === "object") {
               return null;
             }
+            if (value.type === "array") {
+              return [];
+            }
             return "";
           }),
     };
