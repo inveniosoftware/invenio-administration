@@ -1,5 +1,5 @@
 ..
-    Copyright (C) 2022-2024 CERN.
+    Copyright (C) 2022-2025 CERN.
     Copyright (C) 2024-2025 Graz University of Technology.
 
     invenio-administration is free software; you can redistribute it and/or
@@ -8,6 +8,12 @@
 
 Changes
 =======
+
+Version v4.3.2 (released 2025-12-08)
+
+- tests: add option to keep services in `run-tests.sh`
+- webpack: respect `COLLECT_STATIC_ROOT` when copying tinymce
+- fix: typo in search empty resources message
 
 Version v4.3.1 (released 2025-10-07)
 
