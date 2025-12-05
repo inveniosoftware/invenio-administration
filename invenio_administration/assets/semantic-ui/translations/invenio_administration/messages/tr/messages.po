@@ -1,15 +1,16 @@
 # 
 # Translators:
 # Berat Aldemir <berataldemir@gmail.com>, 2022
-# BEN TERCÜME, 2025
+# BEN TERCÜME, 2024
 # Ben Translation and Interpreting Services <info@bentercume.com>, 2025
+# Eylül-1 -, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Ben Translation and Interpreting Services <info@bentercume.com>, 2025\n"
+"Last-Translator: Eylül-1 -, 2025\n"
 "Language-Team: Turkish (https://app.transifex.com/inveniosoftware/teams/23537/tr/)\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -24,13 +25,13 @@ msgid "Resource is not deletable."
 msgstr "Kaynak silinemez."
 
 msgid "Success"
-msgstr "Başarı"
+msgstr "Başarılı"
 
 msgid "Resource was successfully deleted."
-msgstr ""
+msgstr "Kaynak başarıyla silindi."
 
 msgid "Action error"
-msgstr ""
+msgstr "Eylem hatası"
 
 msgid "Delete {{title}}"
 msgstr "{{title}} başlığını sil"
@@ -42,7 +43,7 @@ msgid "Delete"
 msgstr "Sil"
 
 msgid "Are you sure you want to delete {{resourceName}}?"
-msgstr ""
+msgstr "{{resourceName}} isimli kaynağı silmek istediğinizden emin misiniz?"
 
 msgid "Edit"
 msgstr "Düzenle"
@@ -57,13 +58,13 @@ msgid "Server was not able to process your request."
 msgstr "Sunucu isteğinizi işleyemedi."
 
 msgid "Invalid JSON format"
-msgstr ""
+msgstr "Geçersiz JSON biçimi"
 
 msgid "Your changes were successfully submitted"
-msgstr ""
+msgstr "Değişiklikleriniz başarıyla gönderildi"
 
 msgid "Form error"
-msgstr ""
+msgstr "Form hatası"
 
 msgid "Save"
 msgstr "Kaydet"

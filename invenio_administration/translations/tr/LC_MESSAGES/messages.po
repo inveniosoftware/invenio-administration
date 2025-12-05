@@ -8,6 +8,7 @@
 # Berat Aldemir <berataldemir@gmail.com>, 2022
 # BEN TERCÜME, 2024
 # Ben Translation and Interpreting Services <info@bentercume.com>, 2025
+# Eylül-1 -, 2025
 # 
 #, fuzzy
 msgid ""
@@ -16,7 +17,7 @@ msgstr ""
 "Report-Msgid-Bugs-To: info@inveniosoftware.org\n"
 "POT-Creation-Date: 2025-07-08 19:19+0000\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Ben Translation and Interpreting Services <info@bentercume.com>, 2025\n"
+"Last-Translator: Eylül-1 -, 2025\n"
 "Language-Team: Turkish (https://app.transifex.com/inveniosoftware/teams/23537/tr/)\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -67,12 +68,12 @@ msgstr ""
 #: invenio_administration/marshmallow_utils.py:68
 #, python-format
 msgid "Unrecognized field type: %(field_type)s"
-msgstr ""
+msgstr "Tanınmayan alan türü: %(field_type)s"
 
 #: invenio_administration/marshmallow_utils.py:165
 #, python-format
 msgid "Unrecognised schema field %(field)s: %(field_type_name)s"
-msgstr ""
+msgstr "Tanınmayan %(field)s şema alanı: %(field_type_name)s"
 
 #: invenio_administration/menu/menu.py:82
 #, python-format
@@ -81,7 +82,7 @@ msgstr "%(icon)s Yönetim"
 
 #: invenio_administration/menu/menu.py:94
 msgid "Item should be MenuItem instance."
-msgstr ""
+msgstr "Öğe, MenuItem örneği olmalıdır."
 
 #: invenio_administration/templates/semantic-ui/invenio_administration/base.html:26
 msgid "Side menu"
@@ -158,12 +159,12 @@ msgstr "Yan menüyü göster/gizle"
 
 #: invenio_administration/views/base.py:261
 msgid "Resource details"
-msgstr ""
+msgstr "Kaynak ayrıntıları"
 
 #: invenio_administration/views/base.py:323
 msgid "Edit resource"
-msgstr ""
+msgstr "Kaynağı düzenle"
 
 #: invenio_administration/views/base.py:330
 msgid "Create resource"
-msgstr ""
+msgstr "Kaynak oluştur"
