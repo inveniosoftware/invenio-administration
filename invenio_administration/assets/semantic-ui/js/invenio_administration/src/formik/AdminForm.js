@@ -1,6 +1,7 @@
 // This file is part of InvenioAdministration
 // Copyright (C) 2022 CERN.
 // Copyright (C) 2024 KTH Royal Institute of Technology.
+// Copyright (C) 2026 Graz University of Technology.
 //
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
@@ -47,12 +48,12 @@ export class AdminForm extends Component {
   static contextType = NotificationContext;
 
   onSubmit = async (values, actions) => {
-    const { apiEndpoint, pid, successCallback, create } = this.props;
+    const { apiEndpoint, pid, successCallback, create, resourceSchema } = this.props;
     const { addNotification } = this.context;
     let response;
 
     const transformedValues = mapValues(values, (value, key) => {
-      const fieldSchema = this.props.resourceSchema[key];
+      const fieldSchema = resourceSchema[key];
 
       if (fieldSchema?.metadata?.type === "json") {
         try {
