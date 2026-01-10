@@ -59,7 +59,7 @@ export const mapFormFields = (
       return null;
     }
 
-    let fieldType = fieldSchema.type;
+    let fieldType = fieldConfig.type || fieldSchema.type;
     const isHidden = fieldSchema.metadata?.type === "hidden";
 
     if (isHidden) {
