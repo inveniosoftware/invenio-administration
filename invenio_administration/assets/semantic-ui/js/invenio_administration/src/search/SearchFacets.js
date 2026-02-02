@@ -8,7 +8,7 @@
 
 import React from "react";
 import PropTypes from "prop-types";
-import { BucketAggregation } from "react-searchkit";
+import { BucketAggregation, RangeFacet } from "react-searchkit";
 
 export const SearchFacets = ({ aggs }) => {
   return (
@@ -16,7 +16,15 @@ export const SearchFacets = ({ aggs }) => {
       {aggs.map((agg) => {
         return (
           <div className="facet-container" key={agg.title}>
-            <BucketAggregation title={agg.title} agg={agg} />
+            {agg.type === "date" ? (
+              <RangeFacet
+                title={agg.title}
+                agg={agg}
+                rangeSeparator={agg.separator || ".."}
+              />
+            ) : (
+              <BucketAggregation title={agg.title} agg={agg} />
+            )}
           </div>
         );
       })}

@@ -18,6 +18,7 @@ import {
   ContribSearchAppFacets,
   ContribBucketAggregationElement,
   ContribBucketAggregationValuesElement,
+  ContribRangeFacetElement,
 } from "@js/invenio_search_ui/components";
 import { SearchBar } from "./SearchBar";
 
@@ -67,6 +68,7 @@ export const initDefaultSearchComponents = (domContainer) => {
     "ResultsList.item": SearchResultItemWithConfig,
     "BucketAggregation.element": ContribBucketAggregationElement,
     "BucketAggregationValues.element": ContribBucketAggregationValuesElement,
+    "RangeFacet.element": ContribRangeFacetElement,
     "ResultsGrid.item": () => {},
     "SearchApp.results": SearchResultsWithConfig,
     "ResultsList.container": ResultsContainerWithConfig,
