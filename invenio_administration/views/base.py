@@ -85,6 +85,15 @@ class AdminView(MethodView):
         """Determine if the view should be disabled."""
         return False
 
+    @staticmethod
+    def visible_when():
+        """Return a callable to check if menu should be visible.
+
+        By default, checks for administration permission.
+        Override in subclasses for custom permission checks.
+        """
+        return lambda: administration_permission.can()
+
     @property
     def endpoint(self):
         """Get name for endpoint location e.g: 'administration.index'."""

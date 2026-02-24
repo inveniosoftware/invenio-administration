@@ -12,7 +12,7 @@
 
 import urllib.parse
 
-from flask import request
+from flask import current_app, request
 from invenio_i18n import lazy_gettext as _
 from invenio_theme.proxies import current_theme_icons
 from speaklater import make_lazy_string
@@ -42,6 +42,18 @@ class AdminMenu:
             key=lambda menu_item: (menu_item.category is not None, menu_item.category),
         )
 
+        # Group items by category to set up category visibility
+        items_by_category = {}
+        for menu_entry in ordered_menu_items:
+            if not menu_entry.disabled():
+                if menu_entry.category:
+                    if menu_entry.category not in items_by_category:
+                        items_by_category[menu_entry.category] = []
+                    items_by_category[menu_entry.category].append(menu_entry)
+
+        # Track registered categories
+        registered_categories = set()
+
         for menu_entry in ordered_menu_items:
             category = menu_entry.category
             name = menu_entry.name
@@ -51,18 +63,46 @@ class AdminMenu:
             label = menu_entry.label
             icon = menu_entry.icon
             disabled = menu_entry.disabled
+            visible_when = menu_entry.visible_when
 
             if disabled():
                 continue
 
             if category:
                 category_menu = main_menu.submenu(category)
-                category_menu.register(text=category)
+
+                # Register category header with visible_when that checks if any child is visible
+                if category not in registered_categories:
+                    category_items = items_by_category[category]
+
+                    def make_category_visible_when(items):
+                        def check_any_visible():
+                            # Category is visible if any of its items are visible
+                            for item in items:
+                                if item.visible_when is None:
+                                    return True
+                                try:
+                                    if item.visible_when():
+                                        return True
+                                except (RuntimeError, AttributeError):
+                                    # No request context
+                                    return True
+                            return False
+
+                        return check_any_visible
+
+                    category_menu.register(
+                        text=category,
+                        visible_when=make_category_visible_when(category_items),
+                    )
+                    registered_categories.add(category)
+
                 category_menu.submenu(name).register(
                     endpoint=endpoint,
                     text=label,
                     order=order,
                     active_when=active_when or self.sub_content_active_when,
+                    visible_when=visible_when,
                     icon=icon,
                 )
             else:
@@ -71,11 +111,17 @@ class AdminMenu:
                     text=label,
                     order=order,
                     active_when=active_when or self.default_active_when,
+                    visible_when=visible_when,
                     icon=icon,
                 )
 
     def register_admin_entry(self, current_menu, endpoint):
         """Register administration entry as the last one."""
+        # Allow overriding the visible_when check via config
+        visible_when = current_app.config.get(
+            "ADMINISTRATION_MENU_VISIBLE_WHEN",
+            lambda: administration_permission.can(),
+        )
         current_menu.submenu("profile-admin.administration").register(
             f"{endpoint}.dashboard",
             _(
@@ -85,7 +131,7 @@ class AdminMenu:
                 ),
             ),
             order=1,
-            visible_when=lambda: administration_permission.can(),
+            visible_when=visible_when,
         )
 
     def add_menu_item(self, item, index=None):
@@ -101,6 +147,11 @@ class AdminMenu:
 
     def add_view_to_menu(self, view, index=None):
         """Add menu item from view."""
+        # Get visible_when from view if it exists
+        visible_when = getattr(view, "visible_when", None)
+        if visible_when and callable(visible_when):
+            visible_when = visible_when()
+
         menu_item = MenuItem(
             endpoint=view.endpoint,
             name=view.name,
@@ -109,6 +160,7 @@ class AdminMenu:
             order=view.order,
             icon_key=view.icon,
             disabled=view.disabled,
+            visible_when=visible_when,
         )
 
         self.add_menu_item(menu_item, index)
@@ -145,6 +197,7 @@ class MenuItem:
         active_when=None,
         label="",
         disabled=lambda x: False,
+        visible_when=None,
     ):
         """Constructor."""
         self.name = name
@@ -155,6 +208,7 @@ class MenuItem:
         self.icon_key = icon_key
         self.label = label
         self.disabled = disabled
+        self.visible_when = visible_when
 
     @property
     def icon(self):
