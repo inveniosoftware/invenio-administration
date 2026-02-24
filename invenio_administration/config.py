@@ -8,6 +8,8 @@
 
 """Configuration for Invenio-Admin."""
 
+from invenio_administration.permissions import administration_permission
+
 ADMINISTRATION_BASE_TEMPLATE = "invenio_administration/base.html"
 """Admin panel base template.
 By default (``None``) uses the Flask-Admin template."""
@@ -28,4 +30,15 @@ ADMINISTRATION_DISPLAY_VERSIONS = []
 
 Accepts a list of tuples in the format (package name, version).
 Example: [("my-app", "v1.3.2")]
+"""
+
+ADMINISTRATION_MENU_VISIBLE_WHEN = lambda: administration_permission.can()
+"""Custom callable to control administration menu visibility.
+
+If set, this callable will be used instead of the default permission check
+to determine whether the "Administration" menu appears in the user profile menu.
+The callable should return True if the menu should be visible, False otherwise.
+
+Default: lambda: administration_permission.can()
+Example: lambda: my_custom_permission_check()
 """
