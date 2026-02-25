@@ -11,6 +11,10 @@
 Changes
 =======
 
+Version v5.1.0 (released 2026-02-25)
+
+- feat: add range facets for date aggregations
+
 Version v5.0.0 (released 2026-01-30)
 
 - chore(black): update formatting to >= 26.0

@@ -12,6 +12,6 @@
 
 from .ext import InvenioAdministration
 
-__version__ = "5.0.0"
+__version__ = "5.1.0"
 
 __all__ = ["InvenioAdministration"]
