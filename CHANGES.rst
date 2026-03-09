@@ -11,6 +11,10 @@
 Changes
 =======
 
+Version v5.1.0 (released 2026-03-09)
+
+- fix(fields): allow to pass type in form config
+
 Version v5.1.0 (released 2026-02-25)
 
 - feat: add range facets for date aggregations
