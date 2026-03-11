@@ -11,6 +11,7 @@
 
 from invenio_i18n import lazy_gettext as _
 
+from invenio_administration.permissions import administration_view_permission
 from invenio_administration.views.base import AdminView
 
 
@@ -23,3 +24,7 @@ class AdminDashboardView(AdminView):
     icon = "home"
     title = _("Dashboard")
     menu_label = _("Dashboard")
+
+    permission = administration_view_permission
+
+    decorators = [permission.require(http_exception=403)]

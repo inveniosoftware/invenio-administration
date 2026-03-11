@@ -11,13 +11,17 @@
 """Invenio Administration menu module."""
 
 import urllib.parse
+from collections import defaultdict
 
-from flask import current_app, request
+from flask import request
 from invenio_i18n import lazy_gettext as _
 from invenio_theme.proxies import current_theme_icons
 from speaklater import make_lazy_string
 
-from invenio_administration.permissions import administration_permission
+from invenio_administration.permissions import (
+    administration_permission,
+    administration_view_permission,
+)
 
 
 class AdminMenu:
@@ -43,13 +47,10 @@ class AdminMenu:
         )
 
         # Group items by category to set up category visibility
-        items_by_category = {}
+        items_by_category = defaultdict(list)
         for menu_entry in ordered_menu_items:
-            if not menu_entry.disabled():
-                if menu_entry.category:
-                    if menu_entry.category not in items_by_category:
-                        items_by_category[menu_entry.category] = []
-                    items_by_category[menu_entry.category].append(menu_entry)
+            if not menu_entry.disabled() and menu_entry.category:
+                items_by_category[menu_entry.category].append(menu_entry)
 
         # Track registered categories
         registered_categories = set()
@@ -81,11 +82,7 @@ class AdminMenu:
                             for item in items:
                                 if item.visible_when is None:
                                     return True
-                                try:
-                                    if item.visible_when():
-                                        return True
-                                except (RuntimeError, AttributeError):
-                                    # No request context
+                                elif item.visible_when():
                                     return True
                             return False
 
@@ -117,11 +114,6 @@ class AdminMenu:
 
     def register_admin_entry(self, current_menu, endpoint):
         """Register administration entry as the last one."""
-        # Allow overriding the visible_when check via config
-        visible_when = current_app.config.get(
-            "ADMINISTRATION_MENU_VISIBLE_WHEN",
-            lambda: administration_permission.can(),
-        )
         current_menu.submenu("profile-admin.administration").register(
             f"{endpoint}.dashboard",
             _(
@@ -131,7 +123,7 @@ class AdminMenu:
                 ),
             ),
             order=1,
-            visible_when=visible_when,
+            visible_when=lambda: administration_view_permission.can(),
         )
 
     def add_menu_item(self, item, index=None):
@@ -147,10 +139,8 @@ class AdminMenu:
 
     def add_view_to_menu(self, view, index=None):
         """Add menu item from view."""
-        # Get visible_when from view if it exists
-        visible_when = getattr(view, "visible_when", None)
-        if visible_when and callable(visible_when):
-            visible_when = visible_when()
+        permission = getattr(view, "permission", administration_permission)
+        visible_when = lambda: permission.can()
 
         menu_item = MenuItem(
             endpoint=view.endpoint,

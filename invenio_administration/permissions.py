@@ -13,3 +13,14 @@ from invenio_access.permissions import Permission
 
 administration_access_action = action_factory("administration-access")
 administration_permission = Permission(administration_access_action)
+
+administration_view_action = action_factory("admin-view")
+administration_view_permission = Permission(administration_view_action)
+"""Permission controlling visibility of the "Administration" profile menu entry
+and access to the administration dashboard.
+
+Grant this action to any role that should be able to reach the admin panel,
+without necessarily granting full ``administration-access`` to every admin view:
+
+    invenio access allow admin-view role <role-name>
+"""
