@@ -10,7 +10,6 @@
 
 """Invenio Administration views base module."""
 
-import warnings
 from functools import partial
 
 from flask import current_app, render_template, url_for
@@ -42,15 +41,14 @@ class AdminView(MethodView):
     order = None
     icon = None
 
-    permission = administration_permission
-    """Temporary hook to control menu visibility and view access.
+    decorators = [administration_permission.require(http_exception=403)]
 
-    .. deprecated::
-        This attribute will be removed once a proper permission-based
-        visibility mechanism is in place.
-    """
+    def get_permission(self):
+        """Return the permission used to determine menu visibility.
 
-    decorators = [permission.require(http_exception=403)]
+        Override in subclasses to return a custom permission.
+        """
+        return administration_permission
 
     def __init__(
         self,
