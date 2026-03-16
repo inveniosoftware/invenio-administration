@@ -18,7 +18,7 @@ from invenio_i18n import lazy_gettext as _
 from invenio_theme.proxies import current_theme_icons
 from speaklater import make_lazy_string
 
-from invenio_administration.permissions import administration_view_permission
+from invenio_administration.permissions import administration_dashboard_permission
 
 
 class AdminMenu:
@@ -120,7 +120,7 @@ class AdminMenu:
                 ),
             ),
             order=1,
-            visible_when=lambda: administration_view_permission.can(),
+            visible_when=lambda: administration_dashboard_permission.can(),
         )
 
     def add_menu_item(self, item, index=None):
