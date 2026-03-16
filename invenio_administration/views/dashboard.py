@@ -25,6 +25,8 @@ class AdminDashboardView(AdminView):
     title = _("Dashboard")
     menu_label = _("Dashboard")
 
-    permission = administration_view_permission
+    decorators = [administration_view_permission.require(http_exception=403)]
 
-    decorators = [permission.require(http_exception=403)]
+    def get_permission(self):
+        """Return the permission used to determine menu visibility."""
+        return administration_view_permission

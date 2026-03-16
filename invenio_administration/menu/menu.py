@@ -18,10 +18,7 @@ from invenio_i18n import lazy_gettext as _
 from invenio_theme.proxies import current_theme_icons
 from speaklater import make_lazy_string
 
-from invenio_administration.permissions import (
-    administration_permission,
-    administration_view_permission,
-)
+from invenio_administration.permissions import administration_view_permission
 
 
 class AdminMenu:
@@ -139,7 +136,7 @@ class AdminMenu:
 
     def add_view_to_menu(self, view, index=None):
         """Add menu item from view."""
-        permission = getattr(view, "permission", administration_permission)
+        permission = view.get_permission()
         visible_when = lambda: permission.can()
 
         menu_item = MenuItem(
