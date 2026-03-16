@@ -11,7 +11,11 @@
 Changes
 =======
 
-Version v5.1.0 (released 2026-03-09)
+Version v5.2.0 (released 2026-03-16)
+
+- feat(menu): add permission based visibility control for menu items
+
+Version v5.1.1 (released 2026-03-09)
 
 - fix(fields): allow to pass type in form config
 
