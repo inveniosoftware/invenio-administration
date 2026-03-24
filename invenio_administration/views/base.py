@@ -10,7 +10,7 @@
 
 """Invenio Administration views base module."""
 
-from functools import partial
+from functools import partial, wraps
 
 from flask import current_app, render_template, url_for
 from flask.views import MethodView
@@ -28,6 +28,22 @@ from invenio_administration.errors import (
 from invenio_administration.marshmallow_utils import jsonify_schema
 from invenio_administration.permissions import administration_permission
 
+class PermissionDecorator:
+    def __call__(self, f):
+        @wraps(f)
+        def wrapper(*args, **kwargs):
+            try:
+                view = wrapper.view_class
+            except AttributeError:
+                raise AttributeError("Permission decorator must be applied as the last decorator")
+            try:
+                permission = view.permission
+            except AttributeError:
+                raise AttributeError("Permission decorator needs to have permission attribute on wrapped class")
+            with permission.require(http_exception=403):
+                return f(*args, **kwargs)
+        return wrapper
+
 
 class AdminView(MethodView):
     """Base view for admin views."""
@@ -40,15 +56,18 @@ class AdminView(MethodView):
     menu_label = None
     order = None
     icon = None
+    permission = administration_permission
 
-    decorators = [administration_permission.require(http_exception=403)]
+    decorators = [
+        PermissionDecorator()
+    ]
 
     def get_permission(self):
         """Return the permission used to determine menu visibility.
 
         Override in subclasses to return a custom permission.
         """
-        return administration_permission
+        return self.permission
 
     def __init__(
         self,
