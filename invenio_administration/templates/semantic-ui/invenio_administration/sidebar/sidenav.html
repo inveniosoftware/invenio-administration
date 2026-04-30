@@ -18,16 +18,13 @@
 
           {{ loop(item.children) }}
         </div>
-
-
       {% else %}
-          <a class="item {{ 'active' if item.active else '' }}" href="{{ item.url }}">
-            {% if item.icon %}
-              <i class="{{ item.icon }}" aria-hidden="true"></i>{% endif %} {{ item.text|safe }}
-          </a>
-
-      {% endif %}
-
+        <a class="item {{ 'active' if item.active else '' }}" href="{{ item.url }}">
+          {% if item.icon %}
+            <i class="{{ item.icon }}" aria-hidden="true"></i>
+          {% endif %} {{item.text|safe }}
+        </a>
+      {% endif %} 
     {% endfor %}
   </div>
 </div>

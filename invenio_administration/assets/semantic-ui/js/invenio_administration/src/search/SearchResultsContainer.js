@@ -4,7 +4,6 @@
  */
 
 import PropTypes from "prop-types";
-import React from "react";
 import { Table } from "semantic-ui-react";
 import isEmpty from "lodash/isEmpty";
 import { i18next } from "@translations/invenio_administration/i18next";
@@ -12,8 +11,8 @@ import { i18next } from "@translations/invenio_administration/i18next";
 export const SearchResultsContainer = ({
   results,
   columns,
-  displayEdit,
-  displayDelete,
+  displayEdit = true,
+  displayDelete = true,
   actions,
 }) => {
   const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);
@@ -49,9 +48,4 @@ SearchResultsContainer.propTypes = {
   displayEdit: PropTypes.bool,
   displayDelete: PropTypes.bool,
   actions: PropTypes.object.isRequired,
-};
-
-SearchResultsContainer.defaultProps = {
-  displayDelete: true,
-  displayEdit: true,
 };

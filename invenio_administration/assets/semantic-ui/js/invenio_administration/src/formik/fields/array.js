@@ -5,7 +5,6 @@
 
 import { mapFormFields } from "./fields";
 import { generateFieldProps } from "./props_generator";
-import React from "react";
 import { Array } from "react-invenio-forms";
 import { Form, Button, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
@@ -54,10 +53,17 @@ const createEmptyArrayRowObject = (properties) => {
 export const AdminArrayField = ({
   fieldSchema,
   mapFormFields,
-  isCreate,
-  formFields,
+  isCreate = false,
+  formFields = undefined,
   ...fieldProps
 }) => {
+  fieldProps = {
+    ...fieldProps,
+    isCreate: typeof fieldProps.isCreate === "undefined" ? false : fieldProps.isCreate,
+    formFields:
+      typeof fieldProps.formFields === "undefined" ? undefined : fieldProps.formFields,
+  };
+
   const newRow = createEmptyArrayRowObject(fieldSchema.items.properties);
   return (
     <Array
@@ -98,9 +104,4 @@ AdminArrayField.propTypes = {
   mapFormFields: PropTypes.func.isRequired,
   isCreate: PropTypes.bool,
   formFields: PropTypes.object,
-};
-
-AdminArrayField.defaultProps = {
-  isCreate: false,
-  formFields: undefined,
 };

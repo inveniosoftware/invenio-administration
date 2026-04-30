@@ -20,10 +20,9 @@
     data-pid='{{ pid | tojson }}'
     data-resource-schema='{{ resource_schema | tojson }}'
     data-form-fields='{{ form_fields | tojson }}'
-    data-referrer="{{ request.referrer }}"
+    data-referrer='{{ request.referrer }}'
     data-list-endpoint='{{ list_endpoint }}'
-  >
-  </div>
+  ></div>
 {% endblock admin_page_content %}
 
 {% block javascript %}

@@ -3,12 +3,12 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { act } from "react-dom/test-utils";
-import { render, unmountComponentAtNode } from "react-dom";
-import React from "react";
+import { act } from "react";
+import { createRoot } from "react-dom/client";
 import Formatter from "./Formatter";
 
 let container;
+let root;
 const result = {
   updated: "2022-09-06T14:30:31.576504+00:00",
   metadata: {
@@ -29,13 +29,17 @@ beforeEach(() => {
   // setup a DOM element as a render target
   container = document.createElement("div");
   document.body.appendChild(container);
+  root = createRoot(container);
 });
 
 afterEach(() => {
   // cleanup on exiting
-  unmountComponentAtNode(container);
+  act(() => {
+    root.unmount();
+  });
   container.remove();
   container = null;
+  root = null;
 });
 
 it("Can format correctly simple date string", () => {
@@ -52,9 +56,8 @@ it("Can format correctly simple date string", () => {
   };
 
   act(() => {
-    render(
-      <Formatter result={result} resourceSchema={resourceSchema} property={property} />,
-      container
+    root.render(
+      <Formatter result={result} resourceSchema={resourceSchema} property={property} />
     );
   });
 
@@ -98,9 +101,8 @@ it("Can format correctly nested date string", () => {
   };
 
   act(() => {
-    render(
-      <Formatter result={result} resourceSchema={resourceSchema} property={property} />,
-      container
+    root.render(
+      <Formatter result={result} resourceSchema={resourceSchema} property={property} />
     );
   });
 
@@ -131,9 +133,8 @@ it("Can format correctly simple string", () => {
   };
 
   act(() => {
-    render(
-      <Formatter result={result} resourceSchema={resourceSchema} property={property} />,
-      container
+    root.render(
+      <Formatter result={result} resourceSchema={resourceSchema} property={property} />
     );
   });
 
@@ -165,9 +166,8 @@ it("Can format correctly a floated number", () => {
   };
 
   act(() => {
-    render(
-      <Formatter result={result} resourceSchema={resourceSchema} property={property} />,
-      container
+    root.render(
+      <Formatter result={result} resourceSchema={resourceSchema} property={property} />
     );
   });
 
