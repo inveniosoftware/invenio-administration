@@ -15,8 +15,8 @@ import { i18next } from "@translations/invenio_administration/i18next";
 export const SearchResultsContainer = ({
   results,
   columns,
-  displayEdit,
-  displayDelete,
+  displayEdit = true,
+  displayDelete = true,
   actions,
 }) => {
   const resourceHasActions = displayEdit || displayDelete || !isEmpty(actions);

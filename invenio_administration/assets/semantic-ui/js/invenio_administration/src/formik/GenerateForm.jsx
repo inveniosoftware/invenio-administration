@@ -4,11 +4,11 @@ import { mapFormFields } from "./fields/fields";
 
 export const GenerateForm = ({
   jsonSchema,
-  create,
-  formFields,
-  dropDumpOnly,
+  create = false,
+  formFields = undefined,
+  dropDumpOnly = false,
   formikProps,
-  parentField,
+  parentField = undefined,
   formData,
 }) => {
   const properties = jsonSchema;
