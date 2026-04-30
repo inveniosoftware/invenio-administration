@@ -4,7 +4,7 @@
  */
 
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { EditPage } from "./EditPage";
 import _get from "lodash/get";
 import { NotificationController } from "../ui_messages/context";
@@ -16,7 +16,8 @@ const pid = JSON.parse(domContainer.dataset.pid);
 const formFields = JSON.parse(domContainer.dataset.formFields);
 const listUIEndpoint = domContainer.dataset.listEndpoint;
 
-ReactDOM.render(
+const root = createRoot(domContainer);
+root.render(
   <NotificationController>
     <EditPage
       resourceSchema={resourceSchema}
@@ -25,6 +26,5 @@ ReactDOM.render(
       pid={pid}
       listUIEndpoint={listUIEndpoint}
     />
-  </NotificationController>,
-  domContainer
+  </NotificationController>
 );

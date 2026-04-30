@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import { CreatePage } from "./CreatePage";
 import _get from "lodash/get";
 import { NotificationController } from "../ui_messages/context";
@@ -15,7 +14,8 @@ const apiEndpoint = _get(domContainer.dataset, "apiEndpoint");
 const formFields = JSON.parse(domContainer.dataset.formFields);
 const listUIEndpoint = domContainer.dataset.listEndpoint;
 
-ReactDOM.render(
+const root = createRoot(domContainer);
+root.render(
   <NotificationController>
     <CreatePage
       resourceSchema={resourceSchema}
@@ -23,6 +23,5 @@ ReactDOM.render(
       formFields={formFields}
       listUIEndpoint={listUIEndpoint}
     />
-  </NotificationController>,
-  domContainer
+  </NotificationController>
 );
