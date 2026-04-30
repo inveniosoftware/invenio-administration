@@ -1,11 +1,6 @@
-/*
- * SPDX-FileCopyrightText: 2022-2024 CERN.
- * SPDX-License-Identifier: MIT
- */
-
 import { AdminUIRoutes } from "@js/invenio_administration/src/routes";
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import { useState, useEffect, useCallback, cloneElement, isValidElement } from "react";
 import { Grid, Header, Divider, Container, Button } from "semantic-ui-react";
 import { InvenioAdministrationActionsApi } from "../api/actions";
 import DetailsTable from "./DetailsComponent";
@@ -15,127 +10,134 @@ import { sortFields } from "../components/utils";
 import { Loader, ErrorPage } from "../components";
 import Overridable from "react-overridable";
 
-class AdminDetailsView extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      data: undefined,
-      error: undefined,
-    };
-  }
+const AdminDetailsView = ({
+  title,
+  columns,
+  actions = undefined,
+  apiEndpoint,
+  pid,
+  displayEdit,
+  displayDelete,
+  idKeyPath,
+  resourceName,
+  listUIEndpoint,
+  resourceSchema,
+  requestHeaders,
+  uiSchema,
+  name,
+  children = undefined,
+}) => {
+  const [loading, setLoading] = useState(true);
+  const [data, setData] = useState(undefined);
+  const [error, setError] = useState(undefined);
 
-  componentDidMount() {
-    this.fetchData();
-  }
-
-  fetchData = async () => {
-    this.setState({ loading: true });
-    const { apiEndpoint, pid, requestHeaders } = this.props;
+  const fetchData = useCallback(async () => {
+    setLoading(true);
     try {
       const response = await InvenioAdministrationActionsApi.getResource(
         apiEndpoint,
         pid,
         requestHeaders
       );
-
-      this.setState({
-        loading: false,
-        data: response.data,
-        error: undefined,
-      });
+      setLoading(false);
+      setData(response.data);
+      setError(undefined);
     } catch (e) {
       console.error(e);
-      this.setState({ error: e, loading: false });
+      setError(e);
+      setLoading(false);
     }
-  };
+  }, [apiEndpoint, pid, requestHeaders]);
 
-  childrenWithData = (data, columns) => {
-    const { children } = this.props;
-    return React.Children.map(children, (child) => {
-      if (React.isValidElement(child)) {
-        return React.cloneElement(child, { data: data, columns: columns });
-      }
-      return child;
-    });
-  };
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
 
-  handleDelete = () => {
+  const childrenWithData = useCallback(
+    (data, columns) => {
+      return children.map((child) => {
+        if (isValidElement(child)) {
+          return cloneElement(child, { data: data, columns: columns });
+        }
+        return child;
+      });
+    },
+    [children]
+  );
+
+  const handleDelete = useCallback(() => {
     // after deleting the resource go back to the list view
-    const { listUIEndpoint } = this.props;
     window.location.href = listUIEndpoint;
-  };
+  }, [listUIEndpoint]);
 
-  render() {
-    const {
-      title,
-      columns,
-      actions,
-      apiEndpoint,
-      idKeyPath,
-      listUIEndpoint,
-      resourceSchema,
-      resourceName,
-      displayDelete,
-      displayEdit,
-      uiSchema,
-      name,
-    } = this.props;
-    const { loading, data, error } = this.state;
-    const sortedColumns = sortFields(uiSchema);
-    return (
-      <Overridable
-        id={`InvenioAdministration.AdminDetailsView.${name}.layout`}
-        data={data}
-        error={error}
-        loading={loading}
-        {...this.props}
-      >
-        <Loader isLoading={loading}>
-          <ErrorPage
-            error={!_isEmpty(error)}
-            errorCode={error?.response.status}
-            errorMessage={error?.response.data}
-          >
-            <Grid stackable>
-              <Grid.Row columns="2">
-                <Grid.Column verticalAlign="middle">
-                  <Header as="h1">{title}</Header>
-                </Grid.Column>
-                <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
-                  <Button.Group size="tiny" className="relaxed">
-                    <Actions
-                      title={title}
-                      resourceName={resourceName}
-                      apiEndpoint={apiEndpoint}
-                      editUrl={AdminUIRoutes.editView(listUIEndpoint, data, idKeyPath)}
-                      actions={actions}
-                      displayEdit={displayEdit}
-                      displayDelete={displayDelete}
-                      resource={data}
-                      idKeyPath={idKeyPath}
-                      successCallback={this.handleDelete}
-                      listUIEndpoint={listUIEndpoint}
-                    />
-                  </Button.Group>
-                </Grid.Column>
-              </Grid.Row>
-            </Grid>
-            <Divider />
-            <Container fluid>
-              <DetailsTable
-                data={data}
-                schema={resourceSchema}
-                uiSchema={sortedColumns}
-              />
-              {this.childrenWithData(data, columns)}
-            </Container>
-          </ErrorPage>
-        </Loader>
-      </Overridable>
-    );
-  }
-}
+  const sortedColumns = sortFields(uiSchema);
+
+  return (
+    <Overridable
+      id={`InvenioAdministration.AdminDetailsView.${name}.layout`}
+      data={data}
+      error={error}
+      loading={loading}
+      title={title}
+      columns={columns}
+      actions={actions}
+      apiEndpoint={apiEndpoint}
+      pid={pid}
+      displayEdit={displayEdit}
+      displayDelete={displayDelete}
+      idKeyPath={idKeyPath}
+      resourceName={resourceName}
+      listUIEndpoint={listUIEndpoint}
+      resourceSchema={resourceSchema}
+      requestHeaders={requestHeaders}
+      uiSchema={uiSchema}
+      name={name}
+      children={children}
+    >
+      <Loader isLoading={loading}>
+        <ErrorPage
+          error={!_isEmpty(error)}
+          errorCode={error?.response.status}
+          errorMessage={error?.response.data}
+        >
+          <Grid stackable>
+            <Grid.Row columns="2">
+              <Grid.Column verticalAlign="middle">
+                <Header as="h1">{title}</Header>
+              </Grid.Column>
+              <Grid.Column verticalAlign="middle" floated="right" textAlign="right">
+                <Button.Group size="tiny" className="relaxed">
+                  <Actions
+                    title={title}
+                    resourceName={resourceName}
+                    apiEndpoint={apiEndpoint}
+                    editUrl={AdminUIRoutes.editView(listUIEndpoint, data, idKeyPath)}
+                    actions={actions}
+                    displayEdit={displayEdit}
+                    displayDelete={displayDelete}
+                    resource={data}
+                    idKeyPath={idKeyPath}
+                    successCallback={handleDelete}
+                    listUIEndpoint={listUIEndpoint}
+                  />
+                </Button.Group>
+              </Grid.Column>
+            </Grid.Row>
+          </Grid>
+          <Divider />
+          <Container fluid>
+            <DetailsTable
+              data={data}
+              schema={resourceSchema}
+              uiSchema={sortedColumns}
+            />
+            {childrenWithData(data, columns)}
+          </Container>
+        </ErrorPage>
+      </Loader>
+    </Overridable>
+  );
+};
 
 AdminDetailsView.propTypes = {
   actions: PropTypes.object,

@@ -4,49 +4,44 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { Component } from "react";
 import { Button, Header, Icon, Segment } from "semantic-ui-react";
 import { withState } from "react-searchkit";
 import { i18next } from "@translations/invenio_administration/i18next";
 import PropTypes from "prop-types";
 
-class SearchEmptyResults extends Component {
-  render() {
-    const {
-      resetQuery,
-      extraContent,
-      queryString,
-      currentQueryState,
-      currentResultsState,
-    } = this.props;
+const SearchEmptyResults = ({
+  resetQuery,
+  extraContent = undefined,
+  queryString = undefined,
+  currentQueryState,
+  currentResultsState,
+}) => {
+  const isEmptyPageAfterSearch = currentQueryState.page < 0;
+  const isEmptyPage =
+    currentQueryState.page === 1 && currentResultsState.data.total === 0;
 
-    const isEmptyPageAfterSearch = currentQueryState.page < 0;
-    const isEmptyPage =
-      currentQueryState.page === 1 && currentResultsState.data.total === 0;
-
-    return (
-      <Segment placeholder textAlign="center">
-        <Header icon>
-          <Icon name="search" />
-          {isEmptyPage && i18next.t("There are no resources in this category.")}
-          {isEmptyPageAfterSearch && i18next.t("No matching resources found.")}
-        </Header>
-        {queryString && (
-          <em>
-            {i18next.t("Current search")} "{queryString}"
-          </em>
-        )}
-        <br />
-        {isEmptyPageAfterSearch && (
-          <Button primary onClick={() => resetQuery()}>
-            {i18next.t("Clear query")}
-          </Button>
-        )}
-        {extraContent}
-      </Segment>
-    );
-  }
-}
+  return (
+    <Segment placeholder textAlign="center">
+      <Header icon>
+        <Icon name="search" />
+        {isEmptyPage && i18next.t("There are no resources in this category.")}
+        {isEmptyPageAfterSearch && i18next.t("No matching resources found.")}
+      </Header>
+      {queryString && (
+        <em>
+          {i18next.t("Current search")} "{queryString}"
+        </em>
+      )}
+      <br />
+      {isEmptyPageAfterSearch && (
+        <Button primary onClick={() => resetQuery()}>
+          {i18next.t("Clear query")}
+        </Button>
+      )}
+      {extraContent}
+    </Segment>
+  );
+};
 
 SearchEmptyResults.propTypes = {
   resetQuery: PropTypes.func.isRequired,

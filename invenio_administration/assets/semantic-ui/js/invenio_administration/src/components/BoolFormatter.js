@@ -4,19 +4,15 @@
  */
 
 import PropTypes from "prop-types";
-import React from "react";
 import { Icon } from "semantic-ui-react";
 import Overridable from "react-overridable";
 
-class BoolFormatter extends React.Component {
-  render() {
-    const { value, icon, color, tooltip } = this.props;
-    if (!value) {
-      return null;
-    }
-    return <Icon title={tooltip} name={icon} color={color} />;
+const BoolFormatter = ({ value, icon = "check", color = "green", tooltip }) => {
+  if (!value) {
+    return null;
   }
-}
+  return <Icon title={tooltip} name={icon} color={color} />;
+};
 
 BoolFormatter.propTypes = {
   value: PropTypes.bool.isRequired,

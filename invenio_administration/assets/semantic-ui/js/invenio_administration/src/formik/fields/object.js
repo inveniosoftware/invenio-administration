@@ -4,7 +4,6 @@
  */
 
 import { generateFieldProps } from "./props_generator";
-import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { Form, Segment, Header } from "semantic-ui-react";
 
@@ -34,29 +33,31 @@ export const generateObjectFieldProps = (
   return { ...fieldProps, ...objectFieldProps };
 };
 
-export class ObjectField extends Component {
-  render() {
-    const { mapFormFields, fieldSchema, isCreate, formFieldsConfig, ...fieldProps } =
-      this.props;
-    return (
-      <React.Fragment key={fieldProps.name}>
-        <Header attached="top" as="h5">
-          {fieldProps.label}
-        </Header>
-        <Segment attached="bottom">
-          <Form.Group grouped>
-            {mapFormFields(
-              fieldSchema.properties,
-              fieldProps.name,
-              isCreate,
-              formFieldsConfig
-            )}
-          </Form.Group>
-        </Segment>
-      </React.Fragment>
-    );
-  }
-}
+export const ObjectField = ({
+  mapFormFields,
+  fieldSchema,
+  isCreate = false,
+  formFieldsConfig,
+  ...fieldProps
+}) => {
+  return (
+    <React.Fragment key={fieldProps.name}>
+      <Header attached="top" as="h5">
+        {fieldProps.label}
+      </Header>
+      <Segment attached="bottom">
+        <Form.Group grouped>
+          {mapFormFields(
+            fieldSchema.properties,
+            fieldProps.name,
+            isCreate,
+            formFieldsConfig
+          )}
+        </Form.Group>
+      </Segment>
+    </React.Fragment>
+  );
+};
 
 ObjectField.propTypes = {
   fieldProps: PropTypes.object.isRequired,

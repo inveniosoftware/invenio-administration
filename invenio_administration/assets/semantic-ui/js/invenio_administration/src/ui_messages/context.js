@@ -3,78 +3,76 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { Component } from "react";
+import { useState, useCallback, createContext } from "react";
 import PropTypes from "prop-types";
 import { ErrorMessage, SuccessMessage } from "./messages";
 
-export const NotificationContext = React.createContext({
+export const NotificationContext = createContext({
   notifications: {},
   addNotification: () => {},
   removeNotification: () => {},
 });
 
-export class NotificationController extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { nextNotificationID: 1, notifications: {} };
-  }
+export const NotificationController = ({ children }) => {
+  const [nextNotificationID, setNextNotificationID] = useState(1);
+  const [notifications, setNotifications] = useState({});
 
-  addNotification = (notification) => {
-    const { notifications: prevNotifications, nextNotificationID } = this.state;
-
-    this.setState({
-      notifications: {
+  const addNotification = useCallback(
+    (notification) => {
+      setNotifications((prevNotifications) => ({
         ...prevNotifications,
         [nextNotificationID]: notification,
-      },
+      }));
+      setNextNotificationID((prevID) => prevID + 1);
+    },
+    [nextNotificationID]
+  );
+
+  const removeNotification = useCallback((notificationID) => {
+    setNotifications((prevNotifications) => {
+      const updated = { ...prevNotifications };
+      delete updated[notificationID];
+      return updated;
     });
-    this.setState({ nextNotificationID: nextNotificationID + 1 });
-  };
+  }, []);
 
-  removeNotification = (notificationID) => {
-    const { notifications: prevNotifications } = this.state;
-    delete prevNotifications[notificationID];
-    this.setState({ notifications: { ...prevNotifications } });
-  };
+  const renderNotification = useCallback(
+    (id, notification) => {
+      let MessageComponent = ErrorMessage;
+      if (notification.type === "success") {
+        MessageComponent = SuccessMessage;
+      }
 
-  renderNotification(id, notification) {
-    let MessageComponent = ErrorMessage;
-    if (notification.type === "success") {
-      MessageComponent = SuccessMessage;
-    }
+      return (
+        <MessageComponent
+          id={id}
+          key={id}
+          header={notification.title}
+          content={notification.content}
+          removeNotification={removeNotification}
+        />
+      );
+    },
+    [removeNotification]
+  );
 
-    return (
-      <MessageComponent
-        id={id}
-        key={id}
-        header={notification.title}
-        content={notification.content}
-        removeNotification={this.removeNotification}
-      />
-    );
-  }
-
-  render() {
-    const { children } = this.props;
-    const { notifications } = this.state;
-    return (
-      <NotificationContext.Provider
-        value={{
-          notifications: notifications,
-          addNotification: this.addNotification,
-          removeNotification: this.removeNotification,
-        }}
-      >
-        <div id="admin-notifications" className="compact">
-          {Object.entries(notifications).map(([messageID, message]) =>
-            this.renderNotification(messageID, message)
-          )}
-        </div>
-        {children}
-      </NotificationContext.Provider>
-    );
-  }
-}
+  return (
+    <NotificationContext.Provider
+      value={{
+        notifications: notifications,
+        addNotification: addNotification,
+        removeNotification: removeNotification,
+      }}
+    >
+      <div id="admin-notifications" className="compact">
+        {Object.entries(notifications).map(([messageID, message]) =>
+          renderNotification(messageID, message)
+        )}
+      </div>
+      {children}
+    </NotificationContext.Provider>
+  );
+};
 
 NotificationController.propTypes = {
   children: PropTypes.element.isRequired,
