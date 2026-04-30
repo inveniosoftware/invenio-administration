@@ -1,7 +1,9 @@
 {
   "name": "invenio-administration-ui",
   "config": {
-    "languages": ["en"]
+    "languages": [
+      "en"
+    ]
   },
   "devDependencies": {
     "i18next-conv": "^10.2.0",

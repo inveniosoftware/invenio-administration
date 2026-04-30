@@ -1,17 +1,17 @@
-{#
+{# 
   SPDX-FileCopyrightText: 2022 CERN.
   SPDX-License-Identifier: MIT
 #}
 
 {%- block profile_admin %}
-  {% set ns = namespace(admin_menu=False) %} 
+  {% set ns = namespace(admin_menu=False) %}
   {%- for item in current_menu.submenu('profile-admin').children if item.visible %}
     {% set ns.admin_menu = True %}
     <a role="menuitem" class="item" href="{{ item.url }}" tabindex="-1">
       {{ item.text|safe }}
     </a>
-  {%- endfor %} 
+  {%- endfor %}
   {% if ns.admin_menu %}
     <div class="ui divider"></div>
-  {% endif %}  
+  {% endif %}
 {%- endblock %}

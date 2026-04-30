@@ -4,7 +4,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React, { Component } from "react";
+import { useState, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Form, Formik } from "formik";
 import { InvenioAdministrationActionsApi } from "../api/actions";
@@ -18,55 +18,64 @@ import { deserializeFieldErrors } from "../components/utils";
 import { i18next } from "@translations/invenio_administration/i18next";
 import Overridable from "react-overridable";
 
-export class ActionFormLayout extends Component {
-  render() {
-    const {
-      actionSchema,
-      actionCancelCallback,
-      actionConfig,
-      formData,
-      loading,
-      error,
-      onSubmit,
-    } = this.props;
-    return (
-      <Formik initialValues={formData} onSubmit={onSubmit}>
-        {(props) => (
-          <>
-            <Modal.Content>
-              <SemanticForm as={Form} id="action-form" onSubmit={props.handleSubmit}>
-                <GenerateForm
-                  jsonSchema={actionSchema}
-                  formFields={actionSchema}
-                  create
-                  dropDumpOnly
-                  formikProps={props}
-                  formData={formData}
-                />
-                {!isEmpty(error) && (
-                  <ErrorMessage {...error} removeNotification={this.resetErrorState} />
-                )}
-              </SemanticForm>
-            </Modal.Content>
-
-            <Modal.Actions>
-              <Button type="submit" primary form="action-form" loading={loading}>
-                {i18next.t(actionConfig.text)}
-              </Button>
-              <Button
-                onClick={actionCancelCallback}
-                floated="left"
-                icon="cancel"
-                labelPosition="left"
-                content={i18next.t("Cancel")}
+export const ActionFormLayout = ({
+  actionSchema,
+  actionCancelCallback,
+  actionConfig,
+  formData = undefined,
+  loading = false,
+  error = undefined,
+  onSubmit,
+  resetErrorState = () => {},
+  renderFormActions = undefined,
+}) => {
+  return (
+    <Formik initialValues={formData} onSubmit={onSubmit}>
+      {(formikProps) => (
+        <>
+          <Modal.Content>
+            <SemanticForm
+              as={Form}
+              id="action-form"
+              onSubmit={formikProps.handleSubmit}
+            >
+              <GenerateForm
+                jsonSchema={actionSchema}
+                formFields={actionSchema}
+                create
+                dropDumpOnly
+                formikProps={formikProps}
+                formData={formData}
               />
-            </Modal.Actions>
-          </>
-        )}
-      </Formik>
-    );
-  }
-}
+              {renderFormActions?.(formikProps)}
+              {!isEmpty(error) && (
+                <ErrorMessage {...error} removeNotification={resetErrorState} />
+              )}
+            </SemanticForm>
+          </Modal.Content>
+
+          <Modal.Actions>
+            <Button
+              type="button"
+              primary
+              loading={loading}
+              onClick={formikProps.submitForm}
+            >
+              {i18next.t(actionConfig.text)}
+            </Button>
+            <Button
+              onClick={actionCancelCallback}
+              floated="left"
+              icon="cancel"
+              labelPosition="left"
+              content={i18next.t("Cancel")}
+            />
+          </Modal.Actions>
+        </>
+      )}
+    </Formik>
+  );
+};
 
 ActionFormLayout.propTypes = {
   actionSchema: PropTypes.object.isRequired,
@@ -79,112 +88,122 @@ ActionFormLayout.propTypes = {
   formData: PropTypes.object,
   loading: PropTypes.bool,
   onSubmit: PropTypes.func.isRequired,
+  resetErrorState: PropTypes.func,
+  renderFormActions: PropTypes.func,
 };
 
-ActionFormLayout.defaultProps = {
-  formFields: {},
-  actionPayload: {},
-  error: undefined,
-  formData: undefined,
-  loading: false,
-};
+const ActionForm = ({
+  resource,
+  actionSchema,
+  actionKey,
+  actionSuccessCallback,
+  actionCancelCallback,
+  actionConfig,
+  actionPayload = {},
+  formFields = {},
+  renderFormActions = undefined,
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const [formData] = useState(actionPayload);
 
-class ActionForm extends Component {
-  constructor(props) {
-    super(props);
-    const { actionPayload } = props;
-    this.state = {
-      loading: false,
-      error: undefined,
-      formData: actionPayload,
-    };
-  }
+  const getEndpoint = useCallback(
+    (actionKey) => {
+      let endpoint;
+      // get the action endpoint from the current resource links
+      endpoint = _get(resource, `links.actions[${actionKey}]`);
 
-  onSubmit = async (formData, actions) => {
-    this.setState({ loading: true });
-    const { actionKey, actionSuccessCallback } = this.props;
-    const actionEndpoint = this.getEndpoint(actionKey);
+      // endpoint can be also within links, not links.action
+      // TODO: handle it in a nicer way
+      if (isEmpty(endpoint)) {
+        endpoint = _get(resource, `links[${actionKey}]`);
+      }
+      if (!endpoint) {
+        console.error("Action endpoint not found in the resource!");
+      }
+      return endpoint;
+    },
+    [resource]
+  );
 
-    const args = formData?.args;
-    if (args) {
-      formData.args = Object.fromEntries(
-        Object.entries(args).map(([key, value]) => [key, value === "" ? null : value])
-      );
-    }
+  const resetErrorState = useCallback(() => {
+    setError(undefined);
+  }, []);
 
-    try {
-      const response = await InvenioAdministrationActionsApi.resourceAction(
-        actionEndpoint,
-        formData
-      );
-      this.setState({ loading: false });
-      actionSuccessCallback(response.data);
-    } catch (e) {
-      console.error(e);
-      this.setState({ loading: false });
-      let errorMessage = e.message;
+  const onSubmit = useCallback(
+    async (formData, actions) => {
+      setLoading(true);
+      const actionEndpoint = getEndpoint(actionKey);
 
-      // API errors need to be de-serialised to highlight fields.
-      const apiResponse = e?.response?.data;
-      if (apiResponse) {
-        const apiErrors = apiResponse.errors || [];
-        const deserializedErrors = deserializeFieldErrors(apiErrors);
-        actions.setErrors(deserializedErrors);
-        errorMessage = apiResponse.message || errorMessage;
+      const args = formData?.args;
+      if (args) {
+        formData.args = Object.fromEntries(
+          Object.entries(args).map(([key, value]) => [key, value === "" ? null : value])
+        );
       }
 
-      this.setState({
-        error: { header: i18next.t("Action error"), content: errorMessage, id: e.code },
-      });
-    }
-  };
+      try {
+        const response = await InvenioAdministrationActionsApi.resourceAction(
+          actionEndpoint,
+          formData
+        );
+        setLoading(false);
+        actionSuccessCallback(response.data);
+      } catch (e) {
+        console.error(e);
+        setLoading(false);
+        let errorMessage = e.message;
 
-  getEndpoint = (actionKey) => {
-    const { resource } = this.props;
-    let endpoint;
-    // get the action endpoint from the current resource links
-    endpoint = _get(resource, `links.actions[${actionKey}]`);
+        // API errors need to be de-serialised to highlight fields.
+        const apiResponse = e?.response?.data;
+        if (apiResponse) {
+          const apiErrors = apiResponse.errors || [];
+          const deserializedErrors = deserializeFieldErrors(apiErrors);
+          actions.setErrors(deserializedErrors);
+          errorMessage = apiResponse.message || errorMessage;
+        }
 
-    // endpoint can be also within links, not links.action
-    // TODO: handle it in a nicer way
-    if (isEmpty(endpoint)) {
-      endpoint = _get(resource, `links[${actionKey}]`);
-    }
-    if (!endpoint) {
-      console.error("Action endpoint not found in the resource!");
-    }
-    return endpoint;
-  };
+        setError({
+          header: i18next.t("Action error"),
+          content: errorMessage,
+          id: e.code,
+        });
+      }
+    },
+    [actionKey, actionSuccessCallback, getEndpoint]
+  );
 
-  resetErrorState = () => {
-    this.setState({ error: undefined });
-  };
-
-  render() {
-    const { actionSchema, actionCancelCallback, actionConfig, actionKey } = this.props;
-    const { loading, formData, error } = this.state;
-    return (
-      <Overridable
-        id={`InvenioAdministration.ActionForm.${actionKey}.layout`}
+  return (
+    <Overridable
+      id={`InvenioAdministration.ActionForm.${actionKey}.layout`}
+      loading={loading}
+      formData={formData}
+      error={error}
+      resource={resource}
+      actionSchema={actionSchema}
+      actionKey={actionKey}
+      actionSuccessCallback={actionSuccessCallback}
+      actionCancelCallback={actionCancelCallback}
+      actionConfig={actionConfig}
+      actionPayload={actionPayload}
+      formFields={formFields}
+      renderFormActions={renderFormActions}
+    >
+      <ActionFormLayout
+        actionSchema={actionSchema}
+        actionCancelCallback={actionCancelCallback}
+        actionConfig={actionConfig}
+        actionKey={actionKey}
         loading={loading}
         formData={formData}
         error={error}
-        {...this.props}
-      >
-        <ActionFormLayout
-          actionSchema={actionSchema}
-          actionCancelCallback={actionCancelCallback}
-          actionConfig={actionConfig}
-          actionKey={actionKey}
-          loading={loading}
-          formData={formData}
-          error={error}
-          onSubmit={this.onSubmit}
-        />
-      </Overridable>
-    );
-  }
-}
+        onSubmit={onSubmit}
+        resetErrorState={resetErrorState}
+        renderFormActions={renderFormActions}
+      />
+    </Overridable>
+  );
+};
 
 ActionForm.propTypes = {
   resource: PropTypes.object.isRequired,
@@ -195,11 +214,7 @@ ActionForm.propTypes = {
   formFields: PropTypes.object,
   actionConfig: PropTypes.object.isRequired,
   actionPayload: PropTypes.object,
-};
-
-ActionForm.defaultProps = {
-  formFields: {},
-  actionPayload: {},
+  renderFormActions: PropTypes.func,
 };
 
 export default Overridable.component("InvenioAdministration.ActionForm", ActionForm);
