@@ -1,34 +1,29 @@
 import PropTypes from "prop-types";
-import React, { Component } from "react";
+import { useEffect, useCallback } from "react";
 import { Message as SemanticMessage } from "semantic-ui-react";
 
-export class Message extends Component {
-  componentDidMount() {
-    const { autoDismiss } = this.props;
-    if (autoDismiss) {
-      setTimeout(this.handleDismiss, autoDismiss);
-    }
-  }
-
-  handleDismiss = () => {
-    const { removeNotification, id } = this.props;
+export const Message = ({ id, autoDismiss = null, removeNotification, ...props }) => {
+  const handleDismiss = useCallback(() => {
     removeNotification(id);
-  };
+  }, [removeNotification, id]);
 
-  render() {
-    const { id, ...props } = this.props;
+  useEffect(() => {
+    if (autoDismiss) {
+      const timer = setTimeout(handleDismiss, autoDismiss);
+      return () => clearTimeout(timer);
+    }
+  }, [autoDismiss, handleDismiss]);
 
-    return (
-      <SemanticMessage
-        id={id}
-        floating
-        {...props}
-        onDismiss={this.handleDismiss}
-        role="alert"
-      />
-    );
-  }
-}
+  return (
+    <SemanticMessage
+      id={id}
+      floating
+      {...props}
+      onDismiss={handleDismiss}
+      role="alert"
+    />
+  );
+};
 
 export const ErrorMessage = ({ id, header, content, removeNotification }) => (
   <Message
