@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2022 CERN.
+# SPDX-License-Identifier: MIT
+
 import pytest
 from mock_module.administration.mock import MockView, MockViewAlternate
 

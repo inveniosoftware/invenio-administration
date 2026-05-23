@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import React, { useContext } from "react";
 import { SearchBar as SKSearchBar, Sort } from "react-searchkit";
 import { SearchConfigurationContext } from "@js/invenio_search_ui/components";

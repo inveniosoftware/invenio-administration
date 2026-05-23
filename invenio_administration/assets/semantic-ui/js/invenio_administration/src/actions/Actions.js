@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { DeleteModalTrigger } from "./DeleteModalTrigger";

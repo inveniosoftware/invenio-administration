@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2023 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import _set from "lodash/set";
 
 export const sortFields = (schema) => {

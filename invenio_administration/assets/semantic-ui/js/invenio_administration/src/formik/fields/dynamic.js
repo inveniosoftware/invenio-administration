@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { generateFieldProps } from "./props_generator";
 import { LazyForm } from "../LazyForm";
 import React, { Component } from "react";

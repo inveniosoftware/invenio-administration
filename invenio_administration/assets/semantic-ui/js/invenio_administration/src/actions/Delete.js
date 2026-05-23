@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { DeleteModalTrigger } from "./DeleteModalTrigger";
 import React, { Component } from "react";
 import PropTypes from "prop-types";

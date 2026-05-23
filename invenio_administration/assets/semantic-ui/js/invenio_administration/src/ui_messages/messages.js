@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import PropTypes from "prop-types";
 import React, { Component } from "react";
 import { Message as SemanticMessage } from "semantic-ui-react";

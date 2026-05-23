@@ -1,8 +1,7 @@
-// This file is part of InvenioAdministration
-// Copyright (C) 2022 CERN.
-//
-// Invenio RDM Records is free software; you can redistribute it and/or modify it
-// under the terms of the MIT License; see LICENSE file for more details.
+/*
+ * SPDX-FileCopyrightText: 2022 CERN.
+ * SPDX-License-Identifier: MIT
+ */
 
 export { default as AdminDetailsView } from "./AdminDetailsView";
 export { default as DetailsComponent } from "./DetailsComponent";

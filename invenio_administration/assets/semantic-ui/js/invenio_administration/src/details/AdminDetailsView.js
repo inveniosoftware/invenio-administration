@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { AdminUIRoutes } from "@js/invenio_administration/src/routes";
 import PropTypes from "prop-types";
 import React, { Component } from "react";

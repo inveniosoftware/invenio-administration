@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import React, { Component } from "react";
 import { Container, Header, Icon } from "semantic-ui-react";
 import Overridable from "react-overridable";

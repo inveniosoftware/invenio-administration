@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { mapFormFields } from "./fields";
 import { generateFieldProps } from "./props_generator";
 import React from "react";

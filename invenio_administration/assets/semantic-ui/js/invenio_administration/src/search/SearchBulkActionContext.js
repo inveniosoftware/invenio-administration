@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2023 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { NotificationController } from "../ui_messages";
 import { SearchResultsBulkActionsManager } from "react-invenio-forms";
 import PropTypes from "prop-types";

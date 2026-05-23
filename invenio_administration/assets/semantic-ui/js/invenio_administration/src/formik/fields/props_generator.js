@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024-2025 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import React from "react";
 import _capitalize from "lodash/capitalize";
 

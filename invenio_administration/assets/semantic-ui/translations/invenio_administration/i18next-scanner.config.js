@@ -1,8 +1,7 @@
-// This file is part of invenio-administration.
-// Copyright (C) 2025 CERN.
-//
-// Invenio-administration is free software; you can redistribute it and/or modify it
-// under the terms of the MIT License; see LICENSE file for more details.
+/*
+ * SPDX-FileCopyrightText: 2025 CERN.
+ * SPDX-License-Identifier: MIT
+ */
 
 // list of func used to
 // mark the strings for translation

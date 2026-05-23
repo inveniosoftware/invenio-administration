@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2024 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { InvenioAdministrationActionsApi } from "@js/invenio_administration/src/api";
 import { GenerateForm } from "@js/invenio_administration/src/formik/GenerateForm";
 import isEmpty from "lodash/isEmpty";

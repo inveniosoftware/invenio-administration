@@ -1,3 +1,8 @@
+/*
+ * SPDX-FileCopyrightText: 2022-2025 CERN.
+ * SPDX-License-Identifier: MIT
+ */
+
 import { generateObjectFieldProps, ObjectField } from "./object";
 import { DynamicSubFormField, generateDynamicFieldProps } from "./dynamic";
 import { generateHiddenFieldProps } from "./hidden";
