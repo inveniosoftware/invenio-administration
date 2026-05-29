@@ -11,6 +11,10 @@
 Changes
 =======
 
+Version v6.0.0 (released 2026-05-29)
+
+- chore(setup): bump dependencies
+
 Version v5.2.0 (released 2026-03-16)
 
 - feat(menu): add permission based visibility control for menu items
