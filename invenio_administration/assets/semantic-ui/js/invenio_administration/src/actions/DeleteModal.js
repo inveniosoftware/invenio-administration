@@ -5,7 +5,7 @@
 // Invenio RDM Records is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
-import React, { Component } from "react";
+import { useState, useContext, useRef, useEffect, useCallback } from "react";
 import PropTypes from "prop-types";
 import { Button, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
@@ -16,28 +16,37 @@ import { NotificationContext } from "../ui_messages/context";
 import Overridable from "react-overridable";
 import { InvenioAdministrationActionsApi } from "../api/actions";
 
-class DeleteModal extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { loading: false, error: undefined };
-    this.cancelButton = React.createRef();
-  }
+const DeleteModal = ({
+  title,
+  apiEndpoint,
+  successCallback,
+  toggleModal,
+  modalOpen,
+  children = null,
+  ...restProps
+}) => {
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(undefined);
+  const cancelButton = useRef(null);
+  const { addNotification } = useContext(NotificationContext);
 
-  componentDidUpdate() {
-    this.cancelButton.current?.focus();
-  }
+  useEffect(() => {
+    cancelButton.current?.focus();
+  });
 
-  static contextType = NotificationContext;
+  const cleanError = useCallback(() => {
+    setError(undefined);
+  }, []);
 
-  cleanError = () => {
-    this.setState({ error: undefined });
-  };
+  const resetErrorState = useCallback(() => {
+    setError(undefined);
+  }, []);
 
-  handleOnButtonClick = async () => {
-    const { successCallback, apiEndpoint, toggleModal } = this.props;
-    const { addNotification } = this.context;
+  const handleOnButtonClick = useCallback(async () => {
+    setLoading(true);
     try {
       await InvenioAdministrationActionsApi.deleteResource(apiEndpoint);
+      setLoading(false);
       toggleModal(false);
       addNotification({
         title: i18next.t("Success"),
@@ -46,62 +55,62 @@ class DeleteModal extends Component {
       });
       successCallback();
     } catch (e) {
-      this.setState({
-        error: { header: i18next.t("Action error"), content: e.message, id: e.code },
+      setLoading(false);
+      setError({
+        header: i18next.t("Action error"),
+        content: e.message,
+        id: e.code,
       });
     }
-  };
+  }, [apiEndpoint, toggleModal, addNotification, successCallback]);
 
-  resetErrorState = () => {
-    this.setState({ error: undefined });
-  };
-
-  render() {
-    const { loading, error } = this.state;
-    const { modalOpen, toggleModal, children, title } = this.props;
-    return (
-      <Overridable
-        id="DeleteModal.layout"
-        {...this.props}
-        handleOnButtonClick={this.handleOnButtonClick}
-        cleanError={this.cleanError}
-        resetErrorState={this.resetErrorState}
-      >
-        <Modal role="dialog" open={modalOpen}>
-          <Modal.Header as="h2">
-            {i18next.t("Delete {{title}}", { title: title })}
-          </Modal.Header>
-          <Modal.Content>
-            <Modal.Description>
-              {children}
-              {!isEmpty(error) && (
-                <ErrorMessage {...error} removeNotification={this.resetErrorState} />
-              )}
-            </Modal.Description>
-          </Modal.Content>
-          <Modal.Actions>
-            <Button
-              ref={this.cancelButton}
-              icon="cancel"
-              onClick={() => {
-                this.cleanError();
-                toggleModal(false);
-              }}
-              loading={loading}
-              content={i18next.t("Cancel")}
-              floated="left"
-              size="medium"
-            />
-            <Button negative onClick={this.handleOnButtonClick} loading={loading}>
-              <Icon name="trash alternate" />
-              {i18next.t("Delete")}
-            </Button>
-          </Modal.Actions>
-        </Modal>
-      </Overridable>
-    );
-  }
-}
+  return (
+    <Overridable
+      id="DeleteModal.layout"
+      title={title}
+      apiEndpoint={apiEndpoint}
+      successCallback={successCallback}
+      toggleModal={toggleModal}
+      modalOpen={modalOpen}
+      children={children}
+      handleOnButtonClick={handleOnButtonClick}
+      cleanError={cleanError}
+      resetErrorState={resetErrorState}
+      {...restProps}
+    >
+      <Modal role="dialog" open={modalOpen}>
+        <Modal.Header as="h2">
+          {i18next.t("Delete {{title}}", { title: title })}
+        </Modal.Header>
+        <Modal.Content>
+          <Modal.Description>
+            {children}
+            {!isEmpty(error) && (
+              <ErrorMessage {...error} removeNotification={resetErrorState} />
+            )}
+          </Modal.Description>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button
+            ref={cancelButton}
+            icon="cancel"
+            onClick={() => {
+              cleanError();
+              toggleModal(false);
+            }}
+            content={i18next.t("Cancel")}
+            floated="left"
+            size="medium"
+          />
+          <Button negative onClick={handleOnButtonClick} loading={loading}>
+            <Icon name="trash alternate" />
+            {i18next.t("Delete")}
+          </Button>
+        </Modal.Actions>
+      </Modal>
+    </Overridable>
+  );
+};
 
 DeleteModal.propTypes = {
   title: PropTypes.string.isRequired,

@@ -17,9 +17,9 @@ export const SearchBarElement = withState(
     updateQueryState,
     currentQueryState,
     onInputChange,
-    queryString,
-    uiProps,
-    placeholder,
+    queryString = "",
+    uiProps = undefined,
+    placeholder = i18next.t("Search ..."),
   }) => {
     const onBtnSearchClick = () => {
       updateQueryState({ ...currentQueryState, queryString });
