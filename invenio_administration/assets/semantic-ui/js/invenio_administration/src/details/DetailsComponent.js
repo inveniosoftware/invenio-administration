@@ -1,11 +1,13 @@
 // This file is part of InvenioAdministration
 // Copyright (C) 2022 CERN.
+// Copyright (C) 2026 KTH Royal Institute of Technology.
 //
 // Invenio RDM is free software; you can redistribute it and/or modify it
 // under the terms of the MIT License; see LICENSE file for more details.
 
 import PropTypes from "prop-types";
 import React, { Component } from "react";
+import _get from "lodash/get";
 import Overridable from "react-overridable";
 import { Table } from "semantic-ui-react";
 import Formatter from "../components/Formatter";
@@ -18,20 +20,23 @@ class DetailsTable extends Component {
 
     const tableRows = Object.entries(fields).map(([field, fieldSchema]) => {
       const text = fieldSchema.text || field;
+      const formattedValue = (
+        <Formatter
+          result={data}
+          resourceSchema={schema}
+          property={field}
+          fieldSchema={fieldSchema}
+        />
+      );
+      const link = fieldSchema.link ? _get(data, fieldSchema.link) : undefined;
+      const value = link ? <a href={link}>{formattedValue}</a> : formattedValue;
 
       return (
         <Table.Row key={text}>
           <Table.Cell width={3} className="vertical-align-top">
             <b>{text}</b>
           </Table.Cell>
-          <Table.Cell>
-            <Formatter
-              result={data}
-              resourceSchema={schema}
-              property={field}
-              fieldSchema={fieldSchema}
-            />
-          </Table.Cell>
+          <Table.Cell>{value}</Table.Cell>
         </Table.Row>
       );
     });
