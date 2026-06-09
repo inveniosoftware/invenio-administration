@@ -13,6 +13,7 @@ from invenio_base.utils import entry_points
 
 from . import config
 from .admin import Administration
+from .error_handlers import register_administration_error_handlers
 from .views.base import AdminResourceBaseView, AdminView
 
 
@@ -116,3 +117,4 @@ def finalize_app(app):
             view_class.set_schema(extension_name=extension_name)
 
     app.extensions["invenio-administration"].administration.init_menu()
+    register_administration_error_handlers(app)
