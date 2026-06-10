@@ -31,36 +31,39 @@ export class Actions extends Component {
 
     if (_displayAsDropdown) {
       return (
-        <Dropdown>
-          {!isEmpty(actions) && (
-            <ResourceActions
-              resource={resource}
-              successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              actions={actions}
-              Element={Dropdown.Item}
-              trigger={
-                <Button
-                  icon="cog"
-                  size="tiny"
-                  className="transparent rel-ml-1"
-                  aria-label={i18next.t("Open list of actions")}
-                />
-              }
+        <Dropdown
+          trigger={
+            <Button
+              icon="cog"
+              size="tiny"
+              className="transparent rel-ml-1"
+              aria-label={i18next.t("Open list of actions")}
             />
-          )}
-          {displayEdit && <Edit editUrl={editUrl} resource={resource} />}
-          {displayDelete && (
-            <DeleteModalTrigger
-              title={title}
-              resourceName={resourceName}
-              apiEndpoint={_get(resource, "links.self")}
-              resource={resource}
-              successCallback={successCallback}
-              idKeyPath={idKeyPath}
-              Element={Dropdown.Item}
-            />
-          )}
+          }
+        >
+          <Dropdown.Menu>
+            {!isEmpty(actions) && (
+              <ResourceActions
+                resource={resource}
+                successCallback={successCallback}
+                idKeyPath={idKeyPath}
+                actions={actions}
+                Element={Dropdown.Item}
+              />
+            )}
+            {displayEdit && <Edit editUrl={editUrl} resource={resource} />}
+            {displayDelete && (
+              <DeleteModalTrigger
+                title={title}
+                resourceName={resourceName}
+                apiEndpoint={_get(resource, "links.self")}
+                resource={resource}
+                successCallback={successCallback}
+                idKeyPath={idKeyPath}
+                Element={Dropdown.Item}
+              />
+            )}
+          </Dropdown.Menu>
         </Dropdown>
       );
     } else {
