@@ -11,6 +11,10 @@
 Changes
 =======
 
+Version v6.0.1 (released 2026-06-10)
+
+- fix(Actions): dropdown component initialisation
+
 Version v6.0.0 (released 2026-05-29)
 
 - chore(setup): bump dependencies
