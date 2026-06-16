@@ -8,6 +8,12 @@
 Changes
 =======
 
+Version v7.0.0 (released 2026-06-16)
+
+- chore(setup): bump dependencies
+- chore(git-blame): ignore the SPDX license header commit
+- chore(licenses): update license headers to use SPDX
+
 Version v6.0.1 (released 2026-06-10)
 
 - fix(Actions): dropdown component initialisation
