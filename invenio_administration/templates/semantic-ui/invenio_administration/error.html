@@ -1,0 +1,23 @@
+{#
+  Copyright (C) 2026 CERN.
+
+  Invenio App RDM is free software; you can redistribute it and/or modify it
+  under the terms of the MIT License; see LICENSE file for more details.
+#}
+
+{% extends config.ADMINISTRATION_BASE_TEMPLATE %}
+
+{% block page_title %}
+  <h1 class="ui header">
+    <i class="bolt icon" aria-hidden="true"></i>
+    {{ title }}
+  </h1>
+  <div class="ui divider" aria-hidden="true"></div>
+{% endblock page_title %}
+
+{% block admin_page_content %}
+  <p>{{ error_message }}</p>
+  <a class="ui button primary rel-mt-2" href="{{ back_url }}">
+    {{ _("Back to administration page") }}
+  </a>
+{% endblock admin_page_content %}

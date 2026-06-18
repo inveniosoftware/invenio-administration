@@ -12,6 +12,7 @@ from werkzeug.utils import import_string
 
 from invenio_administration.menu import AdminMenu
 
+from .error_handlers import register_blueprint_error_handlers
 from .views.base import AdminFormView, AdminResourceDetailView, AdminView
 
 
@@ -84,6 +85,7 @@ class Administration:
             template_folder="templates",
             static_folder="static",
         )
+        register_blueprint_error_handlers(self.blueprint)
 
     @property
     def views(self):
