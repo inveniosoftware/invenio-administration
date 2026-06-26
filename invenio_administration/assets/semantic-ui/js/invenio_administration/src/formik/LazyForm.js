@@ -20,16 +20,37 @@ export class LazyForm extends Component {
     };
   }
 
-  handleFieldValueChange = async (value) => {
+  hasExistingValue = (value) => {
+    if (value === undefined || value === null || value === "") {
+      return false;
+    }
+
+    if (Array.isArray(value)) {
+      return value.length > 0;
+    }
+
+    return true;
+  };
+
+  handleFieldValueChange = async (value, preserveExistingValues = false) => {
     const { fieldSchema } = this.state;
     const { formikProps, fieldPath } = this.props;
     const { endpoint } = fieldSchema.metadata;
+
     try {
       const response = await InvenioAdministrationActionsApi.getSchema(endpoint, value);
       fieldSchema["properties"] = response.data;
       this.setState({ lazySchema: response.data, fieldSchema: { ...fieldSchema } });
-      for (const [key, value] of Object.entries(response.data)) {
-        formikProps.setFieldValue(`${fieldPath}.${key}`, value.load_default);
+
+      for (const [key, schema] of Object.entries(response.data)) {
+        const nestedFieldPath = `${fieldPath}.${key}`;
+        const currentValue = getIn(formikProps.values, nestedFieldPath);
+
+        if (preserveExistingValues && this.hasExistingValue(currentValue)) {
+          continue;
+        }
+
+        formikProps.setFieldValue(nestedFieldPath, schema.load_default);
       }
     } catch (e) {
       console.error(e);
@@ -48,11 +69,11 @@ export class LazyForm extends Component {
   }
 
   componentDidMount() {
-    const { formikProps, fieldSchema, fieldPath, formData } = this.props;
+    const { formikProps, fieldSchema } = this.props;
     const { depends_on: dependsOnField } = fieldSchema.metadata;
     const choiceValue = getIn(formikProps.values, dependsOnField, "");
     if (!isEmpty(choiceValue)) {
-      this.handleFieldValueChange(choiceValue);
+      this.handleFieldValueChange(choiceValue, true);
     }
   }
 
@@ -79,5 +100,4 @@ LazyForm.propTypes = {
   formikProps: PropTypes.object.isRequired,
   fieldSchema: PropTypes.object.isRequired,
   fieldPath: PropTypes.string.isRequired,
-  formData: PropTypes.object,
 };
