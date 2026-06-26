@@ -56,7 +56,6 @@ export const generateFieldProps = (
     placeholder,
     options: dropdownOptions,
     rows: formFieldConfig?.rows || fieldSchema?.metadata?.rows,
-    value: formFieldConfig.dump_default,
     name: currentFieldName,
     multiple: multiple,
     search: search,
