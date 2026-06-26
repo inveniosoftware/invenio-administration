@@ -20,16 +20,34 @@ export class LazyForm extends Component {
     };
   }
 
+  clearLazyFieldValues = () => {
+    const { formikProps, fieldPath } = this.props;
+    const { lazySchema } = this.state;
+
+    for (const key of Object.keys(lazySchema)) {
+      formikProps.setFieldValue(`${fieldPath}.${key}`, undefined);
+    }
+  };
+
   handleFieldValueChange = async (value) => {
     const { fieldSchema } = this.state;
     const { formikProps, fieldPath } = this.props;
     const { endpoint } = fieldSchema.metadata;
+
     try {
       const response = await InvenioAdministrationActionsApi.getSchema(endpoint, value);
       fieldSchema["properties"] = response.data;
       this.setState({ lazySchema: response.data, fieldSchema: { ...fieldSchema } });
-      for (const [key, value] of Object.entries(response.data)) {
-        formikProps.setFieldValue(`${fieldPath}.${key}`, value.load_default);
+
+      for (const [key, schema] of Object.entries(response.data)) {
+        const nestedFieldPath = `${fieldPath}.${key}`;
+        const currentValue = getIn(formikProps.values, nestedFieldPath);
+
+        if (!isEmpty(currentValue)) {
+          continue;
+        }
+
+        formikProps.setFieldValue(nestedFieldPath, schema.load_default);
       }
     } catch (e) {
       console.error(e);
@@ -43,12 +61,13 @@ export class LazyForm extends Component {
     const previousValue = getIn(prevProps.formikProps.values, dependsOnField, "");
     const choiceValue = getIn(formikProps.values, dependsOnField, "");
     if (previousValue !== choiceValue) {
+      this.clearLazyFieldValues();
       this.handleFieldValueChange(choiceValue);
     }
   }
 
   componentDidMount() {
-    const { formikProps, fieldSchema, fieldPath, formData } = this.props;
+    const { formikProps, fieldSchema } = this.props;
     const { depends_on: dependsOnField } = fieldSchema.metadata;
     const choiceValue = getIn(formikProps.values, dependsOnField, "");
     if (!isEmpty(choiceValue)) {
@@ -79,5 +98,4 @@ LazyForm.propTypes = {
   formikProps: PropTypes.object.isRequired,
   fieldSchema: PropTypes.object.isRequired,
   fieldPath: PropTypes.string.isRequired,
-  formData: PropTypes.object,
 };
