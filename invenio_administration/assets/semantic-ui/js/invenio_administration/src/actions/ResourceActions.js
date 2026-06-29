@@ -11,12 +11,7 @@ import ActionModal from "./ActionModal";
 import _isEmpty from "lodash/isEmpty";
 import Overridable from "react-overridable";
 
-const ResourceActions = ({
-  resource,
-  successCallback,
-  actions,
-  Element = Button,
-}) => {
+const ResourceActions = ({ resource, successCallback, actions, Element = Button }) => {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalHeader, setModalHeader] = useState(undefined);
   const [modalBody, setModalBody] = useState(undefined);

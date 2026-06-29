@@ -71,6 +71,7 @@ const DeleteModal = ({
       successCallback={successCallback}
       toggleModal={toggleModal}
       modalOpen={modalOpen}
+      // eslint-disable-next-line react/no-children-prop
       children={children}
       handleOnButtonClick={handleOnButtonClick}
       cleanError={cleanError}
