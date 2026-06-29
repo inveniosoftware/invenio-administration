@@ -13,5 +13,6 @@ jobs:
     uses: inveniosoftware/invenio-i18n/.github/workflows/i18n-push-base.yml@master
     with:
       extract-backend: true
+      backend-package-path: invenio_administration
       frontend-package-path: invenio_administration/assets/semantic-ui/translations/invenio_administration
     secrets: inherit
