@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import _get from "lodash/get";
 import AdminDetailsView from "./AdminDetailsView";
 import { OverridableContext, overrideStore } from "react-overridable";
@@ -28,8 +27,9 @@ const requestHeaders = JSON.parse(domContainer.dataset?.requestHeaders);
 const uiSchema = JSON.parse(domContainer.dataset?.uiConfig);
 const name = domContainer.dataset?.name;
 
-domContainer &&
-  ReactDOM.render(
+if (domContainer) {
+  const root = createRoot(domContainer);
+  root.render(
     <OverridableContext.Provider value={overriddenComponents}>
       <AdminDetailsView
         title={title}
@@ -47,6 +47,6 @@ domContainer &&
         uiSchema={uiSchema}
         name={name}
       />
-    </OverridableContext.Provider>,
-    domContainer
+    </OverridableContext.Provider>
   );
+}

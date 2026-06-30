@@ -6,7 +6,7 @@
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { DeleteModalTrigger } from "./DeleteModalTrigger";
-import React, { Component } from "react";
+import { Component } from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import ResourceActions from "./ResourceActions";

@@ -27,16 +27,16 @@ theme = WebpackThemeBundle(
     themes={
         "semantic-ui": dict(
             entry={
-                "invenio-administration-search": "./js/invenio_administration/src/search/search.js",
-                "invenio-administration-edit": "./js/invenio_administration/src/edit/edit.js",
-                "invenio-administration-create": "./js/invenio_administration/src/create/create.js",
+                "invenio-administration-search": "./js/invenio_administration/src/search/search.jsx",
+                "invenio-administration-edit": "./js/invenio_administration/src/edit/edit.jsx",
+                "invenio-administration-create": "./js/invenio_administration/src/create/create.jsx",
                 "base-admin-theme": "./js/invenio_administration/src/theme.js",
-                "invenio-administration-details": "./js/invenio_administration/src/details/details.js",
+                "invenio-administration-details": "./js/invenio_administration/src/details/details.jsx",
             },
             dependencies={
                 "@babel/runtime": "^7.9.0",
-                "@tinymce/tinymce-react": "^4.3.0",
-                "tinymce": "^6.7.2",
+                "@hugerte/hugerte-react": "^2.0.2",
+                "hugerte": "^1.0.10",
                 "i18next": "^20.3.0",
                 "i18next-browser-languagedetector": "^6.1.0",
                 "luxon": "^1.23.0",
@@ -47,7 +47,7 @@ theme = WebpackThemeBundle(
                 "react-invenio-forms": "^4.0.0",
                 "react-searchkit": "^3.0.0",
                 "yup": "^0.32.0",
-                "formik": "^2.2.9",
+                "formik": "^2.4.9",
             },
             aliases={
                 # Define Semantic-UI theme configuration needed by
@@ -58,18 +58,18 @@ theme = WebpackThemeBundle(
                 "@translations/invenio_administration": "translations/invenio_administration",
             },
             copy=[
-                # Copy some assets into "static/dist", as TinyMCE requires that
+                # Copy some assets into "static/dist", as Hugerte requires that
                 # Note that the base path for all entries is the `config.json` directory
                 {
-                    "from": "../node_modules/tinymce/skins/content/default/content.css",
+                    "from": "../node_modules/hugerte/skins/content/default/content.css",
                     "to": build_static_path("dist/js/skins/content/default"),
                 },
                 {
-                    "from": "../node_modules/tinymce/skins/ui/oxide/skin.min.css",
+                    "from": "../node_modules/hugerte/skins/ui/oxide/skin.min.css",
                     "to": build_static_path("dist/js/skins/ui/oxide"),
                 },
                 {
-                    "from": "../node_modules/tinymce/skins/ui/oxide/content.min.css",
+                    "from": "../node_modules/hugerte/skins/ui/oxide/content.min.css",
                     "to": build_static_path("dist/js/skins/ui/oxide"),
                 },
             ],
