@@ -53,10 +53,4 @@ DeleteCmp.propTypes = {
   resource: PropTypes.object.isRequired,
 };
 
-DeleteCmp.defaultProps = {
-  disabledMessage: i18next.t("Resource is not deletable."),
-  idKeyPath: "pid",
-  disable: () => false,
-};
-
 export default Overridable.component("InvenioAdministration.DeleteAction", DeleteCmp);

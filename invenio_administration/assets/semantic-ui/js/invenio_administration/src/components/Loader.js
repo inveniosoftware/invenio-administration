@@ -26,9 +26,4 @@ Loader.propTypes = {
   children: PropTypes.node,
 };
 
-Loader.defaultProps = {
-  isLoading: false,
-  children: null,
-};
-
 export default Overridable.component("Loader", Loader);

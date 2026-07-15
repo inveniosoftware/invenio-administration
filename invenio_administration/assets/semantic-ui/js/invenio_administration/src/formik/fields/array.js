@@ -57,6 +57,12 @@ export const AdminArrayField = ({
   formFields = undefined,
   ...fieldProps
 }) => {
+  fieldProps = {
+    ...fieldProps,
+    isCreate: typeof fieldProps.isCreate === "undefined" ? false : fieldProps.isCreate,
+    formFields: typeof fieldProps.formFields === "undefined" ? undefined : fieldProps.formFields
+  };
+
   const newRow = createEmptyArrayRowObject(fieldSchema.items.properties);
   return (
     <Array
@@ -99,7 +105,3 @@ AdminArrayField.propTypes = {
   formFields: PropTypes.object,
 };
 
-AdminArrayField.defaultProps = {
-  isCreate: false,
-  formFields: undefined,
-};

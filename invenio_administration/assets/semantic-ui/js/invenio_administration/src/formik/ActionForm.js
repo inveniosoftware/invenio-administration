@@ -79,14 +79,6 @@ ActionFormLayout.propTypes = {
   onSubmit: PropTypes.func.isRequired,
 };
 
-ActionFormLayout.defaultProps = {
-  formFields: {},
-  actionPayload: {},
-  error: undefined,
-  formData: undefined,
-  loading: false,
-};
-
 const ActionForm = ({
   resource,
   actionSchema,
@@ -205,11 +197,6 @@ ActionForm.propTypes = {
   formFields: PropTypes.object,
   actionConfig: PropTypes.object.isRequired,
   actionPayload: PropTypes.object,
-};
-
-ActionForm.defaultProps = {
-  formFields: {},
-  actionPayload: {},
 };
 
 export default Overridable.component("InvenioAdministration.ActionForm", ActionForm);

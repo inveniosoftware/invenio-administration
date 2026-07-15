@@ -21,11 +21,6 @@ BoolFormatter.propTypes = {
   tooltip: PropTypes.string.isRequired,
 };
 
-BoolFormatter.defaultProps = {
-  icon: "check",
-  color: "green",
-};
-
 export default Overridable.component(
   "InvenioAdministration.BoolFormatter",
   BoolFormatter

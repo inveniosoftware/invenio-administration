@@ -157,11 +157,6 @@ AdminDetailsView.propTypes = {
   name: PropTypes.string.isRequired,
 };
 
-AdminDetailsView.defaultProps = {
-  actions: undefined,
-  children: undefined,
-};
-
 export default Overridable.component(
   "InvenioAdministration.AdminDetailsView",
   AdminDetailsView

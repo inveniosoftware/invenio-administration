@@ -40,7 +40,3 @@ CreatePage.propTypes = {
   formFields: PropTypes.object,
   listUIEndpoint: PropTypes.string.isRequired,
 };
-
-CreatePage.defaultProps = {
-  formFields: undefined,
-};

@@ -36,7 +36,7 @@ export const generateDynamicFieldProps = (
 
 export const DynamicSubFormField = ({ formikProps, fieldSchema, formData, ...fieldProps }) => {
   return (
-    <React.Fragment key={fieldProps.name}>
+    <>
       <Header attached="top" as="h5">
         {fieldProps.label}
       </Header>
@@ -51,7 +51,7 @@ export const DynamicSubFormField = ({ formikProps, fieldSchema, formData, ...fie
           />
         </Form.Group>
       </Segment>
-    </React.Fragment>
+    </>
   );
 };
 

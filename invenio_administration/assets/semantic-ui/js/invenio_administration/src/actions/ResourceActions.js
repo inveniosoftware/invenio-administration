@@ -93,10 +93,6 @@ ResourceActions.propTypes = {
   Element: PropTypes.node,
 };
 
-ResourceActions.defaultProps = {
-  Element: Button,
-};
-
 export default Overridable.component(
   "InvenioAdministration.ResourceActions",
   ResourceActions

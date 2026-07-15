@@ -51,9 +51,4 @@ SearchEmptyResults.propTypes = {
   currentResultsState: PropTypes.object.isRequired,
 };
 
-SearchEmptyResults.defaultProps = {
-  extraContent: undefined,
-  queryString: undefined,
-};
-
 export default withState(SearchEmptyResults);

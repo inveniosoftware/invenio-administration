@@ -35,10 +35,4 @@ ActionModal.propTypes = {
   resource: PropTypes.object.isRequired,
 };
 
-ActionModal.defaultProps = {
-  modalOpen: false,
-  modalProps: {},
-  children: null,
-};
-
 export default Overridable.component("InvenioAdministration.ActionModal", ActionModal);

@@ -120,10 +120,4 @@ SearchResultItemComponent.propTypes = {
   listUIEndpoint: PropTypes.string.isRequired,
 };
 
-SearchResultItemComponent.defaultProps = {
-  displayDelete: true,
-  displayEdit: true,
-  actions: {},
-};
-
 export const SearchResultItem = withState(SearchResultItemComponent);

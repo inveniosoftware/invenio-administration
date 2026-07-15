@@ -44,11 +44,4 @@ EditCmp.propTypes = {
   resource: PropTypes.object,
 };
 
-EditCmp.defaultProps = {
-  display: true,
-  disable: () => false,
-  disabledMessage: i18next.t("Resource is not editable."),
-  resource: undefined,
-};
-
 export default Overridable.component("InvenioAdministration.EditAction", EditCmp);

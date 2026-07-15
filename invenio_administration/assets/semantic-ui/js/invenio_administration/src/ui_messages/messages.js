@@ -8,6 +8,11 @@ import { useEffect, useCallback } from "react";
 import { Message as SemanticMessage } from "semantic-ui-react";
 
 export const Message = ({ id, autoDismiss = null, removeNotification, ...props }) => {
+  props = {
+    ...props,
+    autoDismiss: typeof props.autoDismiss === "undefined" ? null : props.autoDismiss
+  };
+
   const handleDismiss = useCallback(() => {
     removeNotification(id);
   }, [removeNotification, id]);
@@ -57,10 +62,6 @@ Message.propTypes = {
   autoDismiss: PropTypes.number,
   removeNotification: PropTypes.func.isRequired,
   id: PropTypes.string.isRequired,
-};
-
-Message.defaultProps = {
-  autoDismiss: null,
 };
 
 ErrorMessage.propTypes = {

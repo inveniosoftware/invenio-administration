@@ -24,6 +24,11 @@ const DeleteModal = ({
   children = null,
   ...restProps
 }) => {
+  restProps = {
+    ...restProps,
+    children: typeof restProps.children === "undefined" ? null : restProps.children,
+  };
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
   const cancelButton = useRef(null);
@@ -31,7 +36,7 @@ const DeleteModal = ({
 
   useEffect(() => {
     cancelButton.current?.focus();
-  });
+  }, [modalOpen]);
 
   const cleanError = useCallback(() => {
     setError(undefined);
@@ -119,10 +124,6 @@ DeleteModal.propTypes = {
   toggleModal: PropTypes.func.isRequired,
   modalOpen: PropTypes.bool.isRequired,
   children: PropTypes.node,
-};
-
-DeleteModal.defaultProps = {
-  children: null,
 };
 
 export default Overridable.component("DeleteModal", DeleteModal);

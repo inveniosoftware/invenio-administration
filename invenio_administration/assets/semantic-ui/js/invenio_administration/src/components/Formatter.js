@@ -13,7 +13,19 @@ const elementTypeMap = {
   bool: BoolFormatter,
 };
 
-const Formatter = ({ resourceSchema, result, property, fieldSchema = {}, ...uiProps }) => {
+const formatterDefaultPropFieldSchema = {};
+const Formatter = ({
+    resourceSchema,
+    result,
+    property,
+    fieldSchema = {},
+    ...uiProps
+  }) => {
+  uiProps = {
+    ...uiProps,
+    fieldSchema: typeof uiProps.fieldSchema === "undefined" ? formatterDefaultPropFieldSchema : uiProps.fieldSchema
+  };
+
   const resourceSchemaProperty = property.replace(/\./g, ".properties.");
   const typePath = `${resourceSchemaProperty}.type`;
 
@@ -37,10 +49,6 @@ Formatter.propTypes = {
   result: PropTypes.object.isRequired,
   property: PropTypes.string.isRequired,
   fieldSchema: PropTypes.object,
-};
-
-Formatter.defaultProps = {
-  fieldSchema: {},
 };
 
 export default Formatter;

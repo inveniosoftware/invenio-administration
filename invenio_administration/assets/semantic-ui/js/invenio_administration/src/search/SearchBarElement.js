@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
 import { withState } from "react-searchkit";
 import { Input } from "semantic-ui-react";
 import PropTypes from "prop-types";
@@ -54,10 +53,4 @@ SearchBarElement.propTypes = {
   placeholder: PropTypes.string.isRequired,
   onInputChange: PropTypes.func.isRequired,
   uiProps: PropTypes.object,
-};
-
-SearchBarElement.defaultProps = {
-  uiProps: undefined,
-  placeholder: i18next.t("Search ..."),
-  queryString: "",
 };

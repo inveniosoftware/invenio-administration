@@ -195,11 +195,3 @@ AdminForm.propTypes = {
   formFields: PropTypes.object,
   successCallback: PropTypes.func,
 };
-
-AdminForm.defaultProps = {
-  resource: undefined,
-  create: false,
-  pid: undefined,
-  formFields: undefined,
-  successCallback: () => {},
-};

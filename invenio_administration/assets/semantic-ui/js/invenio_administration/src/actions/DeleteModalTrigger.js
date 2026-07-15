@@ -83,9 +83,3 @@ DeleteModalTrigger.propTypes = {
   disabled: PropTypes.bool,
   disabledDeleteMessage: PropTypes.string,
 };
-
-DeleteModalTrigger.defaultProps = {
-  Element: Button,
-  disabled: false,
-  disabledDeleteMessage: "",
-};

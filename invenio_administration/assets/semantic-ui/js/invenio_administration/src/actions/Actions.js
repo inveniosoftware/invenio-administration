@@ -6,7 +6,6 @@
 import Edit from "./Edit";
 import Delete from "./Delete";
 import { DeleteModalTrigger } from "./DeleteModalTrigger";
-import { Component } from "react";
 import PropTypes from "prop-types";
 import isEmpty from "lodash/isEmpty";
 import ResourceActions from "./ResourceActions";
@@ -14,7 +13,7 @@ import { Button, Dropdown } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
 import _get from "lodash/get";
 
-export function Actions({title, resourceName, actions, resource, successCallback, idKeyPath, editUrl, displayEdit, displayDelete, displayAsDropdown}) {
+export function Actions({title, resourceName, actions, resource, successCallback, idKeyPath = "pid", editUrl, displayEdit = true, displayDelete = true, displayAsDropdown = false}) {
   // if number of actions is greater than 3, we display all in a dropdown
     const _displayAsDropdown =
       displayAsDropdown ||
@@ -95,9 +94,3 @@ Actions.propTypes = {
   editUrl: PropTypes.string.isRequired,
 };
 
-Actions.defaultProps = {
-  displayEdit: true,
-  displayDelete: true,
-  displayAsDropdown: false,
-  idKeyPath: "pid",
-};

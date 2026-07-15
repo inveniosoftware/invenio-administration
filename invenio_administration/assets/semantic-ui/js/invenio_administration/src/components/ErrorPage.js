@@ -40,11 +40,4 @@ ErrorPage.propTypes = {
   children: PropTypes.element,
 };
 
-ErrorPage.defaultProps = {
-  errorCode: i18next.t("Error"),
-  errorMessage: i18next.t("Server was not able to process your request."),
-  error: false,
-  children: undefined,
-};
-
 export default Overridable.component("ErrorPage", ErrorPage);

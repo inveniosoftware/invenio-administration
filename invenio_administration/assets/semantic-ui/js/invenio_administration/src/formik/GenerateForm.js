@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
 import PropTypes from "prop-types";
 import { mapFormFields } from "./fields/fields";
 
@@ -40,11 +39,4 @@ GenerateForm.propTypes = {
   formikProps: PropTypes.object,
   parentField: PropTypes.string,
   formData: PropTypes.object,
-};
-
-GenerateForm.defaultProps = {
-  create: false,
-  formFields: undefined,
-  dropDumpOnly: false,
-  parentField: undefined,
 };
