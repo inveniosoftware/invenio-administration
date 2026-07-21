@@ -8,6 +8,11 @@
 Changes
 =======
 
+Version v6.0.2 (released 2026-07-21)
+
+- chore(setup): migrate from setuptools to hatchling
+- chore(licenses): update license headers to use SPDX
+
 Version v6.0.1 (released 2026-06-10)
 
 - fix(Actions): dropdown component initialisation
