@@ -1,15 +1,14 @@
-# 
 # Translators:
 # Matti Lassila <matti.lassila@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
+"POT-Creation-Date: 2026-06-22T20:44:31.114Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Matti Lassila <matti.lassila@gmail.com>, 2025\n"
 "Language-Team: Finnish (https://app.transifex.com/inveniosoftware/teams/23537/fi/)\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: fi\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
@@ -81,9 +80,6 @@ msgstr "Haku"
 msgid "Search ..."
 msgstr "Haku ..."
 
-msgid "There is no resources in this category."
-msgstr "Tässä kategoriassa ei ole resursseja."
-
 msgid "No matching resources found."
 msgstr "Vastaavia resursseja ei löytynyt."
 
@@ -103,3 +99,6 @@ msgstr "tulosta sivulla"
 
 msgid "Actions"
 msgstr "Toiminnot"
+
+msgid "There are no resources in this category."
+msgstr ""

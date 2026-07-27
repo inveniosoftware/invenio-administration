@@ -1,25 +1,21 @@
-# Translators:
-# Mart Jantson, 2022
-# Martin Jantson <martinjantson97@gmail.com>, 2025
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
 "POT-Creation-Date: 2026-06-22T20:44:31.114Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Martin Jantson <martinjantson97@gmail.com>, 2025\n"
-"Language-Team: Estonian (https://app.transifex.com/inveniosoftware/teams/23537/et/)\n"
+"Language-Team: Danish (Denmark) (https://app.transifex.com/inveniosoftware/teams/23537/da_DK/)\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: et\n"
+"Language: da_DK\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "mime-version: 1.0\n"
 
 msgid "Open list of actions"
-msgstr "Avage toimingute loend"
+msgstr ""
 
 msgid "Resource is not deletable."
-msgstr "Ressursi ei saa kustutada."
+msgstr ""
 
 msgid "Success"
 msgstr ""
@@ -31,28 +27,28 @@ msgid "Action error"
 msgstr ""
 
 msgid "Delete {{title}}"
-msgstr "Kustuta {{title}}"
+msgstr ""
 
 msgid "Cancel"
-msgstr "Tühista"
+msgstr ""
 
 msgid "Delete"
-msgstr "Kustuta"
+msgstr ""
 
 msgid "Are you sure you want to delete {{resourceName}}?"
 msgstr ""
 
 msgid "Edit"
-msgstr "Redigeeri"
+msgstr ""
 
 msgid "Resource is not editable."
-msgstr "Ressursi ei saa redigeerida."
+msgstr ""
 
 msgid "Error"
-msgstr "Viga"
+msgstr ""
 
 msgid "Server was not able to process your request."
-msgstr "Server ei saanud teie taotlust töödelda."
+msgstr ""
 
 msgid "Invalid JSON format"
 msgstr ""
@@ -64,31 +60,31 @@ msgid "Form error"
 msgstr ""
 
 msgid "Save"
-msgstr "Salvesta"
+msgstr ""
 
 msgid "Add"
-msgstr "Lisa"
+msgstr ""
 
 msgid "Remove field"
-msgstr "Eemalda väli"
+msgstr ""
 
 msgid "Sort"
-msgstr "Sorteeri"
+msgstr ""
 
 msgid "Search"
-msgstr "Otsi"
+msgstr ""
 
 msgid "Search ..."
-msgstr "Otsi..."
+msgstr ""
 
 msgid "No matching resources found."
-msgstr "Ühtegi sobivat ressurssi ei leitud."
+msgstr ""
 
 msgid "Current search"
-msgstr "Praegune otsing"
+msgstr ""
 
 msgid "Clear query"
-msgstr "Puhasta otsinguväljad"
+msgstr ""
 
 msgid "{{count}} results found"
 msgid_plural "{{count}} results found"
@@ -96,10 +92,10 @@ msgstr[0] ""
 msgstr[1] ""
 
 msgid "results per page"
-msgstr "tulemust lehel"
+msgstr ""
 
 msgid "Actions"
-msgstr "Tegevused"
+msgstr ""
 
 msgid "There are no resources in this category."
 msgstr ""
