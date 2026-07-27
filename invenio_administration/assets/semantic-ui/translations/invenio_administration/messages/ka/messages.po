@@ -1,15 +1,14 @@
-# 
 # Translators:
 # Tibor Simko <tibor.simko@cern.ch>, 2024
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
+"POT-Creation-Date: 2026-06-22T20:44:31.114Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
 "Last-Translator: Tibor Simko <tibor.simko@cern.ch>, 2024\n"
 "Language-Team: Georgian (https://app.transifex.com/inveniosoftware/teams/23537/ka/)\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ka\n"
 "Plural-Forms: nplurals=2; plural=(n!=1);\n"
@@ -81,9 +80,6 @@ msgstr "ძებნა"
 msgid "Search ..."
 msgstr ""
 
-msgid "There is no resources in this category."
-msgstr ""
-
 msgid "No matching resources found."
 msgstr ""
 
@@ -103,3 +99,6 @@ msgstr ""
 
 msgid "Actions"
 msgstr "მოქმედებები"
+
+msgid "There are no resources in this category."
+msgstr ""

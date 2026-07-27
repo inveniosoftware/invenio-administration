@@ -1,104 +1,103 @@
-# 
 # Translators:
-# Minjae Kwon, 2023
+# Minjae Kwon, 2026
 # 
 msgid ""
 msgstr ""
 "Project-Id-Version: i18next-conv\n"
-"POT-Creation-Date: 2025-07-08T19:19:07.985Z\n"
+"POT-Creation-Date: 2026-06-22T20:44:31.114Z\n"
 "PO-Revision-Date: 2022-10-12 07:22+0000\n"
-"Last-Translator: Minjae Kwon, 2023\n"
+"Last-Translator: Minjae Kwon, 2026\n"
 "Language-Team: Korean (https://app.transifex.com/inveniosoftware/teams/23537/ko/)\n"
-"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Language: ko\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
 "mime-version: 1.0\n"
 
 msgid "Open list of actions"
-msgstr ""
+msgstr "작업 목록 열기"
 
 msgid "Resource is not deletable."
-msgstr ""
+msgstr "리소스를 제거할 수 없습니다."
 
 msgid "Success"
-msgstr ""
+msgstr "성공"
 
 msgid "Resource was successfully deleted."
-msgstr ""
+msgstr "리소스를 제거했습니다."
 
 msgid "Action error"
-msgstr ""
+msgstr "작업 오류"
 
 msgid "Delete {{title}}"
-msgstr ""
+msgstr "{{title}} 제거"
 
 msgid "Cancel"
-msgstr ""
+msgstr "취소"
 
 msgid "Delete"
-msgstr ""
+msgstr "제거"
 
 msgid "Are you sure you want to delete {{resourceName}}?"
-msgstr ""
+msgstr "{{resourceName}}을(를) 제거하시겠습니까?"
 
 msgid "Edit"
-msgstr ""
+msgstr "수정"
 
 msgid "Resource is not editable."
-msgstr ""
+msgstr "리소스를 수정할 수 없습니다."
 
 msgid "Error"
-msgstr ""
+msgstr "오류"
 
 msgid "Server was not able to process your request."
-msgstr ""
+msgstr "서버가 요청을 처리할 수 없습니다."
 
 msgid "Invalid JSON format"
-msgstr ""
+msgstr "잘못된 JSON 형식"
 
 msgid "Your changes were successfully submitted"
-msgstr ""
+msgstr "변경 사항을 제출했습니다"
 
 msgid "Form error"
-msgstr ""
+msgstr "양식 오류"
 
 msgid "Save"
-msgstr ""
+msgstr "저장"
 
 msgid "Add"
-msgstr ""
+msgstr "추가"
 
 msgid "Remove field"
-msgstr ""
+msgstr "필드 제거"
 
 msgid "Sort"
-msgstr ""
+msgstr "정렬"
 
 msgid "Search"
 msgstr "검색"
 
 msgid "Search ..."
-msgstr ""
-
-msgid "There is no resources in this category."
-msgstr ""
+msgstr "검색 ..."
 
 msgid "No matching resources found."
-msgstr ""
+msgstr "일치하는 리소스가 없습니다."
 
 msgid "Current search"
-msgstr ""
+msgstr "현재 검색"
 
 msgid "Clear query"
-msgstr ""
+msgstr "쿼리 지우기"
 
 msgid "{{count}} results found"
 msgid_plural "{{count}} results found"
-msgstr[0] ""
+msgstr[0] "{{count}}개 결과를 찾았습니다"
 
 msgid "results per page"
-msgstr ""
+msgstr "페이지당 결과 수"
 
 msgid "Actions"
-msgstr ""
+msgstr "작업"
+
+msgid "There are no resources in this category."
+msgstr "이 카테고리에 리소스가 없습니다."
