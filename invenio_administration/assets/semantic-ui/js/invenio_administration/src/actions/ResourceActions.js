@@ -39,6 +39,7 @@ class ResourceActions extends Component {
           <ActionForm
             actionKey={dataActionKey}
             actionSchema={payloadSchema}
+            actionPayload={actionsConfig[dataActionKey].initial_values}
             actionSuccessCallback={this.onModalClose}
             actionCancelCallback={this.closeModal}
             resource={resource}
