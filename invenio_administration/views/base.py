@@ -220,6 +220,7 @@ class AdminResourceBaseView(AdminView):
         {"action_name":
             {"text": "Action"
              "payload_schema": schema in json
+             "initial_values": optional mapping or callable returning a mapping
              "order": 1
              }
          }
@@ -235,6 +236,10 @@ class AdminResourceBaseView(AdminView):
                 serialized_actions[key]["payload_schema"] = self._schema_to_json(
                     value["payload_schema"]()
                 )
+
+            initial_values = value.get("initial_values")
+            if callable(initial_values):
+                serialized_actions[key]["initial_values"] = initial_values()
 
         return serialized_actions
 
