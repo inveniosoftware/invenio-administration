@@ -3,17 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
 import PropTypes from "prop-types";
 import { mapFormFields } from "./fields/fields";
 
 export const GenerateForm = ({
   jsonSchema,
-  create,
-  formFields,
-  dropDumpOnly,
+  create = false,
+  formFields = undefined,
+  dropDumpOnly = false,
   formikProps,
-  parentField,
+  parentField = undefined,
   formData,
 }) => {
   const properties = jsonSchema;
@@ -40,11 +39,4 @@ GenerateForm.propTypes = {
   formikProps: PropTypes.object,
   parentField: PropTypes.string,
   formData: PropTypes.object,
-};
-
-GenerateForm.defaultProps = {
-  create: false,
-  formFields: undefined,
-  dropDumpOnly: false,
-  parentField: undefined,
 };
