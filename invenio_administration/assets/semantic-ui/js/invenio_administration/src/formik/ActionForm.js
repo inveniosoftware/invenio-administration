@@ -105,7 +105,24 @@ const ActionForm = ({
 }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(undefined);
-  const [formData] = useState(actionPayload);
+  const [formData] = useState(() => {
+    let data = { ...actionPayload };
+    if (actionSchema) {
+      Object.entries(actionSchema).forEach(([key, schema]) => {
+        if (data[key] === undefined) {
+          if (schema.load_default !== undefined && schema.load_default !== null) {
+            data[key] = schema.load_default;
+          } else if (
+            schema.dump_default !== undefined &&
+            schema.dump_default !== null
+          ) {
+            data[key] = schema.dump_default;
+          }
+        }
+      });
+    }
+    return data;
+  });
 
   const getEndpoint = useCallback(
     (actionKey) => {
