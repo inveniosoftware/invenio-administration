@@ -92,11 +92,25 @@ ActionFormLayout.defaultProps = {
 class ActionForm extends Component {
   constructor(props) {
     super(props);
-    const { actionPayload } = props;
+    const { actionPayload, actionSchema } = props;
+    
+    let formData = { ...actionPayload };
+    if (actionSchema) {
+      Object.entries(actionSchema).forEach(([key, schema]) => {
+        if (formData[key] === undefined) {
+          if (schema.load_default !== undefined && schema.load_default !== null) {
+            formData[key] = schema.load_default;
+          } else if (schema.dump_default !== undefined && schema.dump_default !== null) {
+            formData[key] = schema.dump_default;
+          }
+        }
+      });
+    }
+
     this.state = {
       loading: false,
       error: undefined,
-      formData: actionPayload,
+      formData: formData,
     };
   }
 
