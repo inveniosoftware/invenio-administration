@@ -63,5 +63,7 @@
 
 {% block javascript %}
   {{ super() }}
-  {{ webpack['invenio-administration-search.js'] }}
+  {% block admin_search_js %}
+    {{ webpack['invenio-administration-search.js'] }}
+  {% endblock %}
 {% endblock %}
