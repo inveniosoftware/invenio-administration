@@ -9,6 +9,11 @@
 Changes
 =======
 
+Version v7.2.0 (released 2026-09-23)
+
+- feat: allow overriding the admin search bundle
+- fix: use instantiated schema from service wrapper
+
 Version v7.1.1 (released 2026-08-04)
 
 - fix(build): include mo files
