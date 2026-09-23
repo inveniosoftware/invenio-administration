@@ -189,9 +189,8 @@ class AdminResourceBaseView(AdminView):
     @classmethod
     def get_service_schema(cls):
         """Get marshmallow schema of the assigned service."""
-        # schema.schema due to the schema wrapper imposed,
-        # when the actual class needed
-        return cls.resource.service.schema.schema()
+        # attribute schema is now already-instantiated.
+        return cls.resource.service.schema.schema
 
     def _schema_to_json(self, schema):
         """Translate marshmallow schema to JSON.
