@@ -117,6 +117,11 @@ const ActionForm = ({
             schema.dump_default !== null
           ) {
             data[key] = schema.dump_default;
+          } else if (key === "start_date" && schema.format === "datetime") {
+            // ISO without ms is better for date pickers
+            let d = new Date();
+            d.setMilliseconds(0);
+            data[key] = d.toISOString().replace(".000Z", "Z");
           }
         }
       });
