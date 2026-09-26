@@ -6,7 +6,7 @@
 import { mapFormFields } from "./fields";
 import { generateFieldProps } from "./props_generator";
 import React from "react";
-import { Array } from "react-invenio-forms";
+import { Array, Input } from "react-invenio-forms";
 import { Form, Button, Icon } from "semantic-ui-react";
 import { i18next } from "@translations/invenio_administration/i18next";
 import PropTypes from "prop-types";
@@ -37,18 +37,18 @@ export const generateArrayFieldProps = (
   return { ...fieldProps, ...arrayFieldProps };
 };
 
-const createEmptyArrayRowObject = (properties) => {
-  const emptyRow = {};
-  for (let [key, schema] of Object.entries(properties)) {
-    if (schema.type === "object" || schema.type === "vocabulary") {
-      emptyRow[key] = createEmptyArrayRowObject(schema.properties);
-    } else if (schema.type === "array") {
-      emptyRow[key] = [createEmptyArrayRowObject(schema.items.properties)];
-    } else {
-      emptyRow[key] = "";
+const createEmptyArrayRowObject = (schema) => {
+  if (schema.type === "object" || schema.type === "vocabulary") {
+    const emptyRow = {};
+    for (let [key, childSchema] of Object.entries(schema.properties || {})) {
+      emptyRow[key] = createEmptyArrayRowObject(childSchema);
     }
+    return emptyRow;
+  } else if (schema.type === "array") {
+    return [createEmptyArrayRowObject(schema.items)];
+  } else {
+    return "";
   }
-  return emptyRow;
 };
 
 export const AdminArrayField = ({
@@ -58,7 +58,7 @@ export const AdminArrayField = ({
   formFields,
   ...fieldProps
 }) => {
-  const newRow = createEmptyArrayRowObject(fieldSchema.items.properties);
+  const newRow = createEmptyArrayRowObject(fieldSchema.items);
   return (
     <Array
       defaultNewValue={newRow}
@@ -70,11 +70,18 @@ export const AdminArrayField = ({
         const fieldPathPrefix = `${fieldProps.name}.${indexPath}`;
         return (
           <Form.Group grouped widths="equal" className="group">
-            {mapFormFields(
-              fieldSchema.items.properties,
-              fieldPathPrefix,
-              isCreate,
-              formFields
+            {fieldSchema.items.properties ? (
+              mapFormFields(
+                fieldSchema.items.properties,
+                fieldPathPrefix,
+                isCreate,
+                formFields
+              )
+            ) : (
+              <Input
+                fieldPath={fieldPathPrefix}
+                fluid
+              />
             )}
             <Form.Field>
               <Button
