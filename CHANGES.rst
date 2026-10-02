@@ -9,6 +9,11 @@
 Changes
 =======
 
+Version v7.3.0 (released 2026-10-02)
+
+- feat: introduce passing API endpoint by name instead of raw coding URL
+- DEPRECATES: AdminResourceBaseView.api_endpoint (to be removed in next major)
+
 Version v7.2.0 (released 2026-09-23)
 
 - feat: allow overriding the admin search bundle
