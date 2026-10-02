@@ -5,10 +5,12 @@
 
 """Invenio Administration views base module."""
 
+import warnings
 from functools import partial
 
 from flask import current_app, render_template, url_for
 from flask.views import MethodView
+from invenio_base import invenio_url_for
 from invenio_i18n import lazy_gettext as _
 from invenio_search_ui.searchconfig import search_app_config
 
@@ -141,7 +143,8 @@ class AdminResourceBaseView(AdminView):
     resource = None
     actions = {}
     schema = None
-    api_endpoint = None
+    api_endpoint = None  # Deprecated. Remove in next major after 7.
+    api_endpoint_name = None
     pid_path = "pid"
     title = None
     resource_name = None
@@ -201,13 +204,26 @@ class AdminResourceBaseView(AdminView):
 
     def get_api_endpoint(self, **kwargs):
         """Get search API endpoint."""
-        api_url_prefix = current_app.config["SITE_API_URL"]
-        slash_tpl = "/" if not self.api_endpoint.startswith("/") else ""
+        if self.api_endpoint_name:
+            return invenio_url_for(self.api_endpoint_name)
+        else:
+            warnings.warn(
+                "AdminResourceBaseView.api_endpoint is deprecated. Use "
+                "AdminResourceBaseView.api_endpoint_name instead and "
+                "pass it the name of the endpoint instead of a URL. "
+                "AdminResourceBaseView.api_endpoint will be removed in the "
+                "next major version.",
+                DeprecationWarning,
+                stacklevel=2,
+            )
 
-        if not self.api_endpoint.startswith(api_url_prefix):
-            return f"{api_url_prefix}{slash_tpl}{self.api_endpoint}"
+            api_url_prefix = current_app.config["SITE_API_URL"]
+            slash_tpl = "/" if not self.api_endpoint.startswith("/") else ""
 
-        return f"{slash_tpl}{self.api_endpoint}"
+            if not self.api_endpoint.startswith(api_url_prefix):
+                return f"{api_url_prefix}{slash_tpl}{self.api_endpoint}"
+
+            return f"{slash_tpl}{self.api_endpoint}"
 
     def get_actions(self):
         """Get actions attribute."""
@@ -351,7 +367,6 @@ class AdminResourceListView(AdminResourceBaseView):
     available_facets = {}
     item_field_exclude_list = None
     item_field_list = None
-    api_endpoint = None
     item_api_endpoint = None
     title = None
 
@@ -441,7 +456,8 @@ class AdminResourceViewSet:
     resource = None
 
     schema = None
-    api_endpoint = None
+    api_endpoint = None  # Deprecated. Remove in next major after 7.
+    api_endpoint_name = None
     pid_path = "pid"
     title = None
     actions = None
