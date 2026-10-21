@@ -6,7 +6,6 @@
 import { generateObjectFieldProps, ObjectField } from "./object";
 import { DynamicSubFormField, generateDynamicFieldProps } from "./dynamic";
 import { generateHiddenFieldProps } from "./hidden";
-import React from "react";
 import {
   Input,
   AutocompleteDropdown,
@@ -53,7 +52,7 @@ export const mapFormFields = (
   formData
 ) => {
   if (_isEmpty(obj)) {
-    return <></>;
+    return null;
   }
   const sortedFields = sortFields(formFieldsConfig);
   const elements = Object.entries(sortedFields).map(([fieldName]) => {

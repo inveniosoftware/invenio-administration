@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
 import _capitalize from "lodash/capitalize";
 
 export const generateFieldProps = (

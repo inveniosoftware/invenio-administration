@@ -5,22 +5,17 @@
 
 import { DateTime } from "luxon";
 import PropTypes from "prop-types";
-import React from "react";
 
-class DateFormatter extends React.Component {
-  render() {
-    const { value } = this.props;
-
-    if (!value) {
-      return null;
-    }
-
-    const date = DateTime.fromISO(value);
-    return (
-      <p data-testid="date-formatter">{date.toLocaleString(DateTime.DATETIME_MED)}</p>
-    );
+const DateFormatter = ({ value }) => {
+  if (!value) {
+    return null;
   }
-}
+
+  const date = DateTime.fromISO(value);
+  return (
+    <p data-testid="date-formatter">{date.toLocaleString(DateTime.DATETIME_MED)}</p>
+  );
+};
 
 DateFormatter.propTypes = {
   value: PropTypes.string.isRequired,

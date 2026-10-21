@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import _get from "lodash/get";
 import AdminDetailsView from "./AdminDetailsView";
 import { OverridableContext, overrideStore } from "react-overridable";
@@ -13,7 +12,7 @@ const overriddenComponents = overrideStore.getAll();
 
 const domContainer = document.getElementById("invenio-details-config");
 
-const title = domContainer.dataset.title;
+const title = JSON.parse(domContainer.dataset.title);
 const fields = JSON.parse(domContainer.dataset.fields);
 const pidValue = JSON.parse(domContainer.dataset.pid);
 const resourceName = JSON.parse(domContainer.dataset.resourceName);
@@ -28,8 +27,9 @@ const requestHeaders = JSON.parse(domContainer.dataset?.requestHeaders);
 const uiSchema = JSON.parse(domContainer.dataset?.uiConfig);
 const name = domContainer.dataset?.name;
 
-domContainer &&
-  ReactDOM.render(
+if (domContainer) {
+  const root = createRoot(domContainer);
+  root.render(
     <OverridableContext.Provider value={overriddenComponents}>
       <AdminDetailsView
         title={title}
@@ -47,6 +47,6 @@ domContainer &&
         uiSchema={uiSchema}
         name={name}
       />
-    </OverridableContext.Provider>,
-    domContainer
+    </OverridableContext.Provider>
   );
+}
