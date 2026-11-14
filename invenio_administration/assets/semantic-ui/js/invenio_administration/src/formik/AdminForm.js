@@ -34,8 +34,14 @@ export const AdminForm = ({
       ? resource
       : mapValues(resourceSchema, function (value) {
           const defaultValue = value.metadata?.default;
-          if (defaultValue) {
+          if (defaultValue !== undefined && defaultValue !== null) {
             return defaultValue;
+          }
+          if (value.load_default !== undefined && value.load_default !== null) {
+            return value.load_default;
+          }
+          if (value.dump_default !== undefined && value.dump_default !== null) {
+            return value.dump_default;
           }
           if (value.type === "bool") {
             return false;
